@@ -13,3 +13,9 @@ protocol EventDataTransactionDelegate {
     
     func onEditorVCCircleBtnClicked()
 }
+
+protocol indexPathPasser {
+    
+    func onCellEditBtnClicked(indexPathFromCell: [Int])
+    
+}

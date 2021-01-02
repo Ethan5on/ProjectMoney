@@ -21,11 +21,11 @@
                                 <rect key="frame" x="0.0" y="84" width="414" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="accountTableViewCellId" rowHeight="95" id="QSZ-JX-DYo" customClass="AccountTableViewCell" customModule="ProjectMoney" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="95"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="accountTableViewCellId" rowHeight="108" id="QSZ-JX-DYo" customClass="AccountTableViewCell" customModule="ProjectMoney" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QSZ-JX-DYo" id="KCZ-ny-2Bs">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="MMw-fO-8vL">
@@ -676,6 +676,24 @@
                                     <action selector="circleBtnClicked:" destination="I14-hA-6mr" eventType="touchUpInside" id="84L-pS-TLs"/>
                                 </connections>
                             </button>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vo7-sp-9O8">
+                                <rect key="frame" x="0.0" y="678" width="414" height="184"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </datePicker>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rzT-GN-h4w">
+                                <rect key="frame" x="0.0" y="634" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Nez-JB-jZl"/>
+                                    <barButtonItem style="plain" id="gM0-ma-4vN">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="fTU-8W-hbX">
+                                            <rect key="frame" x="357" y="7" width="37" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Done"/>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IU4-Zw-YgP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -696,13 +714,20 @@
                     </view>
                     <connections>
                         <outlet property="ExpIncSegument" destination="Fj5-UY-70F" id="YM8-S5-vfm"/>
+                        <outlet property="accountTextField" destination="pG2-qO-5ik" id="WdW-Ts-RPM"/>
+                        <outlet property="amountTextField" destination="VhM-mR-J0c" id="RJ3-BY-7to"/>
                         <outlet property="backArrowBtn" destination="lNk-Bb-xHu" id="FUp-zl-ASs"/>
+                        <outlet property="categoryTextField" destination="XpC-gG-No0" id="63P-e2-dFr"/>
                         <outlet property="circleBtn" destination="wwU-jF-CjT" id="i5o-Gu-7b4"/>
+                        <outlet property="dateTimeTextField" destination="hhW-kH-htz" id="Zy3-0M-fVd"/>
+                        <outlet property="itemNameTextField" destination="Mce-dY-Fit" id="mWN-RY-UMK"/>
+                        <outlet property="memoTextField" destination="95o-ng-xiL" id="ZBz-WR-3ua"/>
+                        <outlet property="payeeTextField" destination="WHb-Es-pb8" id="Fq7-iI-doD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qW2-Qo-39z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1313.0434782608697" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1328.985507246377" y="137.94642857142856"/>
         </scene>
         <!--ReportVC-->
         <scene sceneID="NJ0-AZ-SJo">

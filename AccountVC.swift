@@ -18,7 +18,6 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     //TableView
     @IBOutlet weak var accountTableView: UITableView!
     
-    
     //Lower
     @IBOutlet weak var botBarAccountBtn: UIButton!
     @IBOutlet weak var botBarReportBtn: UIButton!
@@ -28,7 +27,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     @IBOutlet weak var botBarBudgetBtn: UIButton!
     @IBOutlet weak var botBarSettingsBtn: UIButton!
     
-    
+    //MARK: - Delegate
+    var indexPathDelegate: DatabaseManager = DatabaseManager()
     
     
     //MARK: - Instances
@@ -38,31 +38,46 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     var fc: [FirstCategoryEntity] = []
     var sc: [SecondCategoryEntity] = []
     
+    var indexPathContainer: [Int] = []
     
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
         
         uiConfig()
-        
-        AccountVC.db.insertTransaction(id: 1, name: "asdfasdf", account_Id: 0, firstCategory_Id: 0, secondCategory_Id: 0, amount: 241688, date: "2012.12.31", time: "11:28", payee: "asdf", memo: "asdfasdf")
 
+        refreshView()
         
-        ts = AccountVC.db.readTransaction()
-        ac = AccountVC.db.readAccount()
-        fc = AccountVC.db.readFirstCategory()
-        sc = AccountVC.db.readSecondCategoy()
-        
-        
-//        self.accountTableView.register(AccountVC.self, forCellReuseIdentifier: "accountTableViewCellId")
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
+        
+
     }
+    
+    
 
     //MARK: - UI Configuration
     fileprivate func uiConfig() {
         
         botBarPlusBtn.layer.cornerRadius = botBarPlusBtn.frame.height / 2
+    }
+    
+    fileprivate func refreshView() {
+        
+        //table view update
+        ts = AccountVC.db.readTransaction()
+        ac = AccountVC.db.readAccount()
+        fc = AccountVC.db.readFirstCategory()
+        sc = AccountVC.db.readSecondCategoy()
+        
+        accountTableView.reloadData()
+        
+        //balance label update
+        var balance: Int = 0
+        for i in 1...self.ts.count - 1 {
+            balance += self.ts[i].amount
+        }
+        self.balanceLabel.text = String(balance)
         
     }
     
@@ -118,8 +133,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     func onEditorVCCircleBtnClicked() {
         print("AccountView - onEdiotVCCircleBtnClicked() called")
         print("New transaction is updated on table")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {self.refreshView()})
     }
-    
     
     
 }
@@ -128,8 +143,79 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
 //MARK: - Table View Extensions
 extension AccountVC: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        <#code#>
+//    }
     
+    
+    //MARK: - Swipe Action
+    private func handleGoToDetails() {
+        print("Went to Details")
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
+        uvcs.onCellEditBtnClicked(indexPathFromCell: indexPathContainer)
+        self.present(uvcs, animated: true, completion: nil)
+    }
+
+    private func handleGoToEditor() {
+        print("Went to Editor")
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
+        uvcs.onCellEditBtnClicked(indexPathFromCell: indexPathContainer)
+        self.present(uvcs, animated: true, completion: nil)
+    }
+
+    private func handleMoveToTrash() {
+        print("Moved to trash")
+        AccountVC.db.deleteTransactionById(id: indexPathContainer[1])
+        refreshView()
+    }
+    
+
+    func tableView(_ tableView: UITableView,
+                   editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // Trash action
+        let trash = UIContextualAction(style: .normal,
+                                         title: "Trash") { [weak self] (action, view, completionHandler) in
+                                            self?.handleMoveToTrash()
+                                            completionHandler(true)
+        }
+        trash.backgroundColor = .systemRed
+
+        // Edit action
+        let edit = UIContextualAction(style: .destructive,
+                                       title: "Edit") { [weak self] (action, view, completionHandler) in
+                                        self?.handleGoToEditor()
+                                        completionHandler(true)
+        }
+        edit.backgroundColor = .systemBlue
+
+        // Details action
+        let details = UIContextualAction(style: .normal,
+                                       title: "Details") { [weak self] (action, view, completionHandler) in
+                                        self?.handleGoToDetails()
+                                        completionHandler(true)
+        }
+        details.backgroundColor = .systemGray
+
+        indexPathContainer = [indexPath.section, indexPath.row]
+        let configuration = UISwipeActionsConfiguration(actions: [trash, edit, details])
+
+        return configuration
+    }
 }
+
 
 extension AccountVC: UITableViewDataSource {
     
@@ -138,6 +224,7 @@ extension AccountVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = accountTableView.dequeueReusableCell(withIdentifier: "accountTableViewCellId", for: indexPath) as! AccountTableViewCell
         cell.cellItemName.text = ts[indexPath.row].name
         cell.cellAmount.text = String(ts[indexPath.row].amount)
@@ -148,9 +235,3 @@ extension AccountVC: UITableViewDataSource {
     
 }
 
-class AccountTableViewCell: UITableViewCell {
-    @IBOutlet weak var cellCategoryImage: UIImageView!
-    @IBOutlet weak var cellItemName: UILabel!
-    @IBOutlet weak var cellTransactionDateTime: UILabel!
-    @IBOutlet weak var cellAmount: UILabel!
-}

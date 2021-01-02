@@ -117,8 +117,7 @@ class DatabaseManager {
     
     //MARK: - Insert Functions
     //transaction
-    func insertTransaction(id: Int,
-                           name: String,
+    func insertTransaction(name: String,
                            account_Id: Int,
                            firstCategory_Id: Int,
                            secondCategory_Id: Int,
@@ -128,12 +127,6 @@ class DatabaseManager {
                            payee: String,
                            memo: String) {
         
-        let ts = readTransaction()
-        for p in ts {
-            if p.id == id{
-                return
-            }
-        }
         let insertTransactionStatementString = "INSERT INTO deal(name, account_Id, firstCategory_Id, secondCategory_Id, amount, date, time, payee, memo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
@@ -141,7 +134,7 @@ class DatabaseManager {
             sqlite3_bind_int(insertTransactionStatement, 2, Int32(account_Id))
             sqlite3_bind_int(insertTransactionStatement, 3, Int32(firstCategory_Id))
             sqlite3_bind_int(insertTransactionStatement, 4, Int32(secondCategory_Id))
-            sqlite3_bind_int(insertTransactionStatement, 2, Int32(amount))
+            sqlite3_bind_int(insertTransactionStatement, 5, Int32(amount))
             sqlite3_bind_text(insertTransactionStatement, 6, (date as NSString).utf8String, -1, nil)
             sqlite3_bind_text(insertTransactionStatement, 7, (time as NSString).utf8String, -1, nil)
             sqlite3_bind_text(insertTransactionStatement, 8, (payee as NSString).utf8String, -1, nil)
@@ -160,15 +153,8 @@ class DatabaseManager {
     
     
     //account
-    func insertAccount(id: Int,
-                           name: String) {
+    func insertAccount(name: String) {
         
-        let ts = readAccount()
-        for p in ts {
-            if p.id == id{
-                return
-            }
-        }
         let insertTransactionStatementString = "INSERT INTO account(name) VALUES (?);"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
@@ -187,16 +173,9 @@ class DatabaseManager {
     
     
     //1stCategory
-    func insertFirstCategory(id: Int,
-                           name: String,
+    func insertFirstCategory(name: String,
                            secondCategory_Id: Int) {
-        
-        let ts = readFirstCategory()
-        for p in ts {
-            if p.id == id{
-                return
-            }
-        }
+
         let insertTransactionStatementString = "INSERT INTO firstCategory(name, secondCategory_Id) VALUES (?, ?;"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
@@ -216,15 +195,8 @@ class DatabaseManager {
     
     
     //2ndCategory
-    func insertSecondCategory(id: Int,
-                           name: String) {
-        
-        let ts = readSecondCategoy()
-        for p in ts {
-            if p.id == id {
-                return
-            }
-        }
+    func insertSecondCategory(name: String) {
+
         let insertTransactionStatementString = "INSERT INTO secondCategory(name) VALUES (?);"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
