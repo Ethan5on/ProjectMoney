@@ -7,12 +7,16 @@
 
 import UIKit
 
-class EditorOfTransactionVC: UIViewController, indexPathPasser {
+class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecognizerDelegate {
     
     //MARK: - Upper Bar Buttons
     @IBOutlet weak var backArrowBtn: UIButton!
     @IBOutlet weak var circleBtn: UIButton!
     @IBOutlet weak var ExpIncSegument: UISegmentedControl!
+    
+    //MARK: - Date Picker
+    @IBOutlet weak var dateAndTimePicker: UIDatePicker!
+    @IBOutlet weak var datePickerView: UIView!
     
     //MARK: - Content Text Fields
     @IBOutlet weak var accountTextField: UITextField!
@@ -23,6 +27,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser {
     @IBOutlet weak var payeeTextField: UITextField!
     @IBOutlet weak var memoTextField: UITextField!
     
+    var keyboardDismissGesture : UIGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    
     
     var indexPathFromTable: [Int] = [0, 0]
     
@@ -32,11 +38,16 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser {
     
     var onEditorPopUpSegueIndex: Int = 0
 
+    
+    //MARK: - View Did Load Function
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.keyboardDismissGesture.delegate = self
+        self.view.addGestureRecognizer(keyboardDismissGesture)
         
-
+        
+        datePickerView.isHidden = true
         
         
         let ts: [TransactionEntity] = AccountVC.db.readTransaction()
@@ -63,6 +74,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser {
         dismiss(animated: true, completion: nil)
     }
     
+
     @IBAction func circleBtnClicked(_ sender: UIButton) {
         let dateAndTime = dateTimeTextField.text ?? ""
         var amount = Int(amountTextField.text ?? "")!
@@ -77,6 +89,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser {
         }
         
         if indexPathFromTable != [0, 0] {                               //Updating
+//            AccountVC.db.updateAccount()
             
             
         } else {                                                        //Inserting
@@ -95,6 +108,34 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser {
         dismiss(animated: true, completion: nil)
     }
     
+    //MARK: - Date Picker
+    @IBAction func onToolbarDateBtnClicked(_ sender: UIButton) {
+        print("EditorOfTransactionVC - onToolbarDateBtnClicked() called")
+        self.dateAndTimePicker.datePickerMode = .date
+        
+    }
+    
+    @IBAction func onToolbarTimeBtnClicked(_ sender: UIButton) {
+        print("EditorOfTransactionVC - onToolbarTimeBtnClicked() called")
+
+        dateAndTimePicker.datePickerMode = .time
+    }
+    
+    @IBAction func onToolbarDoneBtnClicked(_ sender: UIButton) {
+        print("EditorOfTransactionVC - onToolbarDoneBtnClicked() called")
+
+        dateTimeTextField.text = "\(dateAndTimePicker.date)"
+    }
+
+    
+    @IBAction func textBtn(_ sender: UIButton) {
+        
+        UIView.animate(withDuration: 0.5, delay: 0.5, animations: {self.datePickerView.isHidden = false})
+        
+    }
+    
+    
+    
     
     func onCellEditBtnClicked(indexPathFromCell: [Int]) {
         print("EditorOfTransactionVC - onCellEditBtnClicked() called / indexPathFromCell = \(indexPathFromCell)")
@@ -103,6 +144,31 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser {
 //        accountTextField.insertText("123")
     }
     
+
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        print("gestureRecognizer called")
+        
+        if (touch.view?.isDescendant(of: accountTextField) == true){
+            print("Touched accountTextField.")
+            return false
+        } else if (touch.view?.isDescendant(of: itemNameTextField) == true){
+            print("Touched itemNameTextField.")
+            return false
+        } else if (touch.view?.isDescendant(of: amountTextField) == true){
+            print("Touched amountTextField.")
+            return false
+        } else if (touch.view?.isDescendant(of: payeeTextField) == true){
+            print("Touched payeeTextField.")
+            return false
+        } else if (touch.view?.isDescendant(of: memoTextField) == true){
+            print("Touched memoTextField.")
+            return false
+        } else {
+            print("화면이 터치되었다.")
+            view.endEditing(true)
+            return true
+        }
+    }
     
 }

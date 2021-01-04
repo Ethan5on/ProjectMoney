@@ -74,11 +74,14 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         
         //balance label update
         var balance: Int = 0
-        for i in 1...self.ts.count - 1 {
-            balance += self.ts[i].amount
+        if ts.count != 0 {
+            for i in 1...self.ts.count - 1 {
+                balance += self.ts[i].amount
+            }
+            self.balanceLabel.text = String(balance)
+        } else {
+            return
         }
-        self.balanceLabel.text = String(balance)
-        
     }
     
     //MARK: - IBAction Bottom Bar Buttons
