@@ -23,7 +23,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var itemNameTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var dateTimeTextField: UITextField!
+    @IBOutlet weak var dateAndTimeButton: UIButton!
     @IBOutlet weak var payeeTextField: UITextField!
     @IBOutlet weak var memoTextField: UITextField!
     
@@ -37,7 +37,10 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     var transactions: [TransactionEntity] = []
     
     var onEditorPopUpSegueIndex: Int = 0
+    
+    var dataFormatter: DataFormatter = DataFormatter()
 
+    var ts: [TransactionEntity] = []
     
     //MARK: - View Did Load Function
     override func viewDidLoad() {
@@ -49,8 +52,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         datePickerView.isHidden = true
         
+        ts = AccountVC.db.readTransaction()
         
-        let ts: [TransactionEntity] = AccountVC.db.readTransaction()
         if indexPathFromTable != [0, 0] {                               //Updating
             if ts[indexPathFromTable[1]].amount < 0 {
                 ExpIncSegument.selectedSegmentIndex = 0
@@ -61,7 +64,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             self.categoryTextField.text = "\(ts[indexPathFromTable[1]].firstCategory_Id) > \(ts[indexPathFromTable[1]].secondCategory_Id)"
             self.itemNameTextField.text = ts[indexPathFromTable[1]].name
             self.amountTextField.text = String(ts[indexPathFromTable[1]].amount)
-            self.dateTimeTextField.text = "\(ts[indexPathFromTable[1]].date), \(ts[indexPathFromTable[1]].time)"
+            self.dateAndTimeButton.titleLabel?.text = "\(ts[indexPathFromTable[1]].date), \(ts[indexPathFromTable[1]].time)"
             self.payeeTextField.text = ts[indexPathFromTable[1]].payee
             self.memoTextField.text = ts[indexPathFromTable[1]].memo
         }else {                                                         //Inserting
@@ -76,7 +79,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
 
     @IBAction func circleBtnClicked(_ sender: UIButton) {
-        let dateAndTime = dateTimeTextField.text ?? ""
+        let dateAndTime = dateAndTimeButton.titleLabel?.text ?? ""
         var amount = Int(amountTextField.text ?? "")!
         
         switch ExpIncSegument.selectedSegmentIndex {
@@ -89,7 +92,17 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         }
         
         if indexPathFromTable != [0, 0] {                               //Updating
-//            AccountVC.db.updateAccount()
+            
+            AccountVC.db.updateTransaction(id: ts[indexPathFromTable[1]].id,
+                                           name: itemNameTextField.text ?? "",
+                                           account_Id: 0,                       ///
+                                           firstCategory_Id: 0,                 ///
+                                           secondCategory_Id: 0,                ///
+                                           amount: amount,
+                                           date: String(dateAndTime.prefix(10)),
+                                           time: String(dateAndTime.suffix(5)),
+                                           payee: payeeTextField.text ?? "",
+                                           memo: memoTextField.text ?? "")
             
             
         } else {                                                        //Inserting
@@ -124,7 +137,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     @IBAction func onToolbarDoneBtnClicked(_ sender: UIButton) {
         print("EditorOfTransactionVC - onToolbarDoneBtnClicked() called")
 
-        dateTimeTextField.text = "\(dateAndTimePicker.date)"
+        dateAndTimeButton.setTitle("\(dataFormatter.dateFormatter(inputValue: dateAndTimePicker.date)), \(dataFormatter.timeFormatter(inputValue: dateAndTimePicker.date))", for: .normal)
     }
 
     
@@ -147,7 +160,6 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
 
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("gestureRecognizer called")
         
         if (touch.view?.isDescendant(of: accountTextField) == true){
             print("Touched accountTextField.")
@@ -164,6 +176,11 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         } else if (touch.view?.isDescendant(of: memoTextField) == true){
             print("Touched memoTextField.")
             return false
+        } else if (touch.view?.isDescendant(of: dateAndTimeButton) == true){
+            print("Touched dateTimeTextField.")
+            view.endEditing(true)
+            datePickerView.isHidden = false
+            return true
         } else {
             print("화면이 터치되었다.")
             view.endEditing(true)

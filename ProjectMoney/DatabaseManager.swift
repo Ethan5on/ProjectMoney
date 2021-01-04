@@ -114,6 +114,115 @@ class DatabaseManager {
         }
         sqlite3_finalize(createTableStatement)
     }
+    //MARK: - Update Functions
+    //transaction
+    func updateTransaction(id: Int,
+                           name: String,
+                           account_Id: Int,
+                           firstCategory_Id: Int,
+                           secondCategory_Id: Int,
+                           amount: Int,
+                           date: String,
+                           time: String,
+                           payee: String,
+                           memo: String) {
+
+        let updateStatementString = "UPDATE deal SET name = ?, account_Id = ?, firstCategory_Id = ?, secondCategory_Id = ?, amount = ?, date = ?, time = ?, payee = ?, memo = ? WHERE id = ?;"
+        var updateStatement: OpaquePointer?
+        
+        if sqlite3_prepare(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(updateStatement, 1, (name as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(updateStatement, 2, Int32(account_Id))
+            sqlite3_bind_int(updateStatement, 3, Int32(firstCategory_Id))
+            sqlite3_bind_int(updateStatement, 4, Int32(secondCategory_Id))
+            sqlite3_bind_int(updateStatement, 5, Int32(amount))
+            sqlite3_bind_text(updateStatement, 6, (date as NSString).utf8String, -1, nil)
+            sqlite3_bind_text(updateStatement, 7, (time as NSString).utf8String, -1, nil)
+            sqlite3_bind_text(updateStatement, 8, (payee as NSString).utf8String, -1, nil)
+            sqlite3_bind_text(updateStatement, 9, (memo as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(updateStatement, 10, Int32(id))
+        
+            if sqlite3_step(updateStatement) == SQLITE_DONE {
+                print("Successfully updated row")
+            } else {
+                print("Could not update row")
+            }
+        } else {
+            print("UPDATE statement could not prepare")
+        }
+        sqlite3_finalize(updateStatement)
+
+    }
+    
+    
+    //account
+    func updateAccount(id: Int,
+                       name: String) {
+        
+        let updateStatementString = "UPDATE account SET name = ? WHERE id = ?;"
+        var updateStatement: OpaquePointer?
+        if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(updateStatement, 1, (name as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(updateStatement, 2, Int32(id))
+
+            if sqlite3_step(updateStatement) == SQLITE_DONE {
+                print("Successfully updated row")
+            } else {
+                print("Could not update row")
+            }
+        } else {
+            print("UPDATE statement could not prepared")
+        }
+        sqlite3_finalize(updateStatement)
+    }
+    
+    //1st category
+    func updateFirstCategory (id: Int,
+                              name: String,
+                              secondCategory_Id: Int) {
+        
+        let updateStatementString = "UPDATE firstCategory SET name = ?, secondCategory_Id = ?, WHERE id = ?;"
+        var updateStatement: OpaquePointer?
+        if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(updateStatement, 1, (name as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(updateStatement, 2, Int32(secondCategory_Id))
+            sqlite3_bind_int(updateStatement, 3, Int32(id))
+
+            if sqlite3_step(updateStatement) == SQLITE_DONE {
+                print("Successfully updated row")
+            } else {
+                print("Could not update row")
+            }
+        } else {
+            print("UPDATE statement could not prepared")
+        }
+        sqlite3_finalize(updateStatement)
+    }
+    
+    
+    //2nd category
+    func updateSecondCategory (id: Int,
+                               name: String) {
+        
+        let updateStatementString = "UPDATE secondCategory SET name = ? WHERE id = ?;"
+        var updateStatement: OpaquePointer?
+        if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(updateStatement, 1, (name as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(updateStatement, 2, Int32(id))
+
+            if sqlite3_step(updateStatement) == SQLITE_DONE {
+                print("Successfully updated row")
+            } else {
+                print("Could not update row")
+            }
+        } else {
+            print("UPDATE statement could not prepared")
+        }
+        sqlite3_finalize(updateStatement)
+    }
+    
+    
+    
     
     //MARK: - Insert Functions
     //transaction

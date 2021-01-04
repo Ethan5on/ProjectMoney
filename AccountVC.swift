@@ -40,6 +40,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     var indexPathContainer: [Int] = []
     
+    var dataFormatter: DataFormatter = DataFormatter()
+    
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,13 +77,15 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         //balance label update
         var balance: Int = 0
         if ts.count != 0 {
-            for i in 1...self.ts.count - 1 {
+            for i in 0...self.ts.count - 1 {
                 balance += self.ts[i].amount
             }
-            self.balanceLabel.text = String(balance)
+            self.balanceLabel.text = dataFormatter.currencyFormatter(inputValue: balance)
         } else {
             return
         }
+        
+        
     }
     
     //MARK: - IBAction Bottom Bar Buttons
@@ -118,7 +122,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     //MARK: - Delegates
     func onPlusPopUpVCBtnClicked(segueIndex: Int) {
         
-        print("AccountView - onEdiotVCCircleBtnClicked() called / segueIndex = \(segueIndex)")
+        print("AccountView - onPlusPopUpVCBtnClicked() called / segueIndex = \(segueIndex)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
             
             let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
@@ -171,6 +175,7 @@ extension AccountVC: UITableViewDelegate {
         print("Went to Editor")
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
         let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
+        uvcs.newTransactionUpdateDelegate = self
         uvcs.onCellEditBtnClicked(indexPathFromCell: indexPathContainer)
         self.present(uvcs, animated: true, completion: nil)
     }
@@ -230,7 +235,7 @@ extension AccountVC: UITableViewDataSource {
         
         let cell = accountTableView.dequeueReusableCell(withIdentifier: "accountTableViewCellId", for: indexPath) as! AccountTableViewCell
         cell.cellItemName.text = ts[indexPath.row].name
-        cell.cellAmount.text = String(ts[indexPath.row].amount)
+        cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: ts[indexPath.row].amount)
         cell.cellTransactionDateTime.text = "\(ts[indexPath.row].date), \(ts[indexPath.row].time)"
         return cell
     }

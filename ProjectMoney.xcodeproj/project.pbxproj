@@ -22,6 +22,7 @@
 		6594E85C259E3521001AEFF3 /* PlusBtnPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E85B259E3521001AEFF3 /* PlusBtnPopUpVC.swift */; };
 		6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */; };
 		6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E861259E433E001AEFF3 /* DatabaseManager.swift */; };
+		65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3EEE625A389D200BCD62D /* DataFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		6594E85B259E3521001AEFF3 /* PlusBtnPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusBtnPopUpVC.swift; sourceTree = "<group>"; };
 		6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorOfTransactionVC.swift; sourceTree = "<group>"; };
 		6594E861259E433E001AEFF3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		65E3EEE625A389D200BCD62D /* DataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataFormatter.swift; path = PopUpViewControllers/DataFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				6594E859259E31B4001AEFF3 /* PopUpViewControllers */,
 				6594E861259E433E001AEFF3 /* DatabaseManager.swift */,
 				6584B39B259F47490087505D /* DataEntities.swift */,
+				65E3EEE625A389D200BCD62D /* DataFormatter.swift */,
 				6594E858259E318C001AEFF3 /* Storyboards */,
 				65130FC82588CD4C005CEACF /* Info.plist */,
 			);
@@ -207,6 +210,7 @@
 			files = (
 				65130FBF2588CD4C005CEACF /* AccountVC.swift in Sources */,
 				6508F0AC259F25B500B5F72F /* EventDataTransactionDelegate.swift in Sources */,
+				65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */,
 				6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */,
 				6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */,
 				65130FBB2588CD4C005CEACF /* AppDelegate.swift in Sources */,
