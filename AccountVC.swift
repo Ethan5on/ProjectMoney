@@ -150,12 +150,25 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
 //MARK: - Table View Extensions
 extension AccountVC: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+//        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if let selectedRows = tableView.indexPathsForSelectedRows, selectedRows.contains(indexPath) {
+            return 120
+        } else {
+            return 50
+        }
+    }
 //
 //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        <#code#>
@@ -222,21 +235,53 @@ extension AccountVC: UITableViewDelegate {
 
         return configuration
     }
+    
 }
 
 
 extension AccountVC: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        var yearAndMonth: Set<String> = []
+        for i in 0...ts.count - 1 {
+            yearAndMonth.insert(String(ts[i].date.prefix(7)))
+        }
+        return yearAndMonth.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var yearAndMonth: Set<String> = []
+        for i in 0...ts.count - 1 {
+            yearAndMonth.insert(String(ts[i].date.prefix(7)))
+        }
+        return String(yearAndMonth.sorted()[section])
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.ts.count
+        var yearAndMonth: Array<String> = []
+        for i in 0...ts.count - 1 {
+            yearAndMonth.append(String(ts[i].date.prefix(7)))
+        }
+        let header = Set(yearAndMonth).sorted()[section]
+
+        return  yearAndMonth.filter{ $0.prefix(7) == header }.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        var yearAndMonth: Set<String> = []
+        for i in 0...ts.count-1 {
+            yearAndMonth.insert(String(ts[i].date.prefix(7)))
+        }
+
+        let header = yearAndMonth.sorted()[indexPath.section]
+        
         let cell = accountTableView.dequeueReusableCell(withIdentifier: "accountTableViewCellId", for: indexPath) as! AccountTableViewCell
-        cell.cellItemName.text = ts[indexPath.row].name
-        cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: ts[indexPath.row].amount)
-        cell.cellTransactionDateTime.text = "\(ts[indexPath.row].date), \(ts[indexPath.row].time)"
+        
+        
+        cell.cellItemName.text = ts.filter{ $0.date.prefix(7) == header }[indexPath.row].name
+        cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: ts.filter{ $0.date.prefix(7) == header }[indexPath.row].amount)
+        cell.cellTransactionDateTime.text = "\(ts.filter{ $0.date.prefix(7) == header }[indexPath.row].date), \(ts.filter{ $0.date.prefix(7) == header }[indexPath.row].time)"
         return cell
     }
     

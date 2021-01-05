@@ -17,6 +17,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     //MARK: - Date Picker
     @IBOutlet weak var dateAndTimePicker: UIDatePicker!
     @IBOutlet weak var datePickerView: UIView!
+    @IBOutlet weak var onToolbarDateBtn: UIButton!
+    @IBOutlet weak var onToolbarTimeBtn: UIButton!
     
     //MARK: - Content Text Fields
     @IBOutlet weak var accountTextField: UITextField!
@@ -163,26 +165,44 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         if (touch.view?.isDescendant(of: accountTextField) == true){
             print("Touched accountTextField.")
+            datePickerView.isHidden = true
             return false
         } else if (touch.view?.isDescendant(of: itemNameTextField) == true){
             print("Touched itemNameTextField.")
+            datePickerView.isHidden = true
             return false
         } else if (touch.view?.isDescendant(of: amountTextField) == true){
             print("Touched amountTextField.")
+            datePickerView.isHidden = true
             return false
         } else if (touch.view?.isDescendant(of: payeeTextField) == true){
             print("Touched payeeTextField.")
+            datePickerView.isHidden = true
             return false
         } else if (touch.view?.isDescendant(of: memoTextField) == true){
             print("Touched memoTextField.")
+            datePickerView.isHidden = true
             return false
         } else if (touch.view?.isDescendant(of: dateAndTimeButton) == true){
-            print("Touched dateTimeTextField.")
+            print("Touched dateAndTimeButton.")
             view.endEditing(true)
+            datePickerView.isHidden = false
+            return true
+        } else if (touch.view?.isDescendant(of: onToolbarDateBtn) == true){
+            print("Touched onToolbarDateBtn.")
+            datePickerView.isHidden = false
+            return true
+        } else if (touch.view?.isDescendant(of: onToolbarTimeBtn) == true){
+            print("Touched onToolbarTimeBtn.")
+            datePickerView.isHidden = false
+            return true
+        } else if (touch.view?.isDescendant(of: dateAndTimePicker) == true){
+            print("Touched dateAndTimePicker.")
             datePickerView.isHidden = false
             return true
         } else {
             print("화면이 터치되었다.")
+            datePickerView.isHidden = true
             view.endEditing(true)
             return true
         }

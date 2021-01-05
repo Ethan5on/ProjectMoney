@@ -114,6 +114,8 @@ class DatabaseManager {
         }
         sqlite3_finalize(createTableStatement)
     }
+    
+    
     //MARK: - Update Functions
     //transaction
     func updateTransaction(id: Int,
@@ -326,7 +328,7 @@ class DatabaseManager {
     //MARK: - Read Functions
     //transaction
     func readTransaction() -> [TransactionEntity] {
-        let queryStatementString = "SELECT * FROM deal;"
+        let queryStatementString = "SELECT * FROM deal ORDER BY date DESC, time DESC;"
         var queryStatement: OpaquePointer?
         var ts: [TransactionEntity] = []
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
