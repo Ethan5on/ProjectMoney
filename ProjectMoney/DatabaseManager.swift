@@ -287,7 +287,7 @@ class DatabaseManager {
     func insertFirstCategory(name: String,
                            secondCategory_Id: Int) {
 
-        let insertTransactionStatementString = "INSERT INTO firstCategory(name, secondCategory_Id) VALUES (?, ?;"
+        let insertTransactionStatementString = "INSERT INTO firstCategory(name, secondCategory_Id) VALUES (?, ?);"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(insertTransactionStatement, 1, (name as NSString).utf8String, -1, nil)

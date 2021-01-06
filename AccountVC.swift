@@ -254,7 +254,7 @@ extension AccountVC: UITableViewDataSource {
         for i in 0...ts.count - 1 {
             yearAndMonth.insert(String(ts[i].date.prefix(7)))
         }
-        return String(yearAndMonth.sorted()[section])
+        return String(yearAndMonth.sorted().reversed()[section])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -262,7 +262,7 @@ extension AccountVC: UITableViewDataSource {
         for i in 0...ts.count - 1 {
             yearAndMonth.append(String(ts[i].date.prefix(7)))
         }
-        let header = Set(yearAndMonth).sorted()[section]
+        let header = Set(yearAndMonth).sorted().reversed()[section]
 
         return  yearAndMonth.filter{ $0.prefix(7) == header }.count
     }
@@ -274,7 +274,7 @@ extension AccountVC: UITableViewDataSource {
             yearAndMonth.insert(String(ts[i].date.prefix(7)))
         }
 
-        let header = yearAndMonth.sorted()[indexPath.section]
+        let header = yearAndMonth.sorted().reversed()[indexPath.section]
         
         let cell = accountTableView.dequeueReusableCell(withIdentifier: "accountTableViewCellId", for: indexPath) as! AccountTableViewCell
         

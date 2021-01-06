@@ -22,27 +22,31 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     //MARK: - Content Text Fields
     @IBOutlet weak var accountTextField: UITextField!
+    @IBOutlet weak var accountButton: UIButton!
     @IBOutlet weak var categoryTextField: UITextField!
+    @IBOutlet weak var categoryButton: UIButton!
     @IBOutlet weak var itemNameTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var dateAndTimeButton: UIButton!
     @IBOutlet weak var payeeTextField: UITextField!
     @IBOutlet weak var memoTextField: UITextField!
     
-    var keyboardDismissGesture : UIGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    @IBOutlet weak var textBtn: UIButton!
     
+    var keyboardDismissGesture : UIGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     
     var indexPathFromTable: [Int] = [0, 0]
     
     var newTransactionUpdateDelegate : EventDataTransactionDelegate?
-    
-    var transactions: [TransactionEntity] = []
-    
+        
     var onEditorPopUpSegueIndex: Int = 0
     
     var dataFormatter: DataFormatter = DataFormatter()
 
     var ts: [TransactionEntity] = []
+    var accounts: [AccountEntity] = []
+    var cgFirst: [FirstCategoryEntity] = []
+    var cgSecond: [SecondCategoryEntity] = []
     
     //MARK: - View Did Load Function
     override func viewDidLoad() {
@@ -51,12 +55,20 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         self.keyboardDismissGesture.delegate = self
         self.view.addGestureRecognizer(keyboardDismissGesture)
         
-        
         datePickerView.isHidden = true
         
         ts = AccountVC.db.readTransaction()
+        accounts = AccountVC.db.readAccount()
+        cgFirst = AccountVC.db.readFirstCategory()
+
+        
+        
+        accountMenus()
+        categoryMenus()
+        
         
         if indexPathFromTable != [0, 0] {                               //Updating
+            
             if ts[indexPathFromTable[1]].amount < 0 {
                 ExpIncSegument.selectedSegmentIndex = 0
             }else if ts[indexPathFromTable[1]].amount > 0 {
@@ -69,10 +81,63 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             self.dateAndTimeButton.titleLabel?.text = "\(ts[indexPathFromTable[1]].date), \(ts[indexPathFromTable[1]].time)"
             self.payeeTextField.text = ts[indexPathFromTable[1]].payee
             self.memoTextField.text = ts[indexPathFromTable[1]].memo
+            
         }else {                                                         //Inserting
+            
             ExpIncSegument?.selectedSegmentIndex = onEditorPopUpSegueIndex
+            dateAndTimeButton.setTitle("\(self.dataFormatter.dateFormatter(inputValue: Date())), \(self.dataFormatter.timeFormatter(inputValue: Date()))", for: .normal)
+            
         }
+
     }
+    
+    //MARK: - Menus for Account & Categories
+    @objc private func accountMenus() {
+    
+        accountButton.showsMenuAsPrimaryAction = true
+        
+        var accountFromDB: [String] = []
+        for i in 0...accounts.count - 1 {
+           accountFromDB.append(accounts[i].name)
+        }
+
+        func uiElementArray(name: [String]) -> [UIMenuElement] {
+            
+            var result: [UIMenuElement] = []
+            for i in 0...name.count - 1 {
+                result.append(UIAction(title: name[i], handler: { _ in self.accountButton.setTitle(name[i], for: .normal)}))
+            }
+            return result
+        }
+        
+        accountButton.menu = UIMenu(title: "Account", image: nil, identifier: nil, options: .destructive, children: uiElementArray(name: accountFromDB))
+    }
+    
+    
+    @objc private func categoryMenus() {
+        
+        categoryButton.showsMenuAsPrimaryAction = true
+        
+        var firstCategoryFromDB: [String] = []
+        for i in 0...cgFirst.count - 1 {
+            firstCategoryFromDB.append(cgFirst[i].name)
+        }
+
+        func uiElementArray(name: [String]) -> [UIMenuElement] {
+            
+            var result: [UIMenuElement] = []
+            for i in 0...name.count - 1 {
+                result.append(UIAction(title: name[i], handler: { _ in self.categoryButton.setTitle(name[i], for: .normal)}))
+            }
+            return result
+        }
+        
+        categoryButton.menu = UIMenu(title: "Category", image: nil, identifier: nil, options: .destructive, children: uiElementArray(name: firstCategoryFromDB))
+        
+        
+    }
+    
+    
     
     //MARK: - IBAction Upper Bar Buttons
     @IBAction func backArrowBtnClicked(_ sender: UIButton) {
@@ -92,6 +157,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         default:
             return
         }
+        
+        
         
         if indexPathFromTable != [0, 0] {                               //Updating
             
@@ -144,8 +211,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
 
     
     @IBAction func textBtn(_ sender: UIButton) {
-        
-        UIView.animate(withDuration: 0.5, delay: 0.5, animations: {self.datePickerView.isHidden = false})
+        print("TestBtn Clicked")
+    
         
     }
     
@@ -155,8 +222,6 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     func onCellEditBtnClicked(indexPathFromCell: [Int]) {
         print("EditorOfTransactionVC - onCellEditBtnClicked() called / indexPathFromCell = \(indexPathFromCell)")
         indexPathFromTable = indexPathFromCell
-//        accountTextField.
-//        accountTextField.insertText("123")
     }
     
 
@@ -199,6 +264,9 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         } else if (touch.view?.isDescendant(of: dateAndTimePicker) == true){
             print("Touched dateAndTimePicker.")
             datePickerView.isHidden = false
+            return true
+        } else if (touch.view?.isDescendant(of: textBtn) == true){
+            print("Touched testBtn.")
             return true
         } else {
             print("화면이 터치되었다.")
