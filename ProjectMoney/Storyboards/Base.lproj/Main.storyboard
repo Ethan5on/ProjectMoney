@@ -489,16 +489,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pG2-qO-5ik">
-                                                <rect key="frame" x="97" y="0.0" width="210" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1Z-gF-Yaz">
-                                                <rect key="frame" x="317" y="0.0" width="57" height="34"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="57" id="dce-X1-l7h"/>
-                                                </constraints>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1Z-gF-Yaz">
+                                                <rect key="frame" x="97" y="0.0" width="277" height="34"/>
                                                 <state key="normal" title="Account"/>
                                             </button>
                                         </subviews>
@@ -518,13 +510,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Food &gt; Fast Food" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XpC-gG-No0">
-                                                <rect key="frame" x="97" y="0.0" width="108" height="34"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYq-1C-Px7">
-                                                <rect key="frame" x="215" y="0.0" width="159" height="34"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GYq-1C-Px7">
+                                                <rect key="frame" x="97" y="0.0" width="277" height="34"/>
                                                 <state key="normal" title="Category1 &gt; Category2"/>
                                             </button>
                                         </subviews>
@@ -569,7 +556,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VhM-mR-J0c">
                                                 <rect key="frame" x="97" y="0.0" width="277" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
                                         </subviews>
                                         <constraints>
@@ -813,11 +800,9 @@
                     <connections>
                         <outlet property="ExpIncSegument" destination="Fj5-UY-70F" id="YM8-S5-vfm"/>
                         <outlet property="accountButton" destination="l1Z-gF-Yaz" id="OJs-gz-YzB"/>
-                        <outlet property="accountTextField" destination="pG2-qO-5ik" id="WdW-Ts-RPM"/>
                         <outlet property="amountTextField" destination="VhM-mR-J0c" id="RJ3-BY-7to"/>
                         <outlet property="backArrowBtn" destination="lNk-Bb-xHu" id="FUp-zl-ASs"/>
                         <outlet property="categoryButton" destination="GYq-1C-Px7" id="boi-WK-kly"/>
-                        <outlet property="categoryTextField" destination="XpC-gG-No0" id="63P-e2-dFr"/>
                         <outlet property="circleBtn" destination="wwU-jF-CjT" id="i5o-Gu-7b4"/>
                         <outlet property="dateAndTimeButton" destination="GYM-fC-bPG" id="57S-Jw-rnH"/>
                         <outlet property="dateAndTimePicker" destination="g5Y-sJ-GYD" id="3lK-2y-3KB"/>

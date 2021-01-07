@@ -53,7 +53,27 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
         
+//        let baseAccount = ["Cash","NatWest","HSBC","Lloyds","Santander","Barclays"]
+//        let baseCatFirst = ["Food","Car","Entertainment","Online","Learning","Monthly","Shopping"]
+//
+//        for i in baseAccount{
+//        AccountVC.db.insertAccount(name: i)
+//        }
+//
+//        for i in baseCatFirst{
+//        AccountVC.db.insertFirstCategory(name: i)
+//        }
+//
+//        AccountVC.db.insertSecondCategory(name: "Beverage", firstCategory_Id: 1)
+//        AccountVC.db.insertSecondCategory(name: "Meal", firstCategory_Id: 1)
+//        AccountVC.db.insertSecondCategory(name: "Grocery", firstCategory_Id: 1)
+//        AccountVC.db.insertSecondCategory(name: "Beverage", firstCategory_Id: 1)
+//        AccountVC.db.insertSecondCategory(name: "Application", firstCategory_Id: 4)
+//        AccountVC.db.insertSecondCategory(name: "Game Cash", firstCategory_Id: 4)
+//        AccountVC.db.insertSecondCategory(name: "Electronics", firstCategory_Id: 7)
+//        AccountVC.db.insertSecondCategory(name: "Cloth", firstCategory_Id: 7)
 
+        
     }
     
     
@@ -77,8 +97,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         //balance label update
         var balance: Int = 0
         if ts.count != 0 {
-            for i in 0...self.ts.count - 1 {
-                balance += self.ts[i].amount
+            for i in ts {
+                balance += i.amount
             }
             self.balanceLabel.text = dataFormatter.currencyFormatter(inputValue: balance)
         } else {
@@ -159,7 +179,7 @@ extension AccountVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
         tableView.endUpdates()
-//        tableView.deselectRow(at: indexPath, animated: true)
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -169,10 +189,7 @@ extension AccountVC: UITableViewDelegate {
             return 50
         }
     }
-//
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        <#code#>
-//    }
+
     
     
     //MARK: - Swipe Action
@@ -242,25 +259,29 @@ extension AccountVC: UITableViewDelegate {
 extension AccountVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+
         var yearAndMonth: Set<String> = []
-        for i in 0...ts.count - 1 {
-            yearAndMonth.insert(String(ts[i].date.prefix(7)))
+        for i in ts {
+            yearAndMonth.insert(String(i.date))
         }
         return yearAndMonth.count
+
+        
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
         var yearAndMonth: Set<String> = []
-        for i in 0...ts.count - 1 {
-            yearAndMonth.insert(String(ts[i].date.prefix(7)))
+        for i in ts {
+            yearAndMonth.insert(String(i.date.prefix(7)))
         }
         return String(yearAndMonth.sorted().reversed()[section])
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var yearAndMonth: Array<String> = []
-        for i in 0...ts.count - 1 {
-            yearAndMonth.append(String(ts[i].date.prefix(7)))
+        for i in ts {
+            yearAndMonth.append(String(i.date.prefix(7)))
         }
         let header = Set(yearAndMonth).sorted().reversed()[section]
 
@@ -270,8 +291,8 @@ extension AccountVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var yearAndMonth: Set<String> = []
-        for i in 0...ts.count-1 {
-            yearAndMonth.insert(String(ts[i].date.prefix(7)))
+        for i in ts {
+            yearAndMonth.insert(String(i.date.prefix(7)))
         }
 
         let header = yearAndMonth.sorted().reversed()[indexPath.section]

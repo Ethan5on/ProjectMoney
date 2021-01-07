@@ -81,7 +81,7 @@ class DatabaseManager {
     //1st category
     func createFirstCategoryTable() {
         
-        let createTableStatementString = "CREATE TABLE IF NOT EXISTS firstCategory(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, secondCategory_Id INTEGER);"
+        let createTableStatementString = "CREATE TABLE IF NOT EXISTS firstCategory(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);"
         var createTableStatement : OpaquePointer?
         
         if sqlite3_prepare_v2(db, createTableStatementString, -1, &createTableStatement, nil) == SQLITE_OK {
@@ -100,7 +100,7 @@ class DatabaseManager {
     //2nd category
     func createSecondCategoryTable() {
         
-        let createTableStatementString = "CREATE TABLE IF NOT EXISTS secondCategory(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);"
+        let createTableStatementString = "CREATE TABLE IF NOT EXISTS secondCategory(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, firstCategory_Id INTEGER);"
         var createTableStatement : OpaquePointer?
         
         if sqlite3_prepare_v2(db, createTableStatementString, -1, &createTableStatement, nil) == SQLITE_OK {
@@ -180,14 +180,12 @@ class DatabaseManager {
     
     //1st category
     func updateFirstCategory (id: Int,
-                              name: String,
-                              secondCategory_Id: Int) {
+                              name: String) {
         
-        let updateStatementString = "UPDATE firstCategory SET name = ?, secondCategory_Id = ?, WHERE id = ?;"
+        let updateStatementString = "UPDATE firstCategory SET name = ? WHERE id = ?;"
         var updateStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(updateStatement, 1, (name as NSString).utf8String, -1, nil)
-            sqlite3_bind_int(updateStatement, 2, Int32(secondCategory_Id))
             sqlite3_bind_int(updateStatement, 3, Int32(id))
 
             if sqlite3_step(updateStatement) == SQLITE_DONE {
@@ -204,13 +202,15 @@ class DatabaseManager {
     
     //2nd category
     func updateSecondCategory (id: Int,
-                               name: String) {
+                               name: String,
+                               firstCategory_Id: Int) {
         
-        let updateStatementString = "UPDATE secondCategory SET name = ? WHERE id = ?;"
+        let updateStatementString = "UPDATE secondCategory SET name = ?, firstCategory_Id = ? WHERE id = ?;"
         var updateStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, updateStatementString, -1, &updateStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(updateStatement, 1, (name as NSString).utf8String, -1, nil)
-            sqlite3_bind_int(updateStatement, 2, Int32(id))
+            sqlite3_bind_int(updateStatement, 2, Int32(firstCategory_Id))
+            sqlite3_bind_int(updateStatement, 3, Int32(id))
 
             if sqlite3_step(updateStatement) == SQLITE_DONE {
                 print("Successfully updated row")
@@ -284,14 +284,12 @@ class DatabaseManager {
     
     
     //1stCategory
-    func insertFirstCategory(name: String,
-                           secondCategory_Id: Int) {
+    func insertFirstCategory(name: String) {
 
-        let insertTransactionStatementString = "INSERT INTO firstCategory(name, secondCategory_Id) VALUES (?, ?);"
+        let insertTransactionStatementString = "INSERT INTO firstCategory(name) VALUES (?);"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(insertTransactionStatement, 1, (name as NSString).utf8String, -1, nil)
-            sqlite3_bind_int(insertTransactionStatement, 2, Int32(secondCategory_Id))
 
             if sqlite3_step(insertTransactionStatement) == SQLITE_DONE {
                 print("Successfully inserted row")
@@ -306,12 +304,14 @@ class DatabaseManager {
     
     
     //2ndCategory
-    func insertSecondCategory(name: String) {
+    func insertSecondCategory(name: String,
+                              firstCategory_Id: Int) {
 
-        let insertTransactionStatementString = "INSERT INTO secondCategory(name) VALUES (?);"
+        let insertTransactionStatementString = "INSERT INTO secondCategory(name, firstCategory_Id) VALUES (?, ?);"
         var insertTransactionStatement: OpaquePointer?
         if sqlite3_prepare_v2(db, insertTransactionStatementString, -1, &insertTransactionStatement, nil) == SQLITE_OK {
             sqlite3_bind_text(insertTransactionStatement, 1, (name as NSString).utf8String, -1, nil)
+            sqlite3_bind_int(insertTransactionStatement, 2, Int32(firstCategory_Id))
 
             if sqlite3_step(insertTransactionStatement) == SQLITE_DONE {
                 print("Successfully inserted row")
@@ -386,11 +386,10 @@ class DatabaseManager {
             while sqlite3_step(queryStatement) == SQLITE_ROW {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)))
-                let secondCategory_Id = sqlite3_column_int(queryStatement, 2)
 
-                fc.append(FirstCategoryEntity(id: Int(id), name: name, secondCategory_Id: Int(secondCategory_Id)))
+                fc.append(FirstCategoryEntity(id: Int(id), name: name))
                 print("Query Result:")
-                print("\(id) | \(name) | \(secondCategory_Id)")
+                print("\(id) | \(name)")
             }
         }else {
             print("SELECT statement could not be prepared")
@@ -409,9 +408,11 @@ class DatabaseManager {
             while sqlite3_step(queryStatement) == SQLITE_ROW {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)))
-                sc.append(SecondCategoryEntity(id: Int(id), name: name))
+                let firstCategory_Id = sqlite3_column_int(queryStatement, 2)
+
+                sc.append(SecondCategoryEntity(id: Int(id), name: name, firstCategory_Id: Int(firstCategory_Id)))
                 print("Query Result:")
-                print("\(id) | \(name)")
+                print("\(id) | \(name) | \(firstCategory_Id)")
             }
         }else {
             print("SELECT statement could not be prepared")
@@ -491,5 +492,30 @@ class DatabaseManager {
         }
         sqlite3_finalize(deleteStatement)
     }
+    
+    
+    //MARK: - Join Expressions
+    func loadSubcategory(name: String) -> [String] {
+        
+        let loadSubcategoryStatementString = "SELECT secondCategory.name FROM secondCategory LEFT OUTER JOIN firstCategory ON firstCategory.id = secondCategory.firstCategory_id WHERE firstCategory.name = ?;"
+        var loadSubcategoryStatement : OpaquePointer?
+        var subcategory: [String] = []
+        if sqlite3_prepare_v2(db, loadSubcategoryStatementString, -1, &loadSubcategoryStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(loadSubcategoryStatement, 1, (name as NSString).utf8String, -1, nil)
+            
+            while sqlite3_step(loadSubcategoryStatement) == SQLITE_ROW {
+                let name = String(describing: String(cString: sqlite3_column_text(loadSubcategoryStatement, 0)))
+
+                subcategory.append(name)
+                print("Query Result:")
+                print("\(name)")
+            }
+        } else {
+            print("JOIN statement could not be prepared")
+        }
+        sqlite3_finalize(loadSubcategoryStatement)
+        return subcategory
+    }
+    
     
 }

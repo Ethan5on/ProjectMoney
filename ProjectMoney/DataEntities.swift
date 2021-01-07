@@ -52,13 +52,11 @@ class FirstCategoryEntity {
     
     var id: Int
     var name: String
-    var secondCategory_Id: Int
     
-    init(id: Int, name: String, secondCategory_Id: Int) {
+    init(id: Int, name: String) {
         
         self.id = id
         self.name = name
-        self.secondCategory_Id = secondCategory_Id
         
     }
 }
@@ -68,11 +66,13 @@ class SecondCategoryEntity {
     
     var id: Int
     var name: String
+    var firstCategory_Id: Int
     
-    init(id: Int, name: String) {
+    init(id: Int, name: String, firstCategory_Id: Int) {
         
         self.id = id
         self.name = name
+        self.firstCategory_Id = firstCategory_Id
         
     }
 }

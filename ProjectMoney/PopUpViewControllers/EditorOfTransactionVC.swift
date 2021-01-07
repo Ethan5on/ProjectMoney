@@ -21,9 +21,9 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     @IBOutlet weak var onToolbarTimeBtn: UIButton!
     
     //MARK: - Content Text Fields
-    @IBOutlet weak var accountTextField: UITextField!
+
     @IBOutlet weak var accountButton: UIButton!
-    @IBOutlet weak var categoryTextField: UITextField!
+
     @IBOutlet weak var categoryButton: UIButton!
     @IBOutlet weak var itemNameTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
@@ -60,12 +60,14 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         ts = AccountVC.db.readTransaction()
         accounts = AccountVC.db.readAccount()
         cgFirst = AccountVC.db.readFirstCategory()
-
+ 
         
         
         accountMenus()
         categoryMenus()
         
+//        var subs = AccountVC.db.loadSubcategory(id: 1)
+//        print(subs)
         
         if indexPathFromTable != [0, 0] {                               //Updating
             
@@ -74,8 +76,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             }else if ts[indexPathFromTable[1]].amount > 0 {
                 ExpIncSegument.selectedSegmentIndex = 1
             }
-            self.accountTextField.text = String(ts[indexPathFromTable[1]].account_Id)
-            self.categoryTextField.text = "\(ts[indexPathFromTable[1]].firstCategory_Id) > \(ts[indexPathFromTable[1]].secondCategory_Id)"
+            self.accountButton.titleLabel?.text = String(ts[indexPathFromTable[1]].account_Id)
+            self.categoryButton.titleLabel?.text = "\(ts[indexPathFromTable[1]].firstCategory_Id) > \(ts[indexPathFromTable[1]].secondCategory_Id)"
             self.itemNameTextField.text = ts[indexPathFromTable[1]].name
             self.amountTextField.text = String(ts[indexPathFromTable[1]].amount)
             self.dateAndTimeButton.titleLabel?.text = "\(ts[indexPathFromTable[1]].date), \(ts[indexPathFromTable[1]].time)"
@@ -95,48 +97,75 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     @objc private func accountMenus() {
     
         accountButton.showsMenuAsPrimaryAction = true
-        
         var accountFromDB: [String] = []
-        for i in 0...accounts.count - 1 {
-           accountFromDB.append(accounts[i].name)
+        for i in accounts {
+           accountFromDB.append(i.name)
         }
 
         func uiElementArray(name: [String]) -> [UIMenuElement] {
             
             var result: [UIMenuElement] = []
-            for i in 0...name.count - 1 {
-                result.append(UIAction(title: name[i], handler: { _ in self.accountButton.setTitle(name[i], for: .normal)}))
+            for i in name {
+                result.append(UIAction(title: i, handler: { _ in self.accountButton.setTitle(i, for: .normal)}))
             }
+            result.append(UIAction(title: "Add", attributes: .destructive, handler: { _ in self.addAccount() }))
             return result
         }
         
-        accountButton.menu = UIMenu(title: "Account", image: nil, identifier: nil, options: .destructive, children: uiElementArray(name: accountFromDB))
+        accountButton.menu = UIMenu(title: "Account",
+                                    image: nil,
+                                    identifier: nil,
+                                    options: .destructive,
+                                    children: uiElementArray(name: accountFromDB))
     }
     
     
     @objc private func categoryMenus() {
         
         categoryButton.showsMenuAsPrimaryAction = true
-        
         var firstCategoryFromDB: [String] = []
-        for i in 0...cgFirst.count - 1 {
-            firstCategoryFromDB.append(cgFirst[i].name)
+        for i in cgFirst {
+            firstCategoryFromDB.append(i.name)
         }
 
-        func uiElementArray(name: [String]) -> [UIMenuElement] {
-            
+        func uiElementArray(name: [String]) -> [UIMenuElement]{
             var result: [UIMenuElement] = []
-            for i in 0...name.count - 1 {
-                result.append(UIAction(title: name[i], handler: { _ in self.categoryButton.setTitle(name[i], for: .normal)}))
+            
+            for i in name {
+                
+                let subs = AccountVC.db.loadSubcategory(name: i)
+                
+                if subs.count != 0  {
+                    var catSecond: [UIMenuElement] = []
+                        for j in subs {
+                            catSecond.append(UIAction(title: j, handler: { _ in self.categoryButton.setTitle("\(i) > \(j)", for: .normal)}))
+                        }
+
+                    result.append(UIMenu(title: i, children: catSecond))
+                } else {
+                    result.append(UIAction(title: i, handler: {_ in self.categoryButton.setTitle(i, for: .normal)}))
+                }
             }
+            result.append(UIAction(title: "Add", attributes: .destructive, handler: { _ in self.addCategory() }))
             return result
         }
+
         
-        categoryButton.menu = UIMenu(title: "Category", image: nil, identifier: nil, options: .destructive, children: uiElementArray(name: firstCategoryFromDB))
-        
-        
+        categoryButton.menu = UIMenu(title: "Category",
+                                     image: nil,
+                                     identifier: nil,
+                                     options: .displayInline,
+                                     children: uiElementArray(name: firstCategoryFromDB))
     }
     
+    
+    @objc func addAccount() {
+        print("addAcount() called")
+    }
+    
+    @objc func addCategory() {
+        print("addCategory() called")
+    }
     
     
     //MARK: - IBAction Upper Bar Buttons
@@ -228,7 +257,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
-        if (touch.view?.isDescendant(of: accountTextField) == true){
+        if (touch.view?.isDescendant(of: accountButton) == true){
             print("Touched accountTextField.")
             datePickerView.isHidden = true
             return false
