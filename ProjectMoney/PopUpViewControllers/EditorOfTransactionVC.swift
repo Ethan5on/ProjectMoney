@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecognizerDelegate {
     
@@ -43,10 +44,10 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     var dataFormatter: DataFormatter = DataFormatter()
 
-    var ts: [TransactionEntity] = []
+    var transactions: [TransactionEntity] = []
     var accounts: [AccountEntity] = []
-    var cgFirst: [FirstCategoryEntity] = []
-    var cgSecond: [SecondCategoryEntity] = []
+    var catFirst: [FirstCategoryEntity] = []
+    var catSecond: [SecondCategoryEntity] = []
     
     //MARK: - View Did Load Function
     override func viewDidLoad() {
@@ -57,32 +58,30 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         datePickerView.isHidden = true
         
-        ts = AccountVC.db.readTransaction()
+        transactions = AccountVC.db.readTransaction()
         accounts = AccountVC.db.readAccount()
-        cgFirst = AccountVC.db.readFirstCategory()
+        catFirst = AccountVC.db.readFirstCategory()
  
         
         
         accountMenus()
         categoryMenus()
-        
-//        var subs = AccountVC.db.loadSubcategory(id: 1)
-//        print(subs)
+
         
         if indexPathFromTable != [0, 0] {                               //Updating
             
-            if ts[indexPathFromTable[1]].amount < 0 {
+            if transactions[indexPathFromTable[1]].amount < 0 {
                 ExpIncSegument.selectedSegmentIndex = 0
-            }else if ts[indexPathFromTable[1]].amount > 0 {
+            }else if transactions[indexPathFromTable[1]].amount > 0 {
                 ExpIncSegument.selectedSegmentIndex = 1
             }
-            self.accountButton.titleLabel?.text = String(ts[indexPathFromTable[1]].account_Id)
-            self.categoryButton.titleLabel?.text = "\(ts[indexPathFromTable[1]].firstCategory_Id) > \(ts[indexPathFromTable[1]].secondCategory_Id)"
-            self.itemNameTextField.text = ts[indexPathFromTable[1]].name
-            self.amountTextField.text = String(ts[indexPathFromTable[1]].amount)
-            self.dateAndTimeButton.titleLabel?.text = "\(ts[indexPathFromTable[1]].date), \(ts[indexPathFromTable[1]].time)"
-            self.payeeTextField.text = ts[indexPathFromTable[1]].payee
-            self.memoTextField.text = ts[indexPathFromTable[1]].memo
+            self.accountButton.titleLabel?.text = String(transactions[indexPathFromTable[1]].account_Id)
+            self.categoryButton.titleLabel?.text = "\(transactions[indexPathFromTable[1]].firstCategory_Id) > \(transactions[indexPathFromTable[1]].secondCategory_Id)"
+            self.itemNameTextField.text = transactions[indexPathFromTable[1]].name
+            self.amountTextField.text = String(transactions[indexPathFromTable[1]].amount)
+            self.dateAndTimeButton.titleLabel?.text = "\(transactions[indexPathFromTable[1]].date), \(transactions[indexPathFromTable[1]].time)"
+            self.payeeTextField.text = transactions[indexPathFromTable[1]].payee
+            self.memoTextField.text = transactions[indexPathFromTable[1]].memo
             
         }else {                                                         //Inserting
             
@@ -124,7 +123,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         categoryButton.showsMenuAsPrimaryAction = true
         var firstCategoryFromDB: [String] = []
-        for i in cgFirst {
+        for i in catFirst {
             firstCategoryFromDB.append(i.name)
         }
 
@@ -175,6 +174,8 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
 
     @IBAction func circleBtnClicked(_ sender: UIButton) {
+        
+        print("EditorOfTransactionVC - circleBtnClicked() called")
         let dateAndTime = dateAndTimeButton.titleLabel?.text ?? ""
         var amount = Int(amountTextField.text ?? "")!
         
@@ -187,15 +188,16 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             return
         }
         
+        let separator = " > "
         
         
         if indexPathFromTable != [0, 0] {                               //Updating
             
-            AccountVC.db.updateTransaction(id: ts[indexPathFromTable[1]].id,
+            AccountVC.db.updateTransaction(id: transactions[indexPathFromTable[1]].id,
                                            name: itemNameTextField.text ?? "",
-                                           account_Id: 0,                       ///
-                                           firstCategory_Id: 0,                 ///
-                                           secondCategory_Id: 0,                ///
+                                           account_Id: AccountVC.db.getAccountIdFromTitle(name: accountButton.titleLabel?.text ?? ""),
+                                           firstCategory_Id: AccountVC.db.getFirstCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[0] ?? ""),
+                                           secondCategory_Id: AccountVC.db.getSecondCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[1] ?? ""),
                                            amount: amount,
                                            date: String(dateAndTime.prefix(10)),
                                            time: String(dateAndTime.suffix(5)),
@@ -205,9 +207,9 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             
         } else {                                                        //Inserting
             AccountVC.db.insertTransaction(name: itemNameTextField.text ?? "",
-                                           account_Id: 0,                       ///
-                                           firstCategory_Id: 0,                 ///
-                                           secondCategory_Id: 0,                ///
+                                           account_Id: AccountVC.db.getAccountIdFromTitle(name: accountButton.titleLabel?.text ?? ""),
+                                           firstCategory_Id: AccountVC.db.getFirstCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[0] ?? ""),
+                                           secondCategory_Id: AccountVC.db.getSecondCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[1] ?? ""),
                                            amount: amount,
                                            date: String(dateAndTime.prefix(10)),
                                            time: String(dateAndTime.suffix(5)),

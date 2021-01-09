@@ -377,7 +377,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-249.27536231884059" y="137.94642857142856"/>
+            <point key="canvasLocation" x="-106" y="138"/>
         </scene>
         <!--Plus Btn Pop UpVC-->
         <scene sceneID="kvb-i4-8ed">
@@ -817,7 +817,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qW2-Qo-39z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1328.985507246377" y="137.94642857142856"/>
+            <point key="canvasLocation" x="1307" y="138"/>
         </scene>
         <!--ReportVC-->
         <scene sceneID="NJ0-AZ-SJo">
@@ -1047,7 +1047,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DjV-9W-gTi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1101" y="964"/>
+            <point key="canvasLocation" x="-112" y="934"/>
         </scene>
         <!--BudgetVC-->
         <scene sceneID="6r7-Xg-bGh">
@@ -1277,7 +1277,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UdU-Ob-2eB" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-388" y="964"/>
+            <point key="canvasLocation" x="601" y="934"/>
         </scene>
         <!--SettingsVC-->
         <scene sceneID="uTl-X6-7xb">
@@ -1508,7 +1508,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gIB-BD-LA5" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="418.84057971014494" y="967.63392857142856"/>
+            <point key="canvasLocation" x="1293" y="934"/>
         </scene>
     </scenes>
     <resources>

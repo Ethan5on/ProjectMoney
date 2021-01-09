@@ -518,4 +518,61 @@ class DatabaseManager {
     }
     
     
+    func getAccountIdFromTitle(name: String) -> Int {
+
+        let getAccountIdFromTitleStatementString = "SELECT id FROM account WHERE name = ?;"
+        var getAccountIdFromTitleStatement: OpaquePointer?
+        var result: Int32 = 0
+        if sqlite3_prepare_v2(db, getAccountIdFromTitleStatementString, -1, &getAccountIdFromTitleStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(getAccountIdFromTitleStatement, 1, (name as NSString).utf8String, -1, nil)
+            if sqlite3_step(getAccountIdFromTitleStatement) == SQLITE_ROW {
+                result = sqlite3_column_int(getAccountIdFromTitleStatement, 0)
+            } else {
+                print("Could not get id")
+            }
+        } else {
+            print("GET ACCOUNT ID FROM TITLE statement could not prepared")
+        }
+        sqlite3_finalize(getAccountIdFromTitleStatement)
+        return Int(result)
+    }
+    
+    func getFirstCatFromTitle(name: String) -> Int {
+
+        let getFirstCatIdFromTitleStatementString = "SELECT id FROM firstCategory WHERE name = ?;"
+        var getFirstCatIdFromTitleStatement: OpaquePointer?
+        var result: Int32 = 0
+        if sqlite3_prepare_v2(db, getFirstCatIdFromTitleStatementString, -1, &getFirstCatIdFromTitleStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(getFirstCatIdFromTitleStatement, 1, (name as NSString).utf8String, -1, nil)
+            if sqlite3_step(getFirstCatIdFromTitleStatement) == SQLITE_ROW {
+                result = sqlite3_column_int(getFirstCatIdFromTitleStatement, 0)
+            } else {
+                print("Could not get id")
+            }
+        } else {
+            print("GET 1ST CATEGORY ID FROM TITLE statement could not prepared")
+        }
+        sqlite3_finalize(getFirstCatIdFromTitleStatement)
+        return Int(result)
+    }
+    
+    func getSecondCatFromTitle(name: String) -> Int {
+
+        let getSecondCatIdFromTitleStatementString = "SELECT id FROM secondCategory WHERE name = ?;"
+        var getSecondCatIdFromTitleStatement: OpaquePointer?
+        var result: Int32 = 0
+        if sqlite3_prepare_v2(db, getSecondCatIdFromTitleStatementString, -1, &getSecondCatIdFromTitleStatement, nil) == SQLITE_OK {
+            sqlite3_bind_text(getSecondCatIdFromTitleStatement, 1, (name as NSString).utf8String, -1, nil)
+            if sqlite3_step(getSecondCatIdFromTitleStatement) == SQLITE_ROW {
+                result = sqlite3_column_int(getSecondCatIdFromTitleStatement, 0)
+            } else {
+                print("Could not get id")
+            }
+        } else {
+            print("GET 1ST CATEGORY ID FROM TITLE statement could not prepared")
+        }
+        sqlite3_finalize(getSecondCatIdFromTitleStatement)
+        return Int(result)
+    }
+    
 }

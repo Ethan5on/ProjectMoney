@@ -33,10 +33,10 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     //MARK: - Instances
     static var db: DatabaseManager = DatabaseManager()
-    var ts: [TransactionEntity] = []
-    var ac: [AccountEntity] = []
-    var fc: [FirstCategoryEntity] = []
-    var sc: [SecondCategoryEntity] = []
+    var transactionsFromDB: [TransactionEntity] = []
+    var accountFromDB: [AccountEntity] = []
+    var firstCategoryFromDB: [FirstCategoryEntity] = []
+    var secondCategoryFromDB: [SecondCategoryEntity] = []
     
     var indexPathContainer: [Int] = []
     
@@ -87,17 +87,17 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     fileprivate func refreshView() {
         
         //table view update
-        ts = AccountVC.db.readTransaction()
-        ac = AccountVC.db.readAccount()
-        fc = AccountVC.db.readFirstCategory()
-        sc = AccountVC.db.readSecondCategoy()
+        transactionsFromDB = AccountVC.db.readTransaction()
+        accountFromDB = AccountVC.db.readAccount()
+        firstCategoryFromDB = AccountVC.db.readFirstCategory()
+        secondCategoryFromDB = AccountVC.db.readSecondCategoy()
         
         accountTableView.reloadData()
         
         //balance label update
         var balance: Int = 0
-        if ts.count != 0 {
-            for i in ts {
+        if transactionsFromDB.count != 0 {
+            for i in transactionsFromDB {
                 balance += i.amount
             }
             self.balanceLabel.text = dataFormatter.currencyFormatter(inputValue: balance)
@@ -261,38 +261,40 @@ extension AccountVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
 
         var yearAndMonth: Set<String> = []
-        for i in ts {
-            yearAndMonth.insert(String(i.date))
+        for transaction in transactionsFromDB {
+            yearAndMonth.insert(String(transaction.date.prefix(7)))
         }
+        print("numberOfSections = \(yearAndMonth.count)")
         return yearAndMonth.count
-
-        
     }
+    
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         var yearAndMonth: Set<String> = []
-        for i in ts {
-            yearAndMonth.insert(String(i.date.prefix(7)))
+        for transaction in transactionsFromDB {
+            yearAndMonth.insert(String(transaction.date.prefix(7)))
         }
         return String(yearAndMonth.sorted().reversed()[section])
     }
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var yearAndMonth: Array<String> = []
-        for i in ts {
-            yearAndMonth.append(String(i.date.prefix(7)))
+        for transaction in transactionsFromDB {
+            yearAndMonth.append(String(transaction.date.prefix(7)))
         }
         let header = Set(yearAndMonth).sorted().reversed()[section]
 
         return  yearAndMonth.filter{ $0.prefix(7) == header }.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var yearAndMonth: Set<String> = []
-        for i in ts {
-            yearAndMonth.insert(String(i.date.prefix(7)))
+        for transaction in transactionsFromDB {
+            yearAndMonth.insert(String(transaction.date.prefix(7)))
         }
 
         let header = yearAndMonth.sorted().reversed()[indexPath.section]
@@ -300,9 +302,9 @@ extension AccountVC: UITableViewDataSource {
         let cell = accountTableView.dequeueReusableCell(withIdentifier: "accountTableViewCellId", for: indexPath) as! AccountTableViewCell
         
         
-        cell.cellItemName.text = ts.filter{ $0.date.prefix(7) == header }[indexPath.row].name
-        cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: ts.filter{ $0.date.prefix(7) == header }[indexPath.row].amount)
-        cell.cellTransactionDateTime.text = "\(ts.filter{ $0.date.prefix(7) == header }[indexPath.row].date), \(ts.filter{ $0.date.prefix(7) == header }[indexPath.row].time)"
+        cell.cellItemName.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].name
+        cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].amount)
+        cell.cellTransactionDateTime.text = "\(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].date), \(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].time)"
         return cell
     }
     
