@@ -16,6 +16,6 @@ protocol EventDataTransactionDelegate {
 
 protocol indexPathPasser {
     
-    func onCellEditBtnClicked(indexPathFromCell: [Int])
+    func onCellEditBtnClicked(editingRowId: Int)
     
 }

@@ -36,7 +36,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     var keyboardDismissGesture : UIGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     
-    var indexPathFromTable: [Int] = [0, 0]
+    var editingTransactionIdFromTable: Int?
     
     var newTransactionUpdateDelegate : EventDataTransactionDelegate?
         
@@ -68,20 +68,35 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         categoryMenus()
 
         
-        if indexPathFromTable != [0, 0] {                               //Updating
+        if editingTransactionIdFromTable != nil {                               //Updating
             
-            if transactions[indexPathFromTable[1]].amount < 0 {
+            let account_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].account_Id
+            print(account_Id)
+            let account_name = accounts.filter{ $0.id == account_Id }[0].name
+            let firstCat_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].firstCategory_Id
+            let firstCat_name = catFirst.filter{ $0.id == firstCat_Id }[0].name
+            let secondCat_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].secondCategory_Id
+            let secondCat_name = catSecond.filter{ $0.id == secondCat_Id }[0].name
+            let name = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].name
+            let amount = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].amount
+            let date = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].date
+            let time = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].time
+            let payee = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].payee
+            let memo = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].memo
+            
+            
+            if amount < 0 {
                 ExpIncSegument.selectedSegmentIndex = 0
-            }else if transactions[indexPathFromTable[1]].amount > 0 {
+            }else if amount > 0 {
                 ExpIncSegument.selectedSegmentIndex = 1
             }
-            self.accountButton.titleLabel?.text = String(transactions[indexPathFromTable[1]].account_Id)
-            self.categoryButton.titleLabel?.text = "\(transactions[indexPathFromTable[1]].firstCategory_Id) > \(transactions[indexPathFromTable[1]].secondCategory_Id)"
-            self.itemNameTextField.text = transactions[indexPathFromTable[1]].name
-            self.amountTextField.text = String(transactions[indexPathFromTable[1]].amount)
-            self.dateAndTimeButton.titleLabel?.text = "\(transactions[indexPathFromTable[1]].date), \(transactions[indexPathFromTable[1]].time)"
-            self.payeeTextField.text = transactions[indexPathFromTable[1]].payee
-            self.memoTextField.text = transactions[indexPathFromTable[1]].memo
+            self.accountButton.titleLabel?.text = String(account_name)
+            self.categoryButton.titleLabel?.text = "\(firstCat_name) > \(secondCat_name)"
+            self.itemNameTextField.text = name
+            self.amountTextField.text = String(amount)
+            self.dateAndTimeButton.titleLabel?.text = "\(date), \(time)"
+            self.payeeTextField.text = payee
+            self.memoTextField.text = memo
             
         }else {                                                         //Inserting
             
@@ -190,10 +205,10 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         let separator = " > "
         
-        
-        if indexPathFromTable != [0, 0] {                               //Updating
+        // 맨위 첫줄이 [0,0]
+        if editingTransactionIdFromTable != nil {                               //Updating
             
-            AccountVC.db.updateTransaction(id: transactions[indexPathFromTable[1]].id,
+            AccountVC.db.updateTransaction(id: editingTransactionIdFromTable!,
                                            name: itemNameTextField.text ?? "",
                                            account_Id: AccountVC.db.getAccountIdFromTitle(name: accountButton.titleLabel?.text ?? ""),
                                            firstCategory_Id: AccountVC.db.getFirstCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[0] ?? ""),
@@ -250,9 +265,9 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     
     
-    func onCellEditBtnClicked(indexPathFromCell: [Int]) {
-        print("EditorOfTransactionVC - onCellEditBtnClicked() called / indexPathFromCell = \(indexPathFromCell)")
-        indexPathFromTable = indexPathFromCell
+    func onCellEditBtnClicked(editingRowId: Int) {
+        print("EditorOfTransactionVC - onCellEditBtnClicked() called / indexPathFromCell = \(editingRowId)")
+        editingTransactionIdFromTable = editingRowId
     }
     
 

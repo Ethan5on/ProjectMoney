@@ -38,7 +38,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     var firstCategoryFromDB: [FirstCategoryEntity] = []
     var secondCategoryFromDB: [SecondCategoryEntity] = []
     
-    var indexPathContainer: [Int] = []
+    var editingRowId: Int = 0
     
     var dataFormatter: DataFormatter = DataFormatter()
     
@@ -197,7 +197,7 @@ extension AccountVC: UITableViewDelegate {
         print("Went to Details")
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
         let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
-        uvcs.onCellEditBtnClicked(indexPathFromCell: indexPathContainer)
+        uvcs.onCellEditBtnClicked(editingRowId: editingRowId)
         self.present(uvcs, animated: true, completion: nil)
     }
 
@@ -206,13 +206,13 @@ extension AccountVC: UITableViewDelegate {
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
         let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
         uvcs.newTransactionUpdateDelegate = self
-        uvcs.onCellEditBtnClicked(indexPathFromCell: indexPathContainer)
+        uvcs.onCellEditBtnClicked(editingRowId: editingRowId)
         self.present(uvcs, animated: true, completion: nil)
     }
 
     private func handleMoveToTrash() {
         print("Moved to trash")
-        AccountVC.db.deleteTransactionById(id: indexPathContainer[1])
+        AccountVC.db.deleteTransactionById(id: editingRowId)
         refreshView()
     }
     
@@ -247,7 +247,17 @@ extension AccountVC: UITableViewDelegate {
         }
         details.backgroundColor = .systemGray
 
-        indexPathContainer = [indexPath.section, indexPath.row]
+        // get id
+        var yearAndMonth: Set<String> = []
+        for transaction in transactionsFromDB {
+            yearAndMonth.insert(String(transaction.date.prefix(7)))
+        }
+        let header = Array(yearAndMonth.sorted().reversed())[indexPath.section]
+        print(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].id)
+        editingRowId = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].id
+
+        print(transactionsFromDB.filter{ $0.id == editingRowId }[0].name)
+        
         let configuration = UISwipeActionsConfiguration(actions: [trash, edit, details])
 
         return configuration
@@ -264,7 +274,6 @@ extension AccountVC: UITableViewDataSource {
         for transaction in transactionsFromDB {
             yearAndMonth.insert(String(transaction.date.prefix(7)))
         }
-        print("numberOfSections = \(yearAndMonth.count)")
         return yearAndMonth.count
     }
     
