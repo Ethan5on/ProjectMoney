@@ -61,6 +61,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         transactions = AccountVC.db.readTransaction()
         accounts = AccountVC.db.readAccount()
         catFirst = AccountVC.db.readFirstCategory()
+        catSecond = AccountVC.db.readSecondCategoy()
  
         
         
@@ -73,10 +74,13 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             let account_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].account_Id
             print(account_Id)
             let account_name = accounts.filter{ $0.id == account_Id }[0].name
+            print(account_name)
             let firstCat_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].firstCategory_Id
             let firstCat_name = catFirst.filter{ $0.id == firstCat_Id }[0].name
+            print(firstCat_name)
             let secondCat_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].secondCategory_Id
             let secondCat_name = catSecond.filter{ $0.id == secondCat_Id }[0].name
+            print(secondCat_name)
             let name = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].name
             let amount = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].amount
             let date = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].date
@@ -90,11 +94,11 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             }else if amount > 0 {
                 ExpIncSegument.selectedSegmentIndex = 1
             }
-            self.accountButton.titleLabel?.text = String(account_name)
-            self.categoryButton.titleLabel?.text = "\(firstCat_name) > \(secondCat_name)"
+            self.accountButton.setTitle(String(account_name), for: .normal)
+            self.categoryButton.setTitle("\(firstCat_name) > \(secondCat_name)", for: .normal)
             self.itemNameTextField.text = name
             self.amountTextField.text = String(amount)
-            self.dateAndTimeButton.titleLabel?.text = "\(date), \(time)"
+            self.dateAndTimeButton.setTitle("\(date), \(time)", for: .normal)
             self.payeeTextField.text = payee
             self.memoTextField.text = memo
             

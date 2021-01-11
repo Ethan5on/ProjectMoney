@@ -13,6 +13,9 @@ class AccountTableViewCell: UITableViewCell {
     @IBOutlet weak var cellItemName: UILabel!
     @IBOutlet weak var cellTransactionDateTime: UILabel!
     @IBOutlet weak var cellAmount: UILabel!
+    @IBOutlet weak var cellAccount: UILabel!
+    @IBOutlet weak var cellCategory: UILabel!
+    @IBOutlet weak var cellMemo: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -314,6 +314,10 @@ extension AccountVC: UITableViewDataSource {
         cell.cellItemName.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].name
         cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].amount)
         cell.cellTransactionDateTime.text = "\(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].date), \(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].time)"
+        cell.cellAccount.text = accountFromDB.filter{ $0.id == transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].account_Id}[0].name
+        cell.cellCategory.text = "\(firstCategoryFromDB.filter{ $0.id == transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].firstCategory_Id}[0].name) > \(secondCategoryFromDB.filter{ $0.id == transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].secondCategory_Id}[0].name)"
+        cell.cellMemo.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].memo
+        
         return cell
     }
     
