@@ -15,6 +15,9 @@
 		65130FC42588CD4C005CEACF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65130FC32588CD4C005CEACF /* Assets.xcassets */; };
 		65130FC72588CD4C005CEACF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65130FC52588CD4C005CEACF /* LaunchScreen.storyboard */; };
 		657D5A0225A08938004C213F /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D5A0125A08938004C213F /* AccountTableViewCell.swift */; };
+		657FAA0925ACDEBB000381B2 /* SettingsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657FAA0825ACDEBB000381B2 /* SettingsTVC.swift */; };
+		657FAA0D25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657FAA0B25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift */; };
+		657FAA0E25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657FAA0C25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib */; };
 		6584B39C259F47490087505D /* DataEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6584B39B259F47490087505D /* DataEntities.swift */; };
 		6589A862259D46390007DE13 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589A861259D46390007DE13 /* ReportVC.swift */; };
 		6589A865259D46430007DE13 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589A864259D46430007DE13 /* SettingsVC.swift */; };
@@ -36,6 +39,9 @@
 		65130FC62588CD4C005CEACF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65130FC82588CD4C005CEACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		657D5A0125A08938004C213F /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
+		657FAA0825ACDEBB000381B2 /* SettingsTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTVC.swift; sourceTree = "<group>"; };
+		657FAA0B25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStaticCellTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		657FAA0C25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsStaticCellTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		6584B39B259F47490087505D /* DataEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEntities.swift; sourceTree = "<group>"; };
 		6589A861259D46390007DE13 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		6589A864259D46430007DE13 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
@@ -76,6 +82,8 @@
 		65130FB92588CD4C005CEACF /* ProjectMoney */ = {
 			isa = PBXGroup;
 			children = (
+				657FAA0B25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift */,
+				657FAA0C25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib */,
 				6594E857259E3168001AEFF3 /* Assets */,
 				6594E856259E3153001AEFF3 /* Delegate */,
 				6589A85F259D46010007DE13 /* MainViewControllers */,
@@ -96,6 +104,7 @@
 				6589A861259D46390007DE13 /* ReportVC.swift */,
 				6589A867259D464D0007DE13 /* BudgetVC.swift */,
 				6589A864259D46430007DE13 /* SettingsVC.swift */,
+				657FAA0825ACDEBB000381B2 /* SettingsTVC.swift */,
 				657D5A0125A08938004C213F /* AccountTableViewCell.swift */,
 			);
 			name = MainViewControllers;
@@ -195,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				657FAA0E25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib in Resources */,
 				65130FC72588CD4C005CEACF /* LaunchScreen.storyboard in Resources */,
 				65130FC42588CD4C005CEACF /* Assets.xcassets in Resources */,
 				65130FC22588CD4C005CEACF /* Main.storyboard in Resources */,
@@ -208,8 +218,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				657FAA0D25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift in Sources */,
 				65130FBF2588CD4C005CEACF /* AccountVC.swift in Sources */,
 				6508F0AC259F25B500B5F72F /* EventDataTransactionDelegate.swift in Sources */,
+				657FAA0925ACDEBB000381B2 /* SettingsTVC.swift in Sources */,
 				65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */,
 				6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */,
 				6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */,
