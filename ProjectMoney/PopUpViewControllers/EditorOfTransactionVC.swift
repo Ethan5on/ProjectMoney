@@ -72,15 +72,16 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         if editingTransactionIdFromTable != nil {                               //Updating
             
             let account_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].account_Id
-            print(account_Id)
             let account_name = accounts.filter{ $0.id == account_Id }[0].name
-            print(account_name)
             let firstCat_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].firstCategory_Id
             let firstCat_name = catFirst.filter{ $0.id == firstCat_Id }[0].name
-            print(firstCat_name)
             let secondCat_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].secondCategory_Id
-            let secondCat_name = catSecond.filter{ $0.id == secondCat_Id }[0].name
-            print(secondCat_name)
+            
+            var secondCat_name: String = ""
+            if secondCat_Id != 0 {
+                secondCat_name = " > \(catSecond.filter{ $0.id == secondCat_Id }[0].name)"
+            }
+
             let name = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].name
             let amount = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].amount
             let date = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].date
@@ -95,7 +96,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
                 ExpIncSegument.selectedSegmentIndex = 1
             }
             self.accountButton.setTitle(String(account_name), for: .normal)
-            self.categoryButton.setTitle("\(firstCat_name) > \(secondCat_name)", for: .normal)
+            self.categoryButton.setTitle("\(firstCat_name)\(secondCat_name)", for: .normal)
             self.itemNameTextField.text = name
             self.amountTextField.text = String(amount)
             self.dateAndTimeButton.setTitle("\(date), \(time)", for: .normal)
@@ -209,14 +210,20 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         let separator = " > "
         
-        // 맨위 첫줄이 [0,0]
+        
+        
+        var secondCatInt: Int = 0
+        if categoryButton.titleLabel?.text?.components(separatedBy: separator).count == 2 {
+            secondCatInt = AccountVC.db.getSecondCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[1] ?? "")
+        }
+        
         if editingTransactionIdFromTable != nil {                               //Updating
             
             AccountVC.db.updateTransaction(id: editingTransactionIdFromTable!,
                                            name: itemNameTextField.text ?? "",
                                            account_Id: AccountVC.db.getAccountIdFromTitle(name: accountButton.titleLabel?.text ?? ""),
                                            firstCategory_Id: AccountVC.db.getFirstCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[0] ?? ""),
-                                           secondCategory_Id: AccountVC.db.getSecondCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[1] ?? ""),
+                                           secondCategory_Id: secondCatInt,
                                            amount: amount,
                                            date: String(dateAndTime.prefix(10)),
                                            time: String(dateAndTime.suffix(5)),
@@ -225,10 +232,12 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             
             
         } else {                                                        //Inserting
+
+            
             AccountVC.db.insertTransaction(name: itemNameTextField.text ?? "",
                                            account_Id: AccountVC.db.getAccountIdFromTitle(name: accountButton.titleLabel?.text ?? ""),
                                            firstCategory_Id: AccountVC.db.getFirstCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[0] ?? ""),
-                                           secondCategory_Id: AccountVC.db.getSecondCatFromTitle(name: categoryButton.titleLabel?.text?.components(separatedBy: separator)[1] ?? ""),
+                                           secondCategory_Id: secondCatInt,
                                            amount: amount,
                                            date: String(dateAndTime.prefix(10)),
                                            time: String(dateAndTime.suffix(5)),
