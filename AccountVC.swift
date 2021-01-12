@@ -21,11 +21,17 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     //Lower
     @IBOutlet weak var botBarAccountBtn: UIButton!
     @IBOutlet weak var botBarReportBtn: UIButton!
-    
-    @IBOutlet weak var botBarPlusBtn: UIButton!
-    
     @IBOutlet weak var botBarBudgetBtn: UIButton!
     @IBOutlet weak var botBarSettingsBtn: UIButton!
+    
+    @IBOutlet weak var botBarPlusBtn: UIButton!
+    @IBOutlet weak var expenseBtn: UIButton!
+    @IBOutlet weak var incomeBtn: UIButton!
+    @IBOutlet weak var cancelBtn: UIButton!
+    
+    //Constraints
+    @IBOutlet weak var topNameBarViewConstraint: NSLayoutConstraint!
+    
     
     //MARK: - Delegate
     var indexPathDelegate: DatabaseManager = DatabaseManager()
@@ -116,6 +122,14 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     @IBAction func botBarReporBtnClicked(_ sender: UIButton) {
         exchangeMainView(viewControllerId: "ReportVCId")
     }
+   
+    @IBAction func botBarBudgetBtnClicked(_ sender: UIButton) {
+        exchangeMainView(viewControllerId: "BudgetVCId")
+    }
+    
+    @IBAction func botBarSettingsBtnClicked(_ sender: UIButton) {
+        exchangeMainView(viewControllerId: "SettingsVCId")
+    }
     
     @IBAction func botBarPlusBtnClicked(_ sender: UIButton) {
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
@@ -124,13 +138,6 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         self.present(uvcs, animated: true, completion: nil)
     }
     
-    @IBAction func botBarBudgetBtnClicked(_ sender: UIButton) {
-        exchangeMainView(viewControllerId: "BudgetVCId")
-    }
-    
-    @IBAction func botBarSettingsBtnClicked(_ sender: UIButton) {
-        exchangeMainView(viewControllerId: "SettingsVCId")
-    }
     
     func exchangeMainView(viewControllerId: String) {
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
@@ -170,6 +177,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
 //MARK: - Table View - Delegate
 extension AccountVC: UITableViewDelegate {
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
@@ -333,3 +341,26 @@ extension AccountVC: UITableViewDataSource {
     
 }
 
+//MARK: - Top Name Bar Hide Extension
+extension AccountVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let maxConstraintWhenScrollDown: CGFloat = -40
+        
+        let y: CGFloat = scrollView.contentOffset.y
+        let newTopNameBarViewConstraint: CGFloat = topNameBarViewConstraint.constant - y
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            if newTopNameBarViewConstraint > maxConstraintWhenScrollDown {      //hide
+                
+                self.topNameBarViewConstraint.constant = 0
+                self.view.layoutIfNeeded()
+            } else {                        //appear
+                self.topNameBarViewConstraint.constant = maxConstraintWhenScrollDown
+                self.view.layoutIfNeeded()
+                
+            }
+        })
+    }
+}

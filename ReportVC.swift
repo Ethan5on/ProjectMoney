@@ -12,9 +12,6 @@ class ReportVC: UIViewController {
     //MARK: - BottomBarButtons
     @IBOutlet weak var botBarAccountBtn: UIButton!
     @IBOutlet weak var botBarReportBtn: UIButton!
-    
-    @IBOutlet weak var botBarPlusBtn: UIButton!
-    
     @IBOutlet weak var botBarBudgetBtn: UIButton!
     @IBOutlet weak var botBarSettingsBtn: UIButton!
     
@@ -30,7 +27,6 @@ class ReportVC: UIViewController {
     //MARK: - UI Configuration
     fileprivate func uiConfig() {
         
-        botBarPlusBtn.layer.cornerRadius = botBarPlusBtn.frame.height / 2
         
     }
     
@@ -41,12 +37,6 @@ class ReportVC: UIViewController {
     }
     
     @IBAction func botBarReporBtnClicked(_ sender: UIButton) {
-    }
-    
-    @IBAction func botBarPlusBtnClicked(_ sender: UIButton) {
-        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
-        let uvcs = storyboards.instantiateViewController(identifier: "PlusBtnPopUpVCId")
-        self.present(uvcs, animated: true, completion: nil)
     }
     
     @IBAction func botBarBudgetBtnClicked(_ sender: UIButton) {
