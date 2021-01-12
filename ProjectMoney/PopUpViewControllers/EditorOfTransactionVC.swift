@@ -53,6 +53,10 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        accountButton.setTitle("Account", for: .normal)
+        categoryButton.setTitle("Category", for: .normal)
+        
+        
         self.keyboardDismissGesture.delegate = self
         self.view.addGestureRecognizer(keyboardDismissGesture)
         
@@ -67,9 +71,17 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         
         accountMenus()
         categoryMenus()
+        drawingInformationOfTransactionOrNot()
+        
+      
+
+    }
+    //MARK: - Drawing infomation of transaction
+    @objc private func drawingInformationOfTransactionOrNot() {
+        print("EditorOfTransactionVC - drawingInformationOfTransactionOrNot() called")
 
         
-        if editingTransactionIdFromTable != nil {                               //Updating
+        if editingTransactionIdFromTable != nil {                               //When Updating
             
             let account_Id = transactions.filter{ $0.id == editingTransactionIdFromTable }[0].account_Id
             let account_name = accounts.filter{ $0.id == account_Id }[0].name
@@ -103,17 +115,19 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
             self.payeeTextField.text = payee
             self.memoTextField.text = memo
             
-        }else {                                                         //Inserting
+        }else {                                                         //When Inserting
             
             ExpIncSegument?.selectedSegmentIndex = onEditorPopUpSegueIndex
             dateAndTimeButton.setTitle("\(self.dataFormatter.dateFormatter(inputValue: Date())), \(self.dataFormatter.timeFormatter(inputValue: Date()))", for: .normal)
             
         }
-
+        
     }
     
     //MARK: - Menus for Account & Categories
     @objc private func accountMenus() {
+        print("EditorOfTransactionVC - accountMenus() called")
+
     
         accountButton.showsMenuAsPrimaryAction = true
         var accountFromDB: [String] = []
@@ -189,13 +203,25 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     //MARK: - IBAction Upper Bar Buttons
     @IBAction func backArrowBtnClicked(_ sender: UIButton) {
+        print("EditorOfTransactionVC - backArrowBtnClicked() called")
         dismiss(animated: true, completion: nil)
     }
     
 
     @IBAction func circleBtnClicked(_ sender: UIButton) {
-        
         print("EditorOfTransactionVC - circleBtnClicked() called")
+
+        //Alert Pop up
+        guard accountButton.titleLabel?.text != "Account" && categoryButton.titleLabel?.text != "Category" && itemNameTextField.text != "" && amountTextField.text != "" else {
+            print("Some of values need to be filled")
+            let alert = UIAlertController(title: "Alert", message: "Some of infomation need to be filled.", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            return
+        }
+        
         let dateAndTime = dateAndTimeButton.titleLabel?.text ?? ""
         var amount = Int(amountTextField.text ?? "")!
         
@@ -284,7 +310,7 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     }
     
 
-    
+    //MARK: - gestureRecognizer
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
         if (touch.view?.isDescendant(of: accountButton) == true){

@@ -168,7 +168,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
 
 
-//MARK: - Table View Extensions
+//MARK: - Table View - Delegate
 extension AccountVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -265,7 +265,7 @@ extension AccountVC: UITableViewDelegate {
     
 }
 
-
+//MARK: - Table View - DataSource
 extension AccountVC: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -324,6 +324,7 @@ extension AccountVC: UITableViewDataSource {
             secondCat = " > \(secondCategoryFromDB.filter{ $0.id == transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].secondCategory_Id}[0].name)"
         }
         cell.cellCategory.text = "\(firstCategoryFromDB.filter{ $0.id == transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].firstCategory_Id}[0].name)\(secondCat)"
+        cell.cellPayee.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].payee
         cell.cellMemo.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].memo
         
         return cell
