@@ -22,7 +22,6 @@
 		6589A862259D46390007DE13 /* ReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589A861259D46390007DE13 /* ReportVC.swift */; };
 		6589A865259D46430007DE13 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589A864259D46430007DE13 /* SettingsVC.swift */; };
 		6589A868259D464D0007DE13 /* BudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589A867259D464D0007DE13 /* BudgetVC.swift */; };
-		6594E85C259E3521001AEFF3 /* PlusBtnPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E85B259E3521001AEFF3 /* PlusBtnPopUpVC.swift */; };
 		6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */; };
 		6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E861259E433E001AEFF3 /* DatabaseManager.swift */; };
 		65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3EEE625A389D200BCD62D /* DataFormatter.swift */; };
@@ -46,7 +45,6 @@
 		6589A861259D46390007DE13 /* ReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVC.swift; sourceTree = "<group>"; };
 		6589A864259D46430007DE13 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		6589A867259D464D0007DE13 /* BudgetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetVC.swift; sourceTree = "<group>"; };
-		6594E85B259E3521001AEFF3 /* PlusBtnPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusBtnPopUpVC.swift; sourceTree = "<group>"; };
 		6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorOfTransactionVC.swift; sourceTree = "<group>"; };
 		6594E861259E433E001AEFF3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		65E3EEE625A389D200BCD62D /* DataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataFormatter.swift; path = PopUpViewControllers/DataFormatter.swift; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 		6594E859259E31B4001AEFF3 /* PopUpViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6594E85B259E3521001AEFF3 /* PlusBtnPopUpVC.swift */,
 				6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */,
 			);
 			path = PopUpViewControllers;
@@ -227,7 +224,6 @@
 				6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */,
 				65130FBB2588CD4C005CEACF /* AppDelegate.swift in Sources */,
 				6589A862259D46390007DE13 /* ReportVC.swift in Sources */,
-				6594E85C259E3521001AEFF3 /* PlusBtnPopUpVC.swift in Sources */,
 				6584B39C259F47490087505D /* DataEntities.swift in Sources */,
 				65130FBD2588CD4C005CEACF /* SceneDelegate.swift in Sources */,
 				657D5A0225A08938004C213F /* AccountTableViewCell.swift in Sources */,

@@ -31,6 +31,9 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     //Constraints
     @IBOutlet weak var topNameBarViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var incomeBtnBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var expenseBtnBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var plusViewHeightConstraint: NSLayoutConstraint!
     
     
     //MARK: - Delegate
@@ -88,6 +91,14 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     fileprivate func uiConfig() {
         
         botBarPlusBtn.layer.cornerRadius = botBarPlusBtn.frame.height / 2
+        cancelBtn.layer.cornerRadius = cancelBtn.frame.height / 2
+        incomeBtn.layer.cornerRadius = incomeBtn.frame.height / 2
+        expenseBtn.layer.cornerRadius = expenseBtn.frame.height / 2
+        
+        cancelBtn.isHidden = true
+        incomeBtn.isHidden = true
+        expenseBtn.isHidden = true
+
     }
     
     fileprivate func refreshView() {
@@ -110,12 +121,19 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         } else {
             return
         }
-        
-        
     }
+    
+    func exchangeMainView(viewControllerId: String) {
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: viewControllerId)
+        uvcs.modalPresentationStyle = .fullScreen
+        self.present(uvcs, animated: false, completion: nil)
+    }
+  
     
     //MARK: - IBAction Bottom Bar Buttons
 
+    //Bottom Bar
     @IBAction func botBarAccountBtnClicked(_ sender: UIButton) {
     }
     
@@ -131,46 +149,97 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         exchangeMainView(viewControllerId: "SettingsVCId")
     }
     
+    
+    //Plus Button
     @IBAction func botBarPlusBtnClicked(_ sender: UIButton) {
+        print("botBarPlusBtnClicked")
+        
+        cancelBtn.isHidden = false
+        incomeBtn.isHidden = false
+        expenseBtn.isHidden = false
+        
+        self.botBarPlusBtn.isHidden = true
+        self.botBarPlusBtn.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.2, animations: {
+            self.cancelBtn.transform = self.cancelBtn.transform.rotated(by: CGFloat(Double.pi / 4))
+            self.botBarPlusBtn.transform = self.botBarPlusBtn.transform.rotated(by: CGFloat(Double.pi / 4))
+            self.incomeBtnBottomConstraint.constant = 50
+            self.expenseBtnBottomConstraint.constant = 100
+            self.plusViewHeightConstraint.constant = 140
+            self.view.layoutIfNeeded()
+        })
+        
+    }
+    
+    @IBAction func incomeBtnOnPlusClicked(_ sender: UIButton) {
+        print("incomBtnOnPlusClicked")
+        
+        self.botBarPlusBtn.isHidden = false
+        self.botBarPlusBtn.isUserInteractionEnabled = true
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.incomeBtn.transform = self.incomeBtn.transform.rotated(by: CGFloat(Double.pi))
+            self.incomeBtnBottomConstraint.constant = 0
+            self.expenseBtnBottomConstraint.constant = 0
+            self.plusViewHeightConstraint.constant = 40
+            self.view.layoutIfNeeded()
+        })
+        
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
-        let uvcs = storyboards.instantiateViewController(identifier: "PlusBtnPopUpVCId") as! PlusBtnPopUpVC
-        uvcs.toEditorDelegate = self
+        let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
+        
+        uvcs.newTransactionUpdateDelegate = self
+        uvcs.onEditorPopUpSegueIndex = 1
         self.present(uvcs, animated: true, completion: nil)
     }
     
     
-    func exchangeMainView(viewControllerId: String) {
-        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
-        let uvcs = storyboards.instantiateViewController(identifier: viewControllerId)
-        uvcs.modalPresentationStyle = .fullScreen
-        self.present(uvcs, animated: false, completion: nil)
-    }
-    
-    //MARK: - Delegates
-    func onPlusPopUpVCBtnClicked(segueIndex: Int) {
+    @IBAction func expenseBtnOnPlusClicked(_ sender: UIButton) {
+        print("expenseBtnOnPlusClicked")
         
-        print("AccountView - onPlusPopUpVCBtnClicked() called / segueIndex = \(segueIndex)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-            
-            let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
-            let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
-            
-            uvcs.newTransactionUpdateDelegate = self
-            uvcs.onEditorPopUpSegueIndex = segueIndex
-            self.present(uvcs, animated: true, completion: nil)
-            
+        self.botBarPlusBtn.isHidden = false
+        self.botBarPlusBtn.isUserInteractionEnabled = true
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.expenseBtn.transform = self.expenseBtn.transform.rotated(by: CGFloat(Double.pi))
+            self.incomeBtnBottomConstraint.constant = 0
+            self.expenseBtnBottomConstraint.constant = 0
+            self.plusViewHeightConstraint.constant = 40
+            self.view.layoutIfNeeded()
         })
         
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
+        
+        uvcs.newTransactionUpdateDelegate = self
+        uvcs.onEditorPopUpSegueIndex = 0
+        self.present(uvcs, animated: true, completion: nil)
         
     }
     
+    
+    @IBAction func cancelBtnOnPlusClicked(_ sender: UIButton) {
+        print("cancelBtnOnPlusClicked")
+
+        self.botBarPlusBtn.isHidden = false
+        self.botBarPlusBtn.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.2, animations: {
+            self.cancelBtn.transform = self.cancelBtn.transform.rotated(by: CGFloat(Double.pi / 2))
+            self.botBarPlusBtn.transform = self.botBarPlusBtn.transform.rotated(by: CGFloat(Double.pi / 2))
+            self.incomeBtnBottomConstraint.constant = 0
+            self.expenseBtnBottomConstraint.constant = 0
+            self.plusViewHeightConstraint.constant = 40
+            self.view.layoutIfNeeded()
+        })
+    }
+ 
+    
+    //MARK: - Delegates
     func onEditorVCCircleBtnClicked() {
         print("AccountView - onEdiotVCCircleBtnClicked() called")
         print("New transaction is updated on table")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {self.refreshView()})
     }
-    
-    
 }
 
 

@@ -467,10 +467,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPE-jr-xf7" userLabel="PlusView">
                                 <rect key="frame" x="359" y="766" width="40" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xq-lj-0nh">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xq-lj-0nh">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="7kk-59-SFS"/>
+                                            <constraint firstAttribute="height" constant="40" id="v6a-cm-EdO"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="plus" catalog="system">
@@ -479,12 +482,16 @@
                                         </state>
                                         <connections>
                                             <action selector="botBarPlusBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lQq-Rs-zwm"/>
+                                            <action selector="cancelBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dwd-I6-yNh"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="des-hU-ZFS">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="des-hU-ZFS">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.27552911229999999" green="0.48255592130000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.0022945527037824009" green="0.59566366792929293" blue="0.063542185025634024" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="47M-rZ-bnj"/>
+                                            <constraint firstAttribute="width" constant="40" id="caX-sC-YeZ"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="plus" catalog="system">
@@ -493,25 +500,34 @@
                                         </state>
                                         <connections>
                                             <action selector="botBarPlusBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f7Z-OG-aNM"/>
+                                            <action selector="incomeBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3cC-G4-weH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEC-uV-ttW">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEC-uV-ttW">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.27552911229999999" green="0.48255592130000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.67177635732323226" green="0.018862184905265731" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="35q-8n-jig"/>
+                                            <constraint firstAttribute="height" constant="40" id="SgD-fD-xS6"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" image="plus" catalog="system">
+                                        <state key="normal" image="minus" catalog="system">
                                             <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large" weight="black"/>
                                         </state>
                                         <connections>
                                             <action selector="botBarPlusBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HgP-He-MKP"/>
+                                            <action selector="expenseBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dez-vd-d1W"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfu-qL-Bif">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.27552911226308152" green="0.482555921286006" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="2zG-YX-51g"/>
+                                            <constraint firstAttribute="height" constant="40" id="LbM-yC-SgP"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" image="plus" catalog="system">
@@ -527,10 +543,17 @@
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="3vr-bp-ty4"/>
+                                    <constraint firstAttribute="trailing" secondItem="0xq-lj-0nh" secondAttribute="trailing" id="BTY-RA-kZu"/>
                                     <constraint firstAttribute="trailing" secondItem="Jfu-qL-Bif" secondAttribute="trailing" id="KfZ-sl-viM"/>
+                                    <constraint firstAttribute="trailing" secondItem="FEC-uV-ttW" secondAttribute="trailing" id="LSl-OD-SMr"/>
+                                    <constraint firstItem="FEC-uV-ttW" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="PyC-xq-Bef"/>
                                     <constraint firstAttribute="bottom" secondItem="Jfu-qL-Bif" secondAttribute="bottom" id="YoY-mB-RFi"/>
-                                    <constraint firstItem="Jfu-qL-Bif" firstAttribute="top" secondItem="sPE-jr-xf7" secondAttribute="top" id="boN-bQ-FQB"/>
+                                    <constraint firstItem="des-hU-ZFS" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="ZbF-3p-2UI"/>
+                                    <constraint firstAttribute="bottom" secondItem="des-hU-ZFS" secondAttribute="bottom" id="bYY-NO-nWS"/>
                                     <constraint firstAttribute="width" constant="40" id="dSz-KL-svY"/>
+                                    <constraint firstItem="0xq-lj-0nh" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="eMo-uS-1VO"/>
+                                    <constraint firstAttribute="bottom" secondItem="0xq-lj-0nh" secondAttribute="bottom" id="tpP-y4-cvw"/>
+                                    <constraint firstAttribute="bottom" secondItem="FEC-uV-ttW" secondAttribute="bottom" id="v1l-pL-atN"/>
                                     <constraint firstItem="Jfu-qL-Bif" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="ypQ-ds-jtF"/>
                                 </constraints>
                             </view>
@@ -566,7 +589,10 @@
                         <outlet property="botBarSettingsBtn" destination="hM9-R8-J1d" id="Gxc-dp-KMa"/>
                         <outlet property="cancelBtn" destination="0xq-lj-0nh" id="IGQ-SV-Q63"/>
                         <outlet property="expenseBtn" destination="FEC-uV-ttW" id="4wJ-C7-Wrc"/>
+                        <outlet property="expenseBtnBottomConstraint" destination="v1l-pL-atN" id="Z7D-dA-qd6"/>
                         <outlet property="incomeBtn" destination="des-hU-ZFS" id="WBd-Fz-jQL"/>
+                        <outlet property="incomeBtnBottomConstraint" destination="bYY-NO-nWS" id="FeI-4f-4Uk"/>
+                        <outlet property="plusViewHeightConstraint" destination="3vr-bp-ty4" id="v9T-q1-Jgm"/>
                         <outlet property="topNameBarViewConstraint" destination="rgq-ay-Rwk" id="QdR-ev-qIw"/>
                     </connections>
                 </viewController>
@@ -1713,6 +1739,7 @@
         <image name="doc.plaintext.fill" catalog="system" width="115" height="128"/>
         <image name="folder.fill" catalog="system" width="128" height="97"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="minus" catalog="system" width="128" height="24"/>
         <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus" catalog="system" width="128" height="113"/>

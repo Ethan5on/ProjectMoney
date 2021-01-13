@@ -8,10 +8,9 @@
 import Foundation
 
 protocol EventDataTransactionDelegate {
-    
-    func onPlusPopUpVCBtnClicked(segueIndex: Int)
-    
+        
     func onEditorVCCircleBtnClicked()
+    
 }
 
 protocol indexPathPasser {
