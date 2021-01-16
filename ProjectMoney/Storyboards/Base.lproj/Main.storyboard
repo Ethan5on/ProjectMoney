@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AZe-h5-fjz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AZe-h5-fjz">
                                 <rect key="frame" x="0.0" y="84" width="414" height="812"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -310,6 +309,10 @@
                                     <constraint firstAttribute="height" constant="40" id="T3s-O0-OG2"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ri-VI-AVB" userLabel="UnsafeView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tJZ-TC-Hcc" userLabel="BottomBarView">
                                 <rect key="frame" x="0.0" y="821" width="414" height="75"/>
                                 <subviews>
@@ -460,16 +463,19 @@
                                     <constraint firstItem="I18-XN-X35" firstAttribute="leading" secondItem="tJZ-TC-Hcc" secondAttribute="leading" constant="20" id="uYg-O7-gxq"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ri-VI-AVB" userLabel="UnsafeView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qJH-kK-qPm">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="backgoundBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vrf-6i-0Yq"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPE-jr-xf7" userLabel="PlusView">
                                 <rect key="frame" x="359" y="766" width="40" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0xq-lj-0nh">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="40" id="7kk-59-SFS"/>
                                             <constraint firstAttribute="height" constant="40" id="v6a-cm-EdO"/>
@@ -481,7 +487,6 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large" weight="black"/>
                                         </state>
                                         <connections>
-                                            <action selector="botBarPlusBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lQq-Rs-zwm"/>
                                             <action selector="cancelBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dwd-I6-yNh"/>
                                         </connections>
                                     </button>
@@ -499,7 +504,6 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large" weight="black"/>
                                         </state>
                                         <connections>
-                                            <action selector="botBarPlusBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f7Z-OG-aNM"/>
                                             <action selector="incomeBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3cC-G4-weH"/>
                                         </connections>
                                     </button>
@@ -517,8 +521,22 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large" weight="black"/>
                                         </state>
                                         <connections>
-                                            <action selector="botBarPlusBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HgP-He-MKP"/>
                                             <action selector="expenseBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dez-vd-d1W"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vS-ai-2qp">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" red="0.90476442888529618" green="0.87873662507150341" blue="0.18174759756101752" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="JJ1-JL-5Qi"/>
+                                            <constraint firstAttribute="width" constant="40" id="iOD-bg-Pjk"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="magnifyingglass" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="large" weight="black"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="searchBtnOnPlusClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fn2-db-v3Y"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfu-qL-Bif">
@@ -542,6 +560,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="0vS-ai-2qp" secondAttribute="bottom" id="0a6-Ph-TtG"/>
                                     <constraint firstAttribute="height" constant="40" id="3vr-bp-ty4"/>
                                     <constraint firstAttribute="trailing" secondItem="0xq-lj-0nh" secondAttribute="trailing" id="BTY-RA-kZu"/>
                                     <constraint firstAttribute="trailing" secondItem="Jfu-qL-Bif" secondAttribute="trailing" id="KfZ-sl-viM"/>
@@ -552,9 +571,11 @@
                                     <constraint firstAttribute="bottom" secondItem="des-hU-ZFS" secondAttribute="bottom" id="bYY-NO-nWS"/>
                                     <constraint firstAttribute="width" constant="40" id="dSz-KL-svY"/>
                                     <constraint firstItem="0xq-lj-0nh" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="eMo-uS-1VO"/>
+                                    <constraint firstItem="0vS-ai-2qp" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="kLP-sh-SR7"/>
                                     <constraint firstAttribute="bottom" secondItem="0xq-lj-0nh" secondAttribute="bottom" id="tpP-y4-cvw"/>
                                     <constraint firstAttribute="bottom" secondItem="FEC-uV-ttW" secondAttribute="bottom" id="v1l-pL-atN"/>
                                     <constraint firstItem="Jfu-qL-Bif" firstAttribute="leading" secondItem="sPE-jr-xf7" secondAttribute="leading" id="ypQ-ds-jtF"/>
+                                    <constraint firstAttribute="trailing" secondItem="0vS-ai-2qp" secondAttribute="trailing" id="zmP-WX-6pc"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -564,16 +585,20 @@
                             <constraint firstItem="AZe-h5-fjz" firstAttribute="top" secondItem="tyH-pZ-7ii" secondAttribute="bottom" id="AyQ-EM-qzV"/>
                             <constraint firstItem="tJZ-TC-Hcc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="E3H-E3-ZKf"/>
                             <constraint firstAttribute="bottom" secondItem="AZe-h5-fjz" secondAttribute="bottom" id="FPA-pA-zOc"/>
+                            <constraint firstAttribute="bottom" secondItem="qJH-kK-qPm" secondAttribute="bottom" id="InT-Mh-1fm"/>
                             <constraint firstItem="4ri-VI-AVB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="JNf-L5-de1"/>
                             <constraint firstItem="tJZ-TC-Hcc" firstAttribute="top" secondItem="sPE-jr-xf7" secondAttribute="bottom" constant="15" id="MiE-jg-rEp"/>
                             <constraint firstItem="tyH-pZ-7ii" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qcs-AE-Yp9"/>
                             <constraint firstAttribute="bottom" secondItem="tJZ-TC-Hcc" secondAttribute="bottom" id="Tjk-g3-Y97"/>
                             <constraint firstItem="tyH-pZ-7ii" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="XhQ-1c-c4r"/>
                             <constraint firstAttribute="trailing" secondItem="4ri-VI-AVB" secondAttribute="trailing" id="Yah-dQ-KsH"/>
+                            <constraint firstItem="qJH-kK-qPm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="auK-sh-2O8"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qJH-kK-qPm" secondAttribute="trailing" id="bpq-tR-oR1"/>
                             <constraint firstItem="AZe-h5-fjz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="h5H-II-HOC"/>
                             <constraint firstItem="AZe-h5-fjz" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="iqD-wf-Aop"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tJZ-TC-Hcc" secondAttribute="trailing" id="kMs-Pu-XjB"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sPE-jr-xf7" secondAttribute="trailing" constant="15" id="nVZ-fM-nc4"/>
+                            <constraint firstItem="qJH-kK-qPm" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="rHk-WT-7El"/>
                             <constraint firstItem="tyH-pZ-7ii" firstAttribute="top" secondItem="4ri-VI-AVB" secondAttribute="bottom" id="rgq-ay-Rwk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="4ri-VI-AVB" secondAttribute="bottom" id="szy-95-M17"/>
                             <constraint firstItem="4ri-VI-AVB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ufP-kz-vmk"/>
@@ -581,6 +606,7 @@
                     </view>
                     <connections>
                         <outlet property="accountTableView" destination="AZe-h5-fjz" id="iFD-ag-Y9U"/>
+                        <outlet property="backgoundButton" destination="qJH-kK-qPm" id="1bv-IC-HKn"/>
                         <outlet property="balanceLabel" destination="EoL-q1-3pJ" id="9ZU-rj-Orv"/>
                         <outlet property="botBarAccountBtn" destination="fsQ-ab-5GV" id="w0s-DQ-OIp"/>
                         <outlet property="botBarBudgetBtn" destination="gPi-o7-AN9" id="v80-ZA-lXT"/>
@@ -593,92 +619,14 @@
                         <outlet property="incomeBtn" destination="des-hU-ZFS" id="WBd-Fz-jQL"/>
                         <outlet property="incomeBtnBottomConstraint" destination="bYY-NO-nWS" id="FeI-4f-4Uk"/>
                         <outlet property="plusViewHeightConstraint" destination="3vr-bp-ty4" id="v9T-q1-Jgm"/>
+                        <outlet property="searchBtn" destination="0vS-ai-2qp" id="SbT-P1-dNM"/>
+                        <outlet property="searchBtnBottomConstraint" destination="0a6-Ph-TtG" id="Jxn-uh-EQE"/>
                         <outlet property="topNameBarViewConstraint" destination="rgq-ay-Rwk" id="QdR-ev-qIw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-107.24637681159422" y="137.94642857142856"/>
-        </scene>
-        <!--Plus Btn Pop UpVC-->
-        <scene sceneID="kvb-i4-8ed">
-            <objects>
-                <viewController storyboardIdentifier="PlusBtnPopUpVCId" id="so2-pW-HhE" customClass="PlusBtnPopUpVC" customModule="ProjectMoney" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="r2G-06-uT6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7kS-7z-ONP">
-                                <rect key="frame" x="10" y="802" width="394" height="60"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="5gu-S7-mPk"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="PingFangHK-Medium" family="PingFang HK" pointSize="18"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" name="AccentColor"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15" weight="bold"/>
-                                </state>
-                                <connections>
-                                    <action selector="cancelBtnClicked:" destination="so2-pW-HhE" eventType="touchUpInside" id="o2x-Lk-uWe"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oZl-PY-5SK">
-                                <rect key="frame" x="10" y="639" width="394" height="128"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfx-xd-Z87">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="60"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="VeI-g5-VAO"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="PingFangHK-Medium" family="PingFang HK" pointSize="18"/>
-                                        <state key="normal" title="Expense">
-                                            <color key="titleColor" name="AccentColor"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15" weight="bold"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="expenseBtnClicked:" destination="so2-pW-HhE" eventType="touchUpInside" id="bNl-G3-ZTS"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GcC-5n-rxg">
-                                        <rect key="frame" x="0.0" y="68" width="394" height="60"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="hzB-tt-3Tv"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="PingFangHK-Medium" family="PingFang HK" pointSize="18"/>
-                                        <state key="normal" title="Income">
-                                            <color key="titleColor" name="AccentColor"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="15" weight="bold"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="incomeBtnClicked:" destination="so2-pW-HhE" eventType="touchUpInside" id="QZP-Wi-v5R"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="hX6-Ds-bKX"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="7kS-7z-ONP" firstAttribute="top" secondItem="oZl-PY-5SK" secondAttribute="bottom" constant="35" id="9yn-Yy-1jd"/>
-                            <constraint firstItem="7kS-7z-ONP" firstAttribute="leading" secondItem="hX6-Ds-bKX" secondAttribute="leading" constant="10" id="PhX-Xw-WUA"/>
-                            <constraint firstItem="hX6-Ds-bKX" firstAttribute="trailing" secondItem="7kS-7z-ONP" secondAttribute="trailing" constant="10" id="Sgy-Gq-geq"/>
-                            <constraint firstItem="hX6-Ds-bKX" firstAttribute="bottom" secondItem="7kS-7z-ONP" secondAttribute="bottom" id="Uhm-XK-lVP"/>
-                            <constraint firstItem="oZl-PY-5SK" firstAttribute="leading" secondItem="hX6-Ds-bKX" secondAttribute="leading" constant="10" id="vtv-Bt-8ua"/>
-                            <constraint firstItem="hX6-Ds-bKX" firstAttribute="trailing" secondItem="oZl-PY-5SK" secondAttribute="trailing" constant="10" id="zMA-1O-lMS"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="cancelBtn" destination="7kS-7z-ONP" id="DT3-SL-Ra6"/>
-                        <outlet property="expenseBtn" destination="kfx-xd-Z87" id="7qH-8N-Nc7"/>
-                        <outlet property="incomeBtn" destination="GcC-5n-rxg" id="WFg-da-caC"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JOW-Sw-Orq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="590" y="138"/>
         </scene>
         <!--Editor Of TransactionVC-->
         <scene sceneID="Hpx-Ix-e4a">
@@ -866,27 +814,6 @@
                                     <constraint firstAttribute="trailing" secondItem="ONQ-z5-dIe" secondAttribute="trailing" id="wYo-MN-4HJ"/>
                                 </constraints>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="arI-pj-u7T">
-                                <rect key="frame" x="82" y="559" width="250" height="34"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transaction_id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mEH-QQ-fzF">
-                                        <rect key="frame" x="0.0" y="0.0" width="112.5" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lXu-zv-Pgb">
-                                        <rect key="frame" x="162.5" y="0.0" width="87.5" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.62000000479999995" blue="0.098999999460000002" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="2f4-6B-8Cp"/>
-                                    <constraint firstAttribute="height" constant="34" id="557-ta-Kvf"/>
-                                </constraints>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNk-Bb-xHu">
                                 <rect key="frame" x="15" y="65" width="30" height="30"/>
                                 <constraints>
@@ -985,13 +912,6 @@
                                     <constraint firstItem="g5Y-sJ-GYD" firstAttribute="top" secondItem="3LM-Gt-LlB" secondAttribute="bottom" id="vyU-hc-3yN"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RM7-uF-0Ya">
-                                <rect key="frame" x="46" y="567" width="20" height="22"/>
-                                <state key="normal" image="pencil.circle.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="textBtn:" destination="I14-hA-6mr" eventType="touchUpInside" id="xub-Uz-gu4"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IU4-Zw-YgP"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1002,20 +922,15 @@
                             <constraint firstItem="237-lY-njS" firstAttribute="trailing" secondItem="IU4-Zw-YgP" secondAttribute="trailing" id="7hR-HV-ZaF"/>
                             <constraint firstItem="uwe-Fe-w0z" firstAttribute="top" secondItem="Fj5-UY-70F" secondAttribute="bottom" constant="30" id="8ot-rb-W0F"/>
                             <constraint firstItem="Fj5-UY-70F" firstAttribute="top" secondItem="IU4-Zw-YgP" secondAttribute="top" constant="20" id="9vd-xk-NcB"/>
-                            <constraint firstItem="RM7-uF-0Ya" firstAttribute="leading" secondItem="IU4-Zw-YgP" secondAttribute="leading" constant="46" id="Dk2-Kz-eJO"/>
                             <constraint firstAttribute="bottom" secondItem="237-lY-njS" secondAttribute="bottom" id="H1y-xy-VXx"/>
-                            <constraint firstItem="arI-pj-u7T" firstAttribute="leading" secondItem="RM7-uF-0Ya" secondAttribute="trailing" constant="16" id="HHg-DJ-vfC"/>
                             <constraint firstItem="uwe-Fe-w0z" firstAttribute="leading" secondItem="IU4-Zw-YgP" secondAttribute="leading" constant="20" id="Hva-oh-GVW"/>
-                            <constraint firstItem="RM7-uF-0Ya" firstAttribute="top" secondItem="uwe-Fe-w0z" secondAttribute="bottom" constant="28" id="Jgg-SU-8ox"/>
                             <constraint firstItem="IU4-Zw-YgP" firstAttribute="trailing" secondItem="Fj5-UY-70F" secondAttribute="trailing" constant="80" id="Plb-pf-GcU"/>
                             <constraint firstItem="uwe-Fe-w0z" firstAttribute="top" secondItem="lNk-Bb-xHu" secondAttribute="bottom" constant="30" id="Sbq-ld-frV"/>
                             <constraint firstItem="uwe-Fe-w0z" firstAttribute="top" secondItem="wwU-jF-CjT" secondAttribute="bottom" constant="30" id="kch-h4-rYG"/>
                             <constraint firstItem="lNk-Bb-xHu" firstAttribute="leading" secondItem="IU4-Zw-YgP" secondAttribute="leading" constant="15" id="mVg-OC-WLH"/>
-                            <constraint firstItem="arI-pj-u7T" firstAttribute="top" secondItem="uwe-Fe-w0z" secondAttribute="bottom" constant="20" id="pC2-Gm-HaV"/>
                             <constraint firstItem="Fj5-UY-70F" firstAttribute="leading" secondItem="IU4-Zw-YgP" secondAttribute="leading" constant="80" id="pp3-qF-NT3"/>
                             <constraint firstItem="IU4-Zw-YgP" firstAttribute="trailing" secondItem="wwU-jF-CjT" secondAttribute="trailing" constant="15" id="sXP-Qu-loL"/>
                             <constraint firstItem="237-lY-njS" firstAttribute="leading" secondItem="IU4-Zw-YgP" secondAttribute="leading" id="twj-ov-ejR"/>
-                            <constraint firstItem="arI-pj-u7T" firstAttribute="centerX" secondItem="Ff3-Ft-yjF" secondAttribute="centerX" id="w5a-sm-XRY"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1033,12 +948,11 @@
                         <outlet property="onToolbarDateBtn" destination="Sbo-Dz-T69" id="SRb-vl-fLi"/>
                         <outlet property="onToolbarTimeBtn" destination="mjZ-N1-ERJ" id="Cqv-VN-NhC"/>
                         <outlet property="payeeTextField" destination="WHb-Es-pb8" id="Fq7-iI-doD"/>
-                        <outlet property="textBtn" destination="RM7-uF-0Ya" id="Wz1-Qf-BD4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qW2-Qo-39z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1307" y="138"/>
+            <point key="canvasLocation" x="742" y="203"/>
         </scene>
         <!--ReportVC-->
         <scene sceneID="NJ0-AZ-SJo">
@@ -1073,7 +987,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarAccountBtnClicked:" destination="uYg-RQ-jWv" eventType="touchUpInside" id="7fe-Ls-ogY"/>
-                                                            <action selector="botBarAccountBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dn0-uI-mfc"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Bl-ra-fpK">
@@ -1108,7 +1021,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarReporBtnClicked:" destination="uYg-RQ-jWv" eventType="touchUpInside" id="ciH-vc-npY"/>
-                                                            <action selector="botBarReporBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xSe-WB-1gI"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMh-X9-QUS">
@@ -1142,7 +1054,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarBudgetBtnClicked:" destination="uYg-RQ-jWv" eventType="touchUpInside" id="bL1-SL-U72"/>
-                                                            <action selector="botBarBudgetBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pmP-n6-X8y"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Budget" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBc-eM-yhU">
@@ -1176,7 +1087,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarSettingsBtnClicked:" destination="uYg-RQ-jWv" eventType="touchUpInside" id="4cP-ws-m4r"/>
-                                                            <action selector="botBarSettingsBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kGK-Fa-G3S"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hj3-pf-F6N">
@@ -1207,15 +1117,25 @@
                                     <constraint firstItem="X2K-g4-0rD" firstAttribute="leading" secondItem="13d-CN-O9c" secondAttribute="leading" constant="20" id="wdt-ug-ymF"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hmv-bp-Cjf" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="86" width="414" height="414"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="414" id="0Mi-AV-8bP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="n2k-ar-78W"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="hmv-bp-Cjf" firstAttribute="leading" secondItem="n2k-ar-78W" secondAttribute="leading" id="2Qd-EQ-oYI"/>
+                            <constraint firstItem="hmv-bp-Cjf" firstAttribute="top" secondItem="n2k-ar-78W" secondAttribute="top" id="6d1-ox-lPq"/>
                             <constraint firstAttribute="bottom" secondItem="13d-CN-O9c" secondAttribute="bottom" id="JSq-Vh-YsQ"/>
                             <constraint firstItem="13d-CN-O9c" firstAttribute="trailing" secondItem="n2k-ar-78W" secondAttribute="trailing" id="JoS-XE-emJ"/>
                             <constraint firstItem="13d-CN-O9c" firstAttribute="leading" secondItem="n2k-ar-78W" secondAttribute="leading" id="Ldv-ua-Vl7"/>
                             <constraint firstItem="Ykr-Sa-psu" firstAttribute="centerX" secondItem="zoe-fB-HU6" secondAttribute="centerX" id="NAH-AG-kkE"/>
                             <constraint firstItem="Ykr-Sa-psu" firstAttribute="centerY" secondItem="zoe-fB-HU6" secondAttribute="centerY" id="Ou0-Zc-57K"/>
+                            <constraint firstItem="n2k-ar-78W" firstAttribute="trailing" secondItem="hmv-bp-Cjf" secondAttribute="trailing" id="Uo1-gf-IHj"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1223,6 +1143,7 @@
                         <outlet property="botBarBudgetBtn" destination="t46-MT-WyZ" id="88O-LL-6Ds"/>
                         <outlet property="botBarReportBtn" destination="wkR-Xt-09H" id="1aK-l5-5pM"/>
                         <outlet property="botBarSettingsBtn" destination="m6n-dh-ywW" id="SKf-as-ovh"/>
+                        <outlet property="monthlyExpensePieChart" destination="hmv-bp-Cjf" id="zri-sQ-c0K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DjV-9W-gTi" sceneMemberID="firstResponder"/>
@@ -1262,7 +1183,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarAccountBtnClicked:" destination="ujM-7B-Vbn" eventType="touchUpInside" id="2Sd-3A-DQf"/>
-                                                            <action selector="botBarAccountBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pl4-8L-Y3D"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDK-mr-jjy">
@@ -1297,7 +1217,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarReporBtnClicked:" destination="ujM-7B-Vbn" eventType="touchUpInside" id="D9s-QR-x5y"/>
-                                                            <action selector="botBarReporBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O75-Ir-Fos"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7q-Ss-TK1">
@@ -1330,7 +1249,6 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="large" weight="regular"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="botBarBudgetBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TQc-1u-LDG"/>
                                                             <action selector="botBarBudgetBtnClicked:" destination="ujM-7B-Vbn" eventType="touchUpInside" id="aos-Zd-yy6"/>
                                                         </connections>
                                                     </button>
@@ -1365,7 +1283,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarSettingsBtnClicked:" destination="ujM-7B-Vbn" eventType="touchUpInside" id="3Cx-Sk-qNf"/>
-                                                            <action selector="botBarSettingsBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Obc-E8-56P"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Fb-lJ-NEu">
@@ -1426,13 +1343,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3a-wU-CDN">
-                                <rect key="frame" x="184" y="433" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="2DQ-Fh-F0P" kind="show" id="9nQ-to-u5t"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4GV-DU-O2T">
                                 <rect key="frame" x="0.0" y="821" width="414" height="75"/>
                                 <subviews>
@@ -1452,7 +1362,6 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="large" weight="regular"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="botBarAccountBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fot-Bw-MJE"/>
                                                             <action selector="botBarAccountBtnClicked:" destination="rb3-xH-ET4" eventType="touchUpInside" id="et6-zr-YWL"/>
                                                         </connections>
                                                     </button>
@@ -1488,7 +1397,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="botBarReporBtnClicked:" destination="rb3-xH-ET4" eventType="touchUpInside" id="6Fp-6h-swr"/>
-                                                            <action selector="botBarReporBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lhb-cf-T8e"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGI-if-wDS">
@@ -1521,7 +1429,6 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="large" weight="regular"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="botBarBudgetBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UCs-Nv-JhQ"/>
                                                             <action selector="botBarBudgetBtnClicked:" destination="rb3-xH-ET4" eventType="touchUpInside" id="ZZK-Sm-sZC"/>
                                                         </connections>
                                                     </button>
@@ -1556,7 +1463,6 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="large" weight="regular"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="botBarSettingsBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IAI-6N-A8L"/>
                                                             <action selector="botBarSettingsBtnClicked:" destination="rb3-xH-ET4" eventType="touchUpInside" id="vca-xj-KeZ"/>
                                                         </connections>
                                                     </button>
@@ -1592,10 +1498,8 @@
                         <viewLayoutGuide key="safeArea" id="5pe-3V-LJt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="r3a-wU-CDN" firstAttribute="centerX" secondItem="QXH-nb-dlV" secondAttribute="centerX" id="BHh-ls-DGl"/>
                             <constraint firstItem="5pe-3V-LJt" firstAttribute="trailing" secondItem="4GV-DU-O2T" secondAttribute="trailing" id="Um6-QW-dch"/>
                             <constraint firstAttribute="bottom" secondItem="4GV-DU-O2T" secondAttribute="bottom" id="YEp-RQ-UHc"/>
-                            <constraint firstItem="r3a-wU-CDN" firstAttribute="centerY" secondItem="QXH-nb-dlV" secondAttribute="centerY" id="lAc-ti-P6V"/>
                             <constraint firstItem="4GV-DU-O2T" firstAttribute="leading" secondItem="5pe-3V-LJt" secondAttribute="leading" id="tSv-u5-c2C"/>
                         </constraints>
                     </view>
@@ -1609,12 +1513,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gIB-BD-LA5" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2202.898550724638" y="933.48214285714278"/>
+            <point key="canvasLocation" x="3949" y="1584"/>
         </scene>
-        <!--SettingsTVC-->
+        <!--Table View Controller-->
         <scene sceneID="sfa-pl-0ur">
             <objects>
-                <tableViewController id="2DQ-Fh-F0P" customClass="SettingsTVC" customModule="ProjectMoney" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SettingsTVCId" id="2DQ-Fh-F0P" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="tgg-0m-L3o">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1693,14 +1597,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6yb-kZ-DAK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3039.130434782609" y="932.8125"/>
+            <point key="canvasLocation" x="3968" y="848"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="b9u-fg-Y9q">
             <objects>
                 <viewController id="7Rt-5D-BN1" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="boS-X8-znU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Ip3-Zo-r8C"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1709,25 +1613,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V2h-gv-oDq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4081.1594202898555" y="932.8125"/>
+            <point key="canvasLocation" x="4991.304347826087" y="932.8125"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="IuK-Pe-rTp">
+        <scene sceneID="Zju-8g-yBd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jXw-0o-o6F" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="evm-hR-kc0" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ff4-73-8GD">
+                    <navigationItem key="navigationItem" id="Vac-hW-gaC"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TE0-0M-L3o">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="rb3-xH-ET4" kind="relationship" relationship="rootViewController" id="1Bc-7S-48l"/>
+                        <segue destination="rb3-xH-ET4" kind="relationship" relationship="rootViewController" id="WkY-dD-7GY"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tp4-vg-icl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lEp-Xd-ufR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1292.753623188406" y="933.48214285714278"/>
+            <point key="canvasLocation" x="3039.130434782609" y="932.8125"/>
         </scene>
     </scenes>
     <resources>
@@ -1739,16 +1644,13 @@
         <image name="doc.plaintext.fill" catalog="system" width="115" height="128"/>
         <image name="folder.fill" catalog="system" width="128" height="97"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="minus" catalog="system" width="128" height="24"/>
-        <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="sterlingsign.square" catalog="system" width="128" height="114"/>
         <image name="wonsign.circle" catalog="system" width="128" height="121"/>
         <image name="wonsign.square.fill" catalog="system" width="128" height="114"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

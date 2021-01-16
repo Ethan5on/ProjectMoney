@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-ProjectMoney/Pods-ProjectMoney-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
 ${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework

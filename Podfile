@@ -9,4 +9,6 @@ target 'ProjectMoney' do
 
  pod 'SQLite.swift', '~> 0.12.0'
 
+ pod 'Charts'
+
 end

@@ -13,7 +13,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     //Upper
     @IBOutlet weak var balanceLabel: UILabel!
     
-
+    @IBOutlet weak var backgoundButton: UIButton!
+    
     
     //TableView
     @IBOutlet weak var accountTableView: UITableView!
@@ -28,12 +29,14 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     @IBOutlet weak var expenseBtn: UIButton!
     @IBOutlet weak var incomeBtn: UIButton!
     @IBOutlet weak var cancelBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
     
     //Constraints
     @IBOutlet weak var topNameBarViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var incomeBtnBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var expenseBtnBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var plusViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchBtnBottomConstraint: NSLayoutConstraint!
     
     
     //MARK: - Delegate
@@ -51,6 +54,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     var dataFormatter: DataFormatter = DataFormatter()
     
+    private let refreshControl = UIRefreshControl()
+    
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +63,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         uiConfig()
 
         refreshView()
+        refreshController()
+
         
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
@@ -81,11 +88,15 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 //        AccountVC.db.insertSecondCategory(name: "Game Cash", firstCategory_Id: 4)
 //        AccountVC.db.insertSecondCategory(name: "Electronics", firstCategory_Id: 7)
 //        AccountVC.db.insertSecondCategory(name: "Cloth", firstCategory_Id: 7)
-
+        
         
     }
     
-    
+    @objc private func refreshController() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refreshView), for: .valueChanged)
+        accountTableView.addSubview(refreshControl)
+    }
 
     //MARK: - UI Configuration
     fileprivate func uiConfig() {
@@ -94,14 +105,18 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         cancelBtn.layer.cornerRadius = cancelBtn.frame.height / 2
         incomeBtn.layer.cornerRadius = incomeBtn.frame.height / 2
         expenseBtn.layer.cornerRadius = expenseBtn.frame.height / 2
+        searchBtn.layer.cornerRadius = searchBtn.frame.height / 2
         
         cancelBtn.isHidden = true
         incomeBtn.isHidden = true
         expenseBtn.isHidden = true
-
+        searchBtn.isHidden = true
+        backgoundButton.isHidden = true
+        
     }
     
-    fileprivate func refreshView() {
+    @objc fileprivate func refreshView() {
+        print("AccountVC - refreshView() called")
         
         //table view update
         transactionsFromDB = AccountVC.db.readTransaction()
@@ -121,6 +136,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         } else {
             return
         }
+        self.refreshControl.endRefreshing()
     }
     
     func exchangeMainView(viewControllerId: String) {
@@ -154,36 +170,62 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     @IBAction func botBarPlusBtnClicked(_ sender: UIButton) {
         print("botBarPlusBtnClicked")
         
-        cancelBtn.isHidden = false
-        incomeBtn.isHidden = false
-        expenseBtn.isHidden = false
+        self.cancelBtn.isHidden = false
+        self.incomeBtn.isHidden = false
+        self.expenseBtn.isHidden = false
+        self.searchBtn.isHidden = false
+        self.backgoundButton.isHidden = false
+
         
         self.botBarPlusBtn.isHidden = true
-        self.botBarPlusBtn.isUserInteractionEnabled = false
+        self.view.layoutIfNeeded()
+
         UIView.animate(withDuration: 0.2, animations: {
             self.cancelBtn.transform = self.cancelBtn.transform.rotated(by: CGFloat(Double.pi / 4))
             self.botBarPlusBtn.transform = self.botBarPlusBtn.transform.rotated(by: CGFloat(Double.pi / 4))
-            self.incomeBtnBottomConstraint.constant = 50
-            self.expenseBtnBottomConstraint.constant = 100
-            self.plusViewHeightConstraint.constant = 140
+            self.expenseBtnBottomConstraint.constant = 50
+            self.incomeBtnBottomConstraint.constant = 100
+            self.searchBtnBottomConstraint.constant = 150
+            self.plusViewHeightConstraint.constant = 190
             self.view.layoutIfNeeded()
         })
-        
     }
+    
+    
+    private func onPlusBtnDefaultPosition(targetBtn: UIButton, isFuntional: Bool) {
+        
+        self.botBarPlusBtn.isHidden = false
+        self.backgoundButton.isHidden = true
+        self.view.layoutIfNeeded()
+
+        UIView.animate(withDuration: 0.25, animations: {
+            if isFuntional == true {
+                targetBtn.transform = targetBtn.transform.rotated(by: CGFloat(Double.pi))
+                targetBtn.transform = targetBtn.transform.rotated(by: CGFloat(Double.pi))
+            }
+            self.cancelBtn.transform = self.cancelBtn.transform.rotated(by: CGFloat(Double.pi / 4 * 3))
+            self.botBarPlusBtn.transform = self.botBarPlusBtn.transform.rotated(by: CGFloat(Double.pi / 4 * 3))
+            self.incomeBtnBottomConstraint.constant = 0
+            self.expenseBtnBottomConstraint.constant = 0
+            self.searchBtnBottomConstraint.constant = 0
+            self.plusViewHeightConstraint.constant = 40
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    
+    @IBAction func searchBtnOnPlusClicked(_ sender: UIButton) {
+        print("searchBtnOnPlusClicked")
+        
+        onPlusBtnDefaultPosition(targetBtn: searchBtn, isFuntional: true)
+
+    }
+    
     
     @IBAction func incomeBtnOnPlusClicked(_ sender: UIButton) {
         print("incomBtnOnPlusClicked")
         
-        self.botBarPlusBtn.isHidden = false
-        self.botBarPlusBtn.isUserInteractionEnabled = true
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.incomeBtn.transform = self.incomeBtn.transform.rotated(by: CGFloat(Double.pi))
-            self.incomeBtnBottomConstraint.constant = 0
-            self.expenseBtnBottomConstraint.constant = 0
-            self.plusViewHeightConstraint.constant = 40
-            self.view.layoutIfNeeded()
-        })
+        onPlusBtnDefaultPosition(targetBtn: incomeBtn, isFuntional: true)
         
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
         let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
@@ -197,16 +239,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     @IBAction func expenseBtnOnPlusClicked(_ sender: UIButton) {
         print("expenseBtnOnPlusClicked")
         
-        self.botBarPlusBtn.isHidden = false
-        self.botBarPlusBtn.isUserInteractionEnabled = true
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            self.expenseBtn.transform = self.expenseBtn.transform.rotated(by: CGFloat(Double.pi))
-            self.incomeBtnBottomConstraint.constant = 0
-            self.expenseBtnBottomConstraint.constant = 0
-            self.plusViewHeightConstraint.constant = 40
-            self.view.layoutIfNeeded()
-        })
+        onPlusBtnDefaultPosition(targetBtn: expenseBtn, isFuntional: true)
         
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
         let uvcs = storyboards.instantiateViewController(identifier: "EditorOfTransactionVCId") as! EditorOfTransactionVC
@@ -220,18 +253,18 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     @IBAction func cancelBtnOnPlusClicked(_ sender: UIButton) {
         print("cancelBtnOnPlusClicked")
-
-        self.botBarPlusBtn.isHidden = false
-        self.botBarPlusBtn.isUserInteractionEnabled = true
-        UIView.animate(withDuration: 0.2, animations: {
-            self.cancelBtn.transform = self.cancelBtn.transform.rotated(by: CGFloat(Double.pi / 2))
-            self.botBarPlusBtn.transform = self.botBarPlusBtn.transform.rotated(by: CGFloat(Double.pi / 2))
-            self.incomeBtnBottomConstraint.constant = 0
-            self.expenseBtnBottomConstraint.constant = 0
-            self.plusViewHeightConstraint.constant = 40
-            self.view.layoutIfNeeded()
-        })
+        
+        onPlusBtnDefaultPosition(targetBtn: cancelBtn, isFuntional: false)
     }
+    
+    
+    @IBAction func backgoundBtnClicked(_ sender: UIButton) {
+        print("backgoundBtnClicked")
+        
+        onPlusBtnDefaultPosition(targetBtn: backgoundButton, isFuntional: false)
+    }
+
+    
  
     
     //MARK: - Delegates
@@ -261,7 +294,7 @@ extension AccountVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let selectedRows = tableView.indexPathsForSelectedRows, selectedRows.contains(indexPath) {
-            return 120
+            return 100
         } else {
             return 50
         }

@@ -32,7 +32,6 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     @IBOutlet weak var payeeTextField: UITextField!
     @IBOutlet weak var memoTextField: UITextField!
     
-    @IBOutlet weak var textBtn: UIButton!
     
     var keyboardDismissGesture : UIGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     
@@ -293,15 +292,6 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
 
         dateAndTimeButton.setTitle("\(dataFormatter.dateFormatter(inputValue: dateAndTimePicker.date)), \(dataFormatter.timeFormatter(inputValue: dateAndTimePicker.date))", for: .normal)
     }
-
-    
-    @IBAction func textBtn(_ sender: UIButton) {
-        print("TestBtn Clicked")
-    
-        
-    }
-    
-    
     
     
     func onCellEditBtnClicked(editingRowId: Int) {
@@ -349,9 +339,6 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         } else if (touch.view?.isDescendant(of: dateAndTimePicker) == true){
             print("Touched dateAndTimePicker.")
             datePickerView.isHidden = false
-            return true
-        } else if (touch.view?.isDescendant(of: textBtn) == true){
-            print("Touched testBtn.")
             return true
         } else {
             print("화면이 터치되었다.")

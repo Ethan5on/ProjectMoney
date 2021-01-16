@@ -43,7 +43,7 @@ class BudgetVC: UIViewController {
     }
     
     @IBAction func botBarSettingsBtnClicked(_ sender: UIButton) {
-        exchangeMainView(viewControllerId: "SettingsVCId")
+        exchangeMainView(viewControllerId: "SettingsTVCId")
     }
     
     func exchangeMainView(viewControllerId: String) {
