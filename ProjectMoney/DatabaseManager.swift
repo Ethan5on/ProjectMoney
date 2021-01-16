@@ -345,7 +345,7 @@ class DatabaseManager {
                 let memo = String(describing: String(cString: sqlite3_column_text(queryStatement, 9)))
                 ts.append(TransactionEntity(id: Int(id), name: name, account_Id: Int(account_Id), firstCategory_Id: Int(firstCategory_Id), secondCategory_Id: Int(secondCategory_Id), amount: Int(amount), date: date, time: time, payee: payee, memo: memo))
                 print("Query Result:")
-                print("\(id) | \(name) | \(account_Id) | \(firstCategory_Id) | \(secondCategory_Id) | \(amount) | \(date) | \(time) | \(memo) ")
+                print("\(id) | \(name) | \(account_Id) | \(firstCategory_Id) | \(secondCategory_Id) | \(amount) | \(date) | \(time) | \(payee) | \(memo) ")
             }
         }else {
             print("SELECT statement could not be prepared")

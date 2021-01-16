@@ -16,16 +16,23 @@ class ReportVC: UIViewController {
     @IBOutlet weak var botBarBudgetBtn: UIButton!
     @IBOutlet weak var botBarSettingsBtn: UIButton!
     @IBOutlet weak var monthlyExpensePieChart: PieChartView!
-     
+    @IBOutlet weak var monthlyExpenseLastSixMonthBarChart: BarChartView!
+    @IBOutlet weak var expensesByPayee: PieChartView!
+    
     var firstCategoriesFromDB: [FirstCategoryEntity] = []
     var transactionsFromDB: [TransactionEntity] = []
     var firstCategoryNameArray: [String] = []
     var firstCategoryIdArray: [Int] = []
-    var totalAmountOnCategory: [Int] = []
+    var totalAmountByCategory: [Int] = []
     
-//    let players = ["Ozil", "Ramsey", "Laca", "Auba", "Xhaka", "Torreira"]
-//    let goals = [555678, 12342, 101886, 444444, 992777, 1160000, 1972222]
+    var payeeArray: [String] = []
+    var totalAmountByPayee: [Int] = []
     
+    var sixMonthsArray: Set<String> = []
+    var totalAmountByMonth: [Int] = []
+    
+    var dataFormatter: DataFormatter = DataFormatter()
+
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +42,24 @@ class ReportVC: UIViewController {
         
         firstCategoriesFromDB = AccountVC.db.readFirstCategory()
         transactionsFromDB = AccountVC.db.readTransaction()
+        expenseTrendByCategoryChartData()
+        expenseTrendByPayeeChartData()
+        monthlyExpenseLastSixMonth()
+        
+        pieChartMaker(pieChart: monthlyExpensePieChart, dataPoints: firstCategoryNameArray, values: totalAmountByCategory.map{ sqrt(Double($0 * $0)) })
+        
+        pieChartMaker(pieChart: expensesByPayee, dataPoints: payeeArray, values: totalAmountByPayee.map{ sqrt(Double($0 * $0)) })
+        
+        barChartMaker(barChartView: monthlyExpenseLastSixMonthBarChart, dataPoints: Array(sixMonthsArray), values: totalAmountByMonth.map{ sqrt(Double($0 * $0)) })
+    }
 
+    //MARK: - UI Configuration
+    fileprivate func uiConfig() {
+
+    }
+    
+    fileprivate func expenseTrendByCategoryChartData() {
+        
         for firstcategory in firstCategoriesFromDB {
             firstCategoryNameArray.append(firstcategory.name)
             firstCategoryIdArray.append(firstcategory.id)
@@ -43,27 +67,67 @@ class ReportVC: UIViewController {
 
         for i in firstCategoryIdArray {
             var result = 0
-
             let x = transactionsFromDB.filter{ $0.firstCategory_Id == i }
-            
             for j in x {
                 result = result + j.amount
             }
-            totalAmountOnCategory.append(result)
+            totalAmountByCategory.append(result)
         }
-        
-        
-        customizeChart(dataPoints: firstCategoryNameArray, values: totalAmountOnCategory.map{ sqrt(Double($0 * $0)) })
-
-    }
-
-    //MARK: - UI Configuration
-    fileprivate func uiConfig() {
-        
-         
     }
     
-    func customizeChart(dataPoints: [String], values: [Double]) {
+    fileprivate func expenseTrendByPayeeChartData() {
+        
+        var payeeTotalAmountDictionary: [String : Int] = [:]
+
+        for transaction in transactionsFromDB {
+            
+            if (payeeTotalAmountDictionary.index(forKey: transaction.payee) == nil) {
+                payeeTotalAmountDictionary[transaction.payee] = transaction.amount
+                } else {
+                payeeTotalAmountDictionary.updateValue(payeeTotalAmountDictionary[transaction.payee, default: 0] + transaction.amount, forKey: transaction.payee)
+            }
+        }
+        payeeArray = Array(payeeTotalAmountDictionary.keys)
+        totalAmountByPayee = Array(payeeTotalAmountDictionary.values)
+        
+        print("\(payeeArray), \(payeeArray.count)")
+        print("\(totalAmountByPayee), \(totalAmountByPayee.count)")
+    }
+    
+    
+    
+    fileprivate func monthlyExpenseLastSixMonth() {
+        
+        var monthTotalAmountDictionary: [String : Int] = [:]
+
+        for transaction in transactionsFromDB {
+            
+            if (monthTotalAmountDictionary.index(forKey: String(transaction.date.prefix(7))) == nil) {
+                monthTotalAmountDictionary[String(transaction.date.prefix(7))] = transaction.amount
+                } else {
+                    monthTotalAmountDictionary.updateValue(monthTotalAmountDictionary[String(transaction.date.prefix(7)), default: 0] + transaction.amount, forKey: String(transaction.date.prefix(7)))
+            }
+        }
+        sixMonthsArray = Set(monthTotalAmountDictionary.keys)
+        totalAmountByMonth = Array(monthTotalAmountDictionary.values)
+        
+    }
+    
+    
+    
+    func barChartMaker(barChartView: BarChartView, dataPoints: [String], values: [Double]) {
+        var dataEntries: [BarChartDataEntry] = []
+        for i in 0..<dataPoints.count {
+          let dataEntry = BarChartDataEntry(x: Double(i), y: Double(values[i]))
+          dataEntries.append(dataEntry)
+        }
+        let chartDataSet = BarChartDataSet(entries: dataEntries, label: nil)
+        let chartData = BarChartData(dataSet: chartDataSet)
+        barChartView.data = chartData
+    }
+    
+    
+    func pieChartMaker(pieChart: PieChartView, dataPoints: [String], values: [Double]) {
       
       // 1. Set ChartDataEntry
       var dataEntries: [ChartDataEntry] = []
@@ -81,7 +145,7 @@ class ReportVC: UIViewController {
       let formatter = DefaultValueFormatter(formatter: format)
       pieChartData.setValueFormatter(formatter)
       // 4. Assign it to the chart’s data
-        monthlyExpensePieChart.data = pieChartData
+        pieChart.data = pieChartData
     }
     
     private func colorsOfCharts(numbersOfColor: Int) -> [UIColor] {
