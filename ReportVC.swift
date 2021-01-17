@@ -28,7 +28,7 @@ class ReportVC: UIViewController {
     var payeeArray: [String] = []
     var totalAmountByPayee: [Int] = []
     
-    var sixMonthsArray: Set<String> = []
+    var sixMonthsArray: [String] = []
     var totalAmountByMonth: [Int] = []
     
     var dataFormatter: DataFormatter = DataFormatter()
@@ -108,8 +108,9 @@ class ReportVC: UIViewController {
                     monthTotalAmountDictionary.updateValue(monthTotalAmountDictionary[String(transaction.date.prefix(7)), default: 0] + transaction.amount, forKey: String(transaction.date.prefix(7)))
             }
         }
-        sixMonthsArray = Set(monthTotalAmountDictionary.keys)
-        totalAmountByMonth = Array(monthTotalAmountDictionary.values)
+        let sorted = monthTotalAmountDictionary.sorted(by: {$0.0 < $1.0})
+        sixMonthsArray = Array(sorted.map{$0.key})
+        totalAmountByMonth = Array(sorted.map{$0.value})
         
     }
     
@@ -117,13 +118,57 @@ class ReportVC: UIViewController {
     
     func barChartMaker(barChartView: BarChartView, dataPoints: [String], values: [Double]) {
         var dataEntries: [BarChartDataEntry] = []
+        
+        let legend = barChartView.legend
+            legend.enabled = false
+//            legend.horizontalAlignment = .right
+//            legend.verticalAlignment = .top
+//            legend.orientation = .vertical
+//            legend.drawInside = true
+//            legend.yOffset = 10.0;
+//            legend.xOffset = 10.0;
+//            legend.yEntrySpace = 0.0;
+            
+            
+        let xaxis = barChartView.xAxis
+//            xaxis.valueFormatter = axisFormatDelegate
+            xaxis.drawGridLinesEnabled = false
+            xaxis.labelPosition = .bottom
+            xaxis.valueFormatter = IndexAxisValueFormatter(values: dataPoints)
+//            xaxis.granularity = 1
+            
+            
+        let leftAxisFormatter = NumberFormatter()
+//            leftAxisFormatter.maximumFractionDigits = 1
+            leftAxisFormatter.numberStyle = .decimal
+            
+        let yaxis = barChartView.leftAxis
+            yaxis.spaceTop = 0.1
+            yaxis.axisMinimum = 0
+            yaxis.drawGridLinesEnabled = true
+            yaxis.drawLabelsEnabled = false
+        
+        let format = NumberFormatter()
+            format.numberStyle = .decimal
+        let formatter = DefaultValueFormatter(formatter: format)
+            
+            barChartView.rightAxis.enabled = false
+        
+        
+        
         for i in 0..<dataPoints.count {
           let dataEntry = BarChartDataEntry(x: Double(i), y: Double(values[i]))
           dataEntries.append(dataEntry)
         }
-        let chartDataSet = BarChartDataSet(entries: dataEntries, label: nil)
-        let chartData = BarChartData(dataSet: chartDataSet)
-        barChartView.data = chartData
+        let barChartDataSet = BarChartDataSet(entries: dataEntries, label: nil)
+            barChartDataSet.colors = colorsOfCharts(numbersOfColor: dataPoints.count)
+        let barChartData = BarChartData(dataSet: barChartDataSet)
+            barChartData.setValueFormatter(formatter)
+        
+        barChartView.data = barChartData
+        barChartView.doubleTapToZoomEnabled = false
+        
+        barChartView.animate(xAxisDuration: 1.5, yAxisDuration: 1.5, easingOption: .linear)
     }
     
     
@@ -141,19 +186,21 @@ class ReportVC: UIViewController {
       // 3. Set ChartData
       let pieChartData = PieChartData(dataSet: pieChartDataSet)
       let format = NumberFormatter()
-      format.numberStyle = .none
+      format.numberStyle = .decimal
       let formatter = DefaultValueFormatter(formatter: format)
       pieChartData.setValueFormatter(formatter)
       // 4. Assign it to the chart’s data
         pieChart.data = pieChartData
+        
+        pieChart.animate(xAxisDuration: 1.5, yAxisDuration: 1.5)
     }
     
     private func colorsOfCharts(numbersOfColor: Int) -> [UIColor] {
       var colors: [UIColor] = []
       for _ in 0..<numbersOfColor {
-        let red = Double(arc4random_uniform(256))
-        let green = Double(arc4random_uniform(256))
-        let blue = Double(arc4random_uniform(256))
+        let red = Double(Int.random(in: 100...255))
+        let green = Double(Int.random(in: 100...255))
+        let blue = Double(Int.random(in: 100...255))
         let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
         colors.append(color)
       }
