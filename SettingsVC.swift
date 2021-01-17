@@ -15,12 +15,18 @@ class SettingsVC: UIViewController {
     @IBOutlet weak var botBarBudgetBtn: UIButton!
     @IBOutlet weak var botBarSettingsBtn: UIButton!
     
+    @IBOutlet weak var settingsTableView: UITableView!
+    
+    let settignsMenus: [String] = ["Categories", "About", "Log Out", "Delete All Data"]
     
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
         
         uiConfig()
+        
+        self.settingsTableView.delegate = self
+        self.settingsTableView.dataSource = self
         
     }
 
@@ -52,3 +58,34 @@ class SettingsVC: UIViewController {
     
 }
 
+extension SettingsVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            print(0)
+        case 1:
+            print(1)
+        case 2:
+            print(2)
+        case 3:
+            print(3)
+        default:
+            print("defalut")
+        }
+    }
+}
+
+extension SettingsVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settignsMenus.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = settingsTableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        cell.accessoryType = .disclosureIndicator
+        cell.textLabel?.text = settignsMenus[indexPath.row]
+        return cell
+    }
+}
