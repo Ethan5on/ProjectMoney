@@ -7,6 +7,24 @@
 
 import Foundation
 
+
+class UserEntity {
+    
+    var user_ID: String
+    var user_Password: String
+    var name: String
+    var emailAdress: String
+    
+    init(user_ID: String, user_Password: String, name: String, emailAdress: String) {
+        
+        self.user_ID = user_ID
+        self.user_Password = user_Password
+        self.name = name
+        self.emailAdress = emailAdress
+        
+    }
+}
+
 class TransactionEntity {
     
     var id: Int
@@ -20,7 +38,16 @@ class TransactionEntity {
     var payee: String
     var memo: String
     
-    init(id: Int, name: String, account_Id: Int, firstCategory_Id: Int, secondCategory_Id: Int, amount: Int, date: String, time: String, payee: String, memo: String) {
+    init(id: Int,
+         name: String,
+         account_Id: Int,
+         firstCategory_Id: Int,
+         secondCategory_Id: Int,
+         amount: Int,
+         date: String,
+         time: String,
+         payee: String,
+         memo: String) {
         
         self.id = id
         self.name = name
@@ -76,3 +103,4 @@ class SecondCategoryEntity {
         
     }
 }
+

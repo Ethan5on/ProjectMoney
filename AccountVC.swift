@@ -39,10 +39,6 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     @IBOutlet weak var searchBtnBottomConstraint: NSLayoutConstraint!
     
     
-    //MARK: - Delegate
-    var indexPathDelegate: DatabaseManager = DatabaseManager()
-    
-    
     //MARK: - Instances
     static var db: DatabaseManager = DatabaseManager()
     var transactionsFromDB: [TransactionEntity] = []
