@@ -40,11 +40,15 @@ class LoginVC: UIViewController {
 //        LoginVC.db.dropUserListTable()
 //        LoginVC.db.insertUser(user_ID: "ethan5on", user_Password: "jong1283", emailAdress: "ethan5on@kakao.com", name: "Ethan Son")
         usersInformation = LoginVC.db.readUser()
+        NSLayoutConstraint(item: headerLabel!, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailingMargin, multiplier: 1.0, constant: 50.0).isActive = true
+        NSLayoutConstraint(item: headerLabel!, attribute: .bottom, relatedBy: .equal, toItem: enterButton, attribute: .topMargin, multiplier: 1.0, constant: -60.0).isActive = true
+        self.headerLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
+
         
         self.userPasswordStackView.isHidden = true
-        self.enterButton.isHidden = true
-        self.headerLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
         
+
+        print(headerLabel.constraints)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handle(keyboardShowNotification:)),
@@ -77,7 +81,6 @@ class LoginVC: UIViewController {
         if let userInfo = notification.userInfo,
             // 3
             let keyboardRectangle = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-                self.enterButton.isHidden = false
                 self.enterBtnBotConstraint.constant = keyboardRectangle.height
                 self.view.layoutIfNeeded()
         }
@@ -108,7 +111,6 @@ class LoginVC: UIViewController {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                                                 self.userPasswordStackView.isHidden = false
-                                                self.signinButton.isHidden = true
                                                 })
                 self.view.layoutIfNeeded()
             })
@@ -154,7 +156,6 @@ class LoginVC: UIViewController {
             self.present(uvcs, animated: false, completion: nil)
         
         default :
-            self.signinButton.isHidden = false
             break
             
         }
