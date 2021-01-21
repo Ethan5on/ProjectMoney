@@ -24,6 +24,9 @@ class LoginVC: UIViewController {
     
     @IBOutlet weak var enterButton: UIButton!
     
+    @IBOutlet weak var remeberSwitchStackVeiw: UIStackView!
+    @IBOutlet weak var rememberSwitch: UISwitch!
+    
     @IBOutlet weak var userIdStackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var enterBtnBotConstraint: NSLayoutConstraint!
     
@@ -33,19 +36,34 @@ class LoginVC: UIViewController {
     
     var usersInformation: [UserEntity] = []
     
+    var rememberUser: String? = nil
+    
     //MARK: - View Did Load()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
 //        LoginVC.db.dropUserListTable()
 //        LoginVC.db.insertUser(user_ID: "ethan5on", user_Password: "jong1283", emailAdress: "ethan5on@kakao.com", name: "Ethan Son")
         usersInformation = LoginVC.db.readUser()
+        rememberUser = LoginVC.db.readRememberUser()
+        
+        if rememberUser?.count != 0 {
+            print(" \(String(describing: rememberUser))")
+            
+            let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+            let uvcs = storyboards.instantiateViewController(identifier: "AccountVCId") as! AccountVC
+            uvcs.modalPresentationStyle = .fullScreen
+            uvcs.user_Id = rememberUser
+            self.present(uvcs, animated: false, completion: nil)
+        }
+        
+        
         NSLayoutConstraint(item: headerLabel!, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailingMargin, multiplier: 1.0, constant: 50.0).isActive = true
         NSLayoutConstraint(item: headerLabel!, attribute: .bottom, relatedBy: .equal, toItem: enterButton, attribute: .topMargin, multiplier: 1.0, constant: -60.0).isActive = true
         self.headerLabel.transform = CGAffineTransform(rotationAngle: -CGFloat.pi / 2)
 
         
         self.userPasswordStackView.isHidden = true
+        self.remeberSwitchStackVeiw.isHidden = true
         
 
         print(headerLabel.constraints)
@@ -86,6 +104,7 @@ class LoginVC: UIViewController {
         }
     }
     
+    
     //MARK: - Enter Button Action
     @IBAction func enterButtonClicked(_ sender: UIButton) {
         
@@ -111,11 +130,12 @@ class LoginVC: UIViewController {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
                                                 self.userPasswordStackView.isHidden = false
+                                                self.remeberSwitchStackVeiw.isHidden = false
                                                 })
                 self.view.layoutIfNeeded()
             })
             
-            userPasswordTextField.becomeFirstResponder()
+            self.userPasswordTextField.becomeFirstResponder()
            
             //When Insert Password
         case 2:
@@ -131,37 +151,50 @@ class LoginVC: UIViewController {
             }
             
             // code for Checking Id & Passward
-            for user in usersInformation {
+            userloop: for user in usersInformation {
                 
-                guard self.userIdTextField.text == user.user_ID, self.userPasswordTextField.text == user.user_Password else {
-                    self.numberOfClickforEnterBtn = 1
-
-                    let alert = UIAlertController(title: nil, message: "ID or Password is incorrect", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true)
+                if self.userIdTextField.text! == user.user_ID && self.userPasswordTextField.text! == user.user_Password {
+                    print("Successfully Loged In")
                     
-                    break
+                    if rememberSwitch.isOn {
+                        print("Remember this user")
+                        LoginVC.db.insertRememberUser(user_ID: self.userIdTextField.text!)
+                    }
+                    
+                    self.userPasswordTextField.resignFirstResponder()
+                    self.userPasswordLabel.text = "Password"
+
+                    
+                    let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+                    let uvcs = storyboards.instantiateViewController(identifier: "AccountVCId") as! AccountVC
+                    uvcs.modalPresentationStyle = .fullScreen
+                    uvcs.user_Id = user.user_ID
+                    self.present(uvcs, animated: false, completion: nil)
+                    
+                    return
                 }
                 
             }
-            print("Successfully Loged In")
-            userPasswordTextField.resignFirstResponder()
-            enterButton.isHidden = true
-            userPasswordLabel.text = "Password"
             
-            //Go to AccountVC
-            let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
-            let uvcs = storyboards.instantiateViewController(identifier: "AccountVCId") as! AccountVC
-            uvcs.modalPresentationStyle = .fullScreen
-            self.present(uvcs, animated: false, completion: nil)
+            
+            self.numberOfClickforEnterBtn = 1
+
+            let alert = UIAlertController(title: nil, message: "ID or Password is incorrect", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+
+            
+
         
         default :
-            break
+            print(11111111)
+            return
             
         }
         
         print("LoginVC - numberOfClickforEnterBtn = \(numberOfClickforEnterBtn)")
     }
+    
     
     @IBAction func signinButtonClicked(_ sender: UIButton) {
         print("LoginVC - signinButtonClicked() called")

@@ -50,11 +50,15 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     var dataFormatter: DataFormatter = DataFormatter()
     
+    var user_Id: String? = nil
+    
     private let refreshControl = UIRefreshControl()
     
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("AccountVC - \(String(describing: user_Id))")
         
         uiConfig()
 
@@ -215,6 +219,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         
         onPlusBtnDefaultPosition(targetBtn: searchBtn, isFuntional: true)
 
+        LoginVC.db.deleteRememberUser(id: user_Id!)
+        exchangeMainView(viewControllerId: "LoginVCId")
     }
     
     

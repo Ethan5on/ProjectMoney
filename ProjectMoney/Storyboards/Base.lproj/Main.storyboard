@@ -90,6 +90,20 @@
                                 <color key="textColor" systemColor="systemBlueColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aZN-ke-uoO">
+                                <rect key="frame" x="15" y="800" width="149" height="31"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="sdffd" translatesAutoresizingMaskIntoConstraints="NO" id="Thh-nk-bex">
+                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkC-qd-PT8">
+                                        <rect key="frame" x="57" y="0.0" width="92" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="E0j-mN-BAl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -99,6 +113,8 @@
                             <constraint firstItem="1bp-aa-eAI" firstAttribute="centerX" secondItem="R3t-nR-erm" secondAttribute="centerX" id="6tN-Ca-Vg7"/>
                             <constraint firstItem="1bp-aa-eAI" firstAttribute="top" secondItem="E0j-mN-BAl" secondAttribute="top" constant="60" id="MvI-Ek-LTA"/>
                             <constraint firstItem="afN-5Y-UrF" firstAttribute="centerX" secondItem="R3t-nR-erm" secondAttribute="centerX" id="QVi-SQ-Ezr"/>
+                            <constraint firstItem="aZN-ke-uoO" firstAttribute="leading" secondItem="E0j-mN-BAl" secondAttribute="leading" constant="15" id="fsM-sX-G9j"/>
+                            <constraint firstItem="HeP-pY-mDx" firstAttribute="top" secondItem="aZN-ke-uoO" secondAttribute="bottom" constant="15" id="kRm-1u-KRU"/>
                             <constraint firstItem="HeP-pY-mDx" firstAttribute="leading" secondItem="E0j-mN-BAl" secondAttribute="leading" id="zda-3K-up9"/>
                             <constraint firstAttribute="bottom" secondItem="HeP-pY-mDx" secondAttribute="bottom" id="zde-Hs-9va"/>
                         </constraints>
@@ -124,6 +140,8 @@
                         <outlet property="enterBtnBotConstraint" destination="zde-Hs-9va" id="hjg-8V-Xjm"/>
                         <outlet property="enterButton" destination="HeP-pY-mDx" id="vgw-1m-qAH"/>
                         <outlet property="headerLabel" destination="kcS-gz-Kz0" id="O9P-dN-RFu"/>
+                        <outlet property="remeberSwitchStackVeiw" destination="aZN-ke-uoO" id="ePC-f0-jo9"/>
+                        <outlet property="rememberSwitch" destination="Thh-nk-bex" id="hJ6-eQ-G32"/>
                         <outlet property="signinButton" destination="ggN-jg-h9L" id="KBJ-x8-KQR"/>
                         <outlet property="userIdLabel" destination="OAv-X5-DTN" id="oK6-0K-w8h"/>
                         <outlet property="userIdStackView" destination="afN-5Y-UrF" id="QZw-Ia-8c7"/>
