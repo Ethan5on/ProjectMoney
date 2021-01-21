@@ -7,8 +7,4 @@
 
 import Foundation
 
-struct Constants {
-    
-    let user_Id: String
-
-}
+let user_Id_Global: String = LoginVC.logedInId!

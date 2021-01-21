@@ -66,8 +66,19 @@ extension SettingsVC: UITableViewDelegate {
             print(0)
         case 1:
             print(1)
+            
+        //Log Out
         case 2:
-            print(2)
+            
+            let alert = UIAlertController(title: nil, message: "Log Out", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                LoginVC.db.deleteRememberUser(id: user_Id_Global)
+                self.exchangeMainView(viewControllerId: "LoginVCId")
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil ))
+
+            self.present(alert, animated: true)
+            
         case 3:
             print(3)
         default:

@@ -36,7 +36,7 @@ class LoginVC: UIViewController {
     
     var usersInformation: [UserEntity] = []
     
-    var rememberUser: String? = nil
+    static var logedInId: String? = nil
     
     //MARK: - View Did Load()
     override func viewDidLoad() {
@@ -44,15 +44,14 @@ class LoginVC: UIViewController {
 //        LoginVC.db.dropUserListTable()
 //        LoginVC.db.insertUser(user_ID: "ethan5on", user_Password: "jong1283", emailAdress: "ethan5on@kakao.com", name: "Ethan Son")
         usersInformation = LoginVC.db.readUser()
-        rememberUser = LoginVC.db.readRememberUser()
+        LoginVC.logedInId = LoginVC.db.readRememberUser()
         
-        if rememberUser?.count != 0 {
-            print(" \(String(describing: rememberUser))")
+        if LoginVC.logedInId?.count != 0 {
+            print(" \(String(describing: LoginVC.logedInId))")
             
             let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
             let uvcs = storyboards.instantiateViewController(identifier: "AccountVCId") as! AccountVC
             uvcs.modalPresentationStyle = .fullScreen
-            uvcs.user_Id = rememberUser
             self.present(uvcs, animated: false, completion: nil)
         }
         
@@ -168,7 +167,7 @@ class LoginVC: UIViewController {
                     let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
                     let uvcs = storyboards.instantiateViewController(identifier: "AccountVCId") as! AccountVC
                     uvcs.modalPresentationStyle = .fullScreen
-                    uvcs.user_Id = user.user_ID
+                    LoginVC.logedInId = user.user_ID
                     self.present(uvcs, animated: false, completion: nil)
                     
                     return

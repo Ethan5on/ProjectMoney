@@ -40,7 +40,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     
     
     //MARK: - Instances
-    static var db: DatabaseManager = DatabaseManager()
+    static var db: DatabaseManager = DatabaseManager(user_Id: user_Id_Global)
     var transactionsFromDB: [TransactionEntity] = []
     var accountFromDB: [AccountEntity] = []
     var firstCategoryFromDB: [FirstCategoryEntity] = []
@@ -49,17 +49,13 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     var editingRowId: Int = 0
     
     var dataFormatter: DataFormatter = DataFormatter()
-    
-    var user_Id: String? = nil
-    
+        
     private let refreshControl = UIRefreshControl()
     
     //MARK: - ViewDidLoad Function
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("AccountVC - \(String(describing: user_Id))")
-        
+                
         uiConfig()
 
         refreshView()
@@ -219,7 +215,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         
         onPlusBtnDefaultPosition(targetBtn: searchBtn, isFuntional: true)
 
-        LoginVC.db.deleteRememberUser(id: user_Id!)
+        //Temporary Log Out Button
+        LoginVC.db.deleteRememberUser(id: user_Id_Global)
         exchangeMainView(viewControllerId: "LoginVCId")
     }
     

@@ -10,21 +10,22 @@ import SQLite3
 
 class DatabaseManager {
  
-    init() {
-        
-        db = openDatabase()
+    init(user_Id: String) {
+
+        db = openDatabase(user_Id: user_Id)
         createTransactionTable()
         createAccountTable()
         createFirstCategoryTable()
         createSecondCategoryTable()
     }
-    
-    let dbPath: String = "Transaction.sqlite"
+        
     var db: OpaquePointer?
     
     
     //MARK: - Open Database
-    func openDatabase() -> OpaquePointer? {
+    func openDatabase(user_Id: String) -> OpaquePointer? {
+        
+        let dbPath = "\(user_Id).sqlite"
         
         let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent(dbPath)
         var db: OpaquePointer?

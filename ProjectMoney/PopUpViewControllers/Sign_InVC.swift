@@ -112,11 +112,12 @@ class Sign_InVC: UIViewController {
         case 4:
             checkingIsEmpty(timesForEnter: 4, textField: userEmailTextField, alertMessage: "Insert Your Email", nextStackView: nil, nextSVConstraint: nil)
             print(4)
+
             
-        case 5:
+            //Add refresh LoginVC-DB Delegate
+            
             
             _ = navigationController?.popToRootViewController(animated: true)
-            print(5)
             
         default:
             print("break")
