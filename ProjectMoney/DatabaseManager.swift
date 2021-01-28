@@ -552,6 +552,20 @@ class DatabaseManager {
         sqlite3_finalize(deleteStatement)
     }
     
+    func dropTable() {
+        
+        let dropTableStatementString = "DROP TABLE deal"
+        var dropTAbleStatement: OpaquePointer?
+        if sqlite3_prepare_v2(db, dropTableStatementString, -1, &dropTAbleStatement, nil) == SQLITE_OK {
+            if sqlite3_step(dropTAbleStatement) == SQLITE_DONE {
+                print("Successfully drop table")
+            }
+        } else {
+            print("DROP statement could not be prepared")
+        }
+        sqlite3_finalize(dropTAbleStatement)
+    }
+    
     
     //MARK: - Join Expressions
     func loadSubcategory(name: String) -> [String] {
