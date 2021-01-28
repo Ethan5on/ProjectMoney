@@ -12,6 +12,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     //MARK: - IBOulets
     //Upper
     @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet weak var accountNameLabel: UILabel!
+    @IBOutlet weak var accountArrowButton: UIButton!
     
     @IBOutlet weak var backgoundButton: UIButton!
     
@@ -60,7 +62,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
         refreshView()
         refreshController()
-
+        accountMenus()
         
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
@@ -88,7 +90,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         
     }
     
-    @objc private func refreshController() {
+    @objc
+    private func refreshController() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refreshView), for: .valueChanged)
         accountTableView.addSubview(refreshControl)
@@ -111,7 +114,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         
     }
     
-    @objc fileprivate func refreshView() {
+    @objc
+    fileprivate func refreshView() {
         print("AccountVC - refreshView() called")
         
         //table view update
@@ -143,6 +147,41 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     }
   
     
+    @objc
+    private func accountMenus() {
+        print("EditorOfTransactionVC - accountMenus() called")
+
+    
+        accountArrowButton.showsMenuAsPrimaryAction = true
+        var accounts: [String] = []
+        for i in accountFromDB {
+            accounts.append(i.name)
+        }
+
+        func uiElementArray(name: [String]) -> [UIMenuElement] {
+            
+            var result: [UIMenuElement] = []
+            for i in name {
+                result.append(UIAction(title: i, handler: { _ in self.accountNameLabel.text = i
+                                                            self.refreshView() }))
+            }
+            result.append(UIAction(title: "Add", attributes: .destructive, handler: { _ in self.addAccount() }))
+            return result
+        }
+        
+        accountArrowButton.menu = UIMenu(title: "Account",
+                                    image: nil,
+                                    identifier: nil,
+                                    options: .destructive,
+                                    children: uiElementArray(name: accounts))
+    }
+
+    
+    @objc
+    func addAccount() {
+        print("addAcount() called")
+    }
+    
     //MARK: - IBAction Bottom Bar Buttons
 
     //Bottom Bar
@@ -158,7 +197,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     }
     
     @IBAction func botBarSettingsBtnClicked(_ sender: UIButton) {
-        exchangeMainView(viewControllerId: "SettingsVCId")
+        exchangeMainView(viewControllerId: "naviToSettings")
     }
     
     
@@ -217,7 +256,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
         //Temporary Log Out Button
         LoginVC.db.deleteRememberUser(id: user_Id_Global)
-        exchangeMainView(viewControllerId: "LoginVCId")
+        exchangeMainView(viewControllerId: "naviToLoginVCId")
     }
     
     
@@ -419,8 +458,6 @@ extension AccountVC: UITableViewDataSource {
         
         let cell = accountTableView.dequeueReusableCell(withIdentifier: "accountTableViewCellId", for: indexPath) as! AccountTableViewCell
         
-
-        
         cell.cellItemName.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].name
         cell.cellAmount.text = dataFormatter.currencyFormatter(inputValue: transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].amount)
         cell.cellTransactionDateTime.text = "\(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].date), \(transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].time)"
@@ -435,6 +472,7 @@ extension AccountVC: UITableViewDataSource {
         cell.cellCategory.text = "\(firstCategoryFromDB.filter{ $0.id == transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].firstCategory_Id}[0].name)\(secondCat)"
         cell.cellPayee.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].payee
         cell.cellMemo.text = transactionsFromDB.filter{ $0.date.prefix(7) == header }[indexPath.row].memo
+
         
         return cell
     }

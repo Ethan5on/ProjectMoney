@@ -157,6 +157,7 @@ class LoginVC: UIViewController {
                     
                     if rememberSwitch.isOn {
                         print("Remember this user")
+                        LoginVC.logedInId = user.user_ID
                         LoginVC.db.insertRememberUser(user_ID: self.userIdTextField.text!)
                     }
                     
@@ -198,6 +199,8 @@ class LoginVC: UIViewController {
     @IBAction func signinButtonClicked(_ sender: UIButton) {
         print("LoginVC - signinButtonClicked() called")
         
+        performSegue(withIdentifier: "signinSegue", sender: self)
     }
     
+
 }

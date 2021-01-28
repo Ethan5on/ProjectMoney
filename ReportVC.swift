@@ -221,7 +221,7 @@ class ReportVC: UIViewController {
     }
     
     @IBAction func botBarSettingsBtnClicked(_ sender: UIButton) {
-        exchangeMainView(viewControllerId: "SettingsVCId")
+        exchangeMainView(viewControllerId: "naviToSettings")
     }
     
     func exchangeMainView(viewControllerId: String) {

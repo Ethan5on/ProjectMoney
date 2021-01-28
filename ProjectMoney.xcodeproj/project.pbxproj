@@ -14,10 +14,12 @@
 		65130FC22588CD4C005CEACF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65130FC02588CD4C005CEACF /* Main.storyboard */; };
 		65130FC42588CD4C005CEACF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65130FC32588CD4C005CEACF /* Assets.xcassets */; };
 		65130FC72588CD4C005CEACF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65130FC52588CD4C005CEACF /* LaunchScreen.storyboard */; };
+		651AE88525C163D500EA9046 /* AboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651AE88425C163D500EA9046 /* AboutVC.swift */; };
 		6530214E25B5D928004633A1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6530214D25B5D928004633A1 /* LoginVC.swift */; };
 		6530215225B5F8FE004633A1 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6530215125B5F8FE004633A1 /* UserList.swift */; };
 		6530215525B60A93004633A1 /* Sign_InVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6530215425B60A93004633A1 /* Sign_InVC.swift */; };
 		65319CC425BA067E009B1485 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65319CC325BA067E009B1485 /* Constants.swift */; };
+		6557A8BD25C2A60C007D2EC1 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6557A8BC25C2A60C007D2EC1 /* CategoryVC.swift */; };
 		657D5A0225A08938004C213F /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657D5A0125A08938004C213F /* AccountTableViewCell.swift */; };
 		657FAA0D25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657FAA0B25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift */; };
 		657FAA0E25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657FAA0C25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib */; };
@@ -27,6 +29,7 @@
 		6589A868259D464D0007DE13 /* BudgetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6589A867259D464D0007DE13 /* BudgetVC.swift */; };
 		6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */; };
 		6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E861259E433E001AEFF3 /* DatabaseManager.swift */; };
+		65A0CA8125BB40A400445BFC /* memoji.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 65A0CA8025BB40A400445BFC /* memoji.jpeg */; };
 		65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3EEE625A389D200BCD62D /* DataFormatter.swift */; };
 		828A66D709F42F53948AAEA7 /* Pods_ProjectMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF62904A2B42C54E8F5A4AFD /* Pods_ProjectMoney.framework */; };
 /* End PBXBuildFile section */
@@ -41,10 +44,12 @@
 		65130FC32588CD4C005CEACF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65130FC62588CD4C005CEACF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65130FC82588CD4C005CEACF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		651AE88425C163D500EA9046 /* AboutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutVC.swift; sourceTree = "<group>"; };
 		6530214D25B5D928004633A1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		6530215125B5F8FE004633A1 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		6530215425B60A93004633A1 /* Sign_InVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sign_InVC.swift; sourceTree = "<group>"; };
 		65319CC325BA067E009B1485 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		6557A8BC25C2A60C007D2EC1 /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
 		657D5A0125A08938004C213F /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
 		657FAA0B25ACDF71000381B2 /* SettingsStaticCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStaticCellTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		657FAA0C25ACDF71000381B2 /* SettingsStaticCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsStaticCellTableViewCell.xib; sourceTree = SOURCE_ROOT; };
@@ -54,6 +59,7 @@
 		6589A867259D464D0007DE13 /* BudgetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetVC.swift; sourceTree = "<group>"; };
 		6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorOfTransactionVC.swift; sourceTree = "<group>"; };
 		6594E861259E433E001AEFF3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		65A0CA8025BB40A400445BFC /* memoji.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = memoji.jpeg; sourceTree = "<group>"; };
 		65E3EEE625A389D200BCD62D /* DataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataFormatter.swift; path = PopUpViewControllers/DataFormatter.swift; sourceTree = "<group>"; };
 		7C1A88D408AE048D3259BB0C /* Pods-ProjectMoney.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectMoney.release.xcconfig"; path = "Target Support Files/Pods-ProjectMoney/Pods-ProjectMoney.release.xcconfig"; sourceTree = "<group>"; };
 		BF62904A2B42C54E8F5A4AFD /* Pods_ProjectMoney.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectMoney.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				65130FC32588CD4C005CEACF /* Assets.xcassets */,
+				65A0CA8025BB40A400445BFC /* memoji.jpeg */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -156,6 +163,8 @@
 			children = (
 				6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */,
 				6530215425B60A93004633A1 /* Sign_InVC.swift */,
+				651AE88425C163D500EA9046 /* AboutVC.swift */,
+				6557A8BC25C2A60C007D2EC1 /* CategoryVC.swift */,
 			);
 			path = PopUpViewControllers;
 			sourceTree = "<group>";
@@ -240,6 +249,7 @@
 				65130FC72588CD4C005CEACF /* LaunchScreen.storyboard in Resources */,
 				65130FC42588CD4C005CEACF /* Assets.xcassets in Resources */,
 				65130FC22588CD4C005CEACF /* Main.storyboard in Resources */,
+				65A0CA8125BB40A400445BFC /* memoji.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +306,7 @@
 				65319CC425BA067E009B1485 /* Constants.swift in Sources */,
 				65130FBF2588CD4C005CEACF /* AccountVC.swift in Sources */,
 				6530214E25B5D928004633A1 /* LoginVC.swift in Sources */,
+				6557A8BD25C2A60C007D2EC1 /* CategoryVC.swift in Sources */,
 				6508F0AC259F25B500B5F72F /* EventDataTransactionDelegate.swift in Sources */,
 				65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */,
 				6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */,
@@ -308,6 +319,7 @@
 				65130FBD2588CD4C005CEACF /* SceneDelegate.swift in Sources */,
 				657D5A0225A08938004C213F /* AccountTableViewCell.swift in Sources */,
 				6589A865259D46430007DE13 /* SettingsVC.swift in Sources */,
+				651AE88525C163D500EA9046 /* AboutVC.swift in Sources */,
 				6589A868259D464D0007DE13 /* BudgetVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
