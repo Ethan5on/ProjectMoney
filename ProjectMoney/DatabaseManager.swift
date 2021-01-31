@@ -333,6 +333,8 @@ class DatabaseManager {
         var queryStatement: OpaquePointer?
         var ts: [TransactionEntity] = []
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            print("-----------------READ Transaction-----------------")
+            print("Query Result:")
             while sqlite3_step(queryStatement) == SQLITE_ROW {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)))
@@ -345,7 +347,6 @@ class DatabaseManager {
                 let payee = String(describing: String(cString: sqlite3_column_text(queryStatement, 8)))
                 let memo = String(describing: String(cString: sqlite3_column_text(queryStatement, 9)))
                 ts.append(TransactionEntity(id: Int(id), name: name, account_Id: Int(account_Id), firstCategory_Id: Int(firstCategory_Id), secondCategory_Id: Int(secondCategory_Id), amount: Int(amount), date: date, time: time, payee: payee, memo: memo))
-                print("Query Result:")
                 print("\(id) | \(name) | \(account_Id) | \(firstCategory_Id) | \(secondCategory_Id) | \(amount) | \(date) | \(time) | \(payee) | \(memo) ")
             }
         }else {
@@ -362,12 +363,13 @@ class DatabaseManager {
         var queryStatement: OpaquePointer?
         var ac: [AccountEntity] = []
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            print("-----------------READ Account-----------------")
+            print("Query Result:")
             while sqlite3_step(queryStatement) == SQLITE_ROW {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)))
                 
                 ac.append(AccountEntity(id: Int(id), name: name))
-                print("Query Result:")
                 print("\(id) | \(name)")
             }
         }else {
@@ -384,12 +386,13 @@ class DatabaseManager {
         var queryStatement: OpaquePointer?
         var fc: [FirstCategoryEntity] = []
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            print("-----------------READ First Category-----------------")
+            print("Query Result:")
             while sqlite3_step(queryStatement) == SQLITE_ROW {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)))
 
                 fc.append(FirstCategoryEntity(id: Int(id), name: name))
-                print("Query Result:")
                 print("\(id) | \(name)")
             }
         }else {
@@ -406,13 +409,14 @@ class DatabaseManager {
         var queryStatement: OpaquePointer?
         var sc: [SecondCategoryEntity] = []
         if sqlite3_prepare_v2(db, queryStatementString, -1, &queryStatement, nil) == SQLITE_OK {
+            print("-----------------READ Second Category-----------------")
+            print("Query Result:")
             while sqlite3_step(queryStatement) == SQLITE_ROW {
                 let id = sqlite3_column_int(queryStatement, 0)
                 let name = String(describing: String(cString: sqlite3_column_text(queryStatement, 1)))
                 let firstCategory_Id = sqlite3_column_int(queryStatement, 2)
 
                 sc.append(SecondCategoryEntity(id: Int(id), name: name, firstCategory_Id: Int(firstCategory_Id)))
-                print("Query Result:")
                 print("\(id) | \(name) | \(firstCategory_Id)")
             }
         }else {

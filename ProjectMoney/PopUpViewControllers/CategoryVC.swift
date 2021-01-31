@@ -18,6 +18,8 @@ class CategoryVC: UIViewController {
     var secondCategoryFromDB: [SecondCategoryEntity] = []
     var secondCatTableArray: [String] = []
     
+    let barEditButton: UINavigationItem = UINavigationItem()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,15 +37,87 @@ class CategoryVC: UIViewController {
         
         firstCatTableWidthConstraint.constant = view.frame.width
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(naviBarEditBtnClicked))
     }
     
     
+    @objc
+    private func naviBarEditBtnClicked(sender: UIBarButtonItem) {
+        print("Edit Button Clicked()")
+        
+
+        
+        if self.firstCategoryTableView.isEditing != true {
+            firstCategoryTableView.setEditing(true, animated: true)
+            secondCategoryTableView.setEditing(true, animated: true)
+            navigationItem.rightBarButtonItem?.title = "Done"
+        } else {
+            firstCategoryTableView.setEditing(false, animated: true)
+            secondCategoryTableView.setEditing(false, animated: true)
+            navigationItem.rightBarButtonItem?.title = "Edit"
+        }
+        
+    }
+    
+    
+    @objc
+    fileprivate func refreshView() {
+        print("AccountVC - refreshView() called")
+        
+        //table view update
+        firstCategoryFromDB = AccountVC.db.readFirstCategory()
+        secondCategoryFromDB = AccountVC.db.readSecondCategoy()
+        
+        firstCategoryTableView.reloadData()
+        secondCategoryTableView.reloadData()
+    }
     
     
 }
 
 
 extension CategoryVC: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        
+        if editingStyle == .delete {
+            
+            if tableView == firstCategoryTableView {
+                
+                print("First category table - Deleted row at \(indexPath)")
+                let titleLabel: String = (firstCategoryTableView.cellForRow(at: indexPath)?.textLabel?.text)!
+                let firstCatId: Int = firstCategoryFromDB.filter{ $0.name == titleLabel }[0].id
+                AccountVC.db.deleteFirstCategoryById(id: firstCatId)
+                
+                var subCatIdArray: [Int] = []
+                
+                for secondCat in secondCategoryFromDB {
+                    if secondCat.firstCategory_Id == firstCatId {
+                    subCatIdArray.append(secondCat.id)
+                    }
+                }
+                for subCatId in subCatIdArray {
+                    AccountVC.db.deleteSecondCategoryById(id: subCatId)
+                }
+                
+                //Need to delete no Transaction !!!!!!!!!!!!!!!!
+                
+            } else if tableView == secondCategoryTableView {
+                
+                print("Second category table - Deleted row at \(indexPath)")
+                let titleLabel: String = (secondCategoryTableView.cellForRow(at: indexPath)?.textLabel?.text)!
+                let secondCatId: Int = secondCategoryFromDB.filter{ $0.name == titleLabel }[0].id
+                AccountVC.db.deleteSecondCategoryById(id: secondCatId)
+            }
+        }
+        self.refreshView()
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 35
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -95,6 +169,7 @@ extension CategoryVC: UITableViewDataSource {
             let firstCatCell = firstCategoryTableView.dequeueReusableCell(withIdentifier: "firstCategoryCell", for: indexPath)
             
             firstCatCell.textLabel?.text = firstCategoryFromDB[indexPath.row].name
+            firstCatCell.imageView?.image = UIImage(systemName: "cart")
             
             return firstCatCell
         case secondCategoryTableView:

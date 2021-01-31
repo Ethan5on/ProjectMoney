@@ -1795,21 +1795,12 @@
                                     <constraint firstAttribute="width" constant="207" id="zEa-N9-n5B"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="firstCategoryCell" textLabel="pVt-PK-diG" style="IBUITableViewCellStyleDefault" id="nEF-Dc-Ut5">
-                                        <rect key="frame" x="0.0" y="28" width="207" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="firstCategoryCell" rowHeight="30" id="nEF-Dc-Ut5">
+                                        <rect key="frame" x="0.0" y="28" width="207" height="30"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nEF-Dc-Ut5" id="Ulx-Mk-UTL">
-                                            <rect key="frame" x="0.0" y="0.0" width="207" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pVt-PK-diG">
-                                                    <rect key="frame" x="16" y="0.0" width="175" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -1818,11 +1809,11 @@
                                 <rect key="frame" x="207" y="88" width="207" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="secondCategoryCell" id="faV-r5-2Pe">
-                                        <rect key="frame" x="0.0" y="28" width="207" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="secondCategoryCell" rowHeight="46" id="faV-r5-2Pe">
+                                        <rect key="frame" x="0.0" y="28" width="207" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="faV-r5-2Pe" id="VlK-Yi-aK8">
-                                            <rect key="frame" x="0.0" y="0.0" width="207" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="207" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1832,13 +1823,13 @@
                         <viewLayoutGuide key="safeArea" id="3qr-8N-XN9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ZAI-KK-haL" firstAttribute="top" secondItem="3qr-8N-XN9" secondAttribute="top" id="5lv-As-Waj"/>
                             <constraint firstItem="EGX-NQ-fw1" firstAttribute="leading" secondItem="3qr-8N-XN9" secondAttribute="leading" id="5t4-rk-W6x"/>
                             <constraint firstItem="3qr-8N-XN9" firstAttribute="trailing" secondItem="ZAI-KK-haL" secondAttribute="trailing" id="71B-uP-sqf"/>
                             <constraint firstAttribute="bottom" secondItem="ZAI-KK-haL" secondAttribute="bottom" id="8bm-D1-ZXf"/>
+                            <constraint firstItem="ZAI-KK-haL" firstAttribute="top" secondItem="3qr-8N-XN9" secondAttribute="top" id="EfK-OY-DJe"/>
+                            <constraint firstItem="EGX-NQ-fw1" firstAttribute="top" secondItem="3qr-8N-XN9" secondAttribute="top" id="aNR-0E-UKa"/>
                             <constraint firstAttribute="bottom" secondItem="EGX-NQ-fw1" secondAttribute="bottom" id="crr-bx-H6v"/>
                             <constraint firstItem="ZAI-KK-haL" firstAttribute="leading" secondItem="EGX-NQ-fw1" secondAttribute="trailing" id="nx9-N3-Xbg"/>
-                            <constraint firstItem="EGX-NQ-fw1" firstAttribute="top" secondItem="3qr-8N-XN9" secondAttribute="top" id="vjU-zR-kyl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Categories" id="7Gx-n5-EvG"/>
