@@ -8,11 +8,14 @@
 import Foundation
 import UIKit
 
-class CategoryVC: UIViewController {
+class CategoryVC: UIViewController, CreateCategoryVCDelegate {
+    
     
     @IBOutlet weak var firstCategoryTableView: UITableView!
     @IBOutlet weak var secondCategoryTableView: UITableView!
     @IBOutlet weak var firstCatTableWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var plusButton: UIButton!
     
     var firstCategoryFromDB: [FirstCategoryEntity] = []
     var secondCategoryFromDB: [SecondCategoryEntity] = []
@@ -36,14 +39,16 @@ class CategoryVC: UIViewController {
         self.secondCategoryTableView.delegate = self
         
         firstCatTableWidthConstraint.constant = view.frame.width
+        plusButton.layer.cornerRadius = plusButton.frame.height / 2
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(naviBarEditBtnClicked))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(naviBarEditBtnClicked))
+        navigationItem.rightBarButtonItem?.tintColor = .red
     }
     
     
     @objc
     private func naviBarEditBtnClicked(sender: UIBarButtonItem) {
-        print("Edit Button Clicked()")
+        print("Delete Button Clicked()")
         
 
         
@@ -54,7 +59,7 @@ class CategoryVC: UIViewController {
         } else {
             firstCategoryTableView.setEditing(false, animated: true)
             secondCategoryTableView.setEditing(false, animated: true)
-            navigationItem.rightBarButtonItem?.title = "Edit"
+            navigationItem.rightBarButtonItem?.title = "Delete"
         }
         
     }
@@ -62,7 +67,7 @@ class CategoryVC: UIViewController {
     
     @objc
     fileprivate func refreshView() {
-        print("AccountVC - refreshView() called")
+        print("refreshView() called")
         
         //table view update
         firstCategoryFromDB = AccountVC.db.readFirstCategory()
@@ -72,8 +77,28 @@ class CategoryVC: UIViewController {
         secondCategoryTableView.reloadData()
     }
     
+    @IBAction func plusButtonClicked(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.plusButton.transform = self.plusButton.transform.rotated(by: CGFloat(Double.pi))
+            self.view.layoutIfNeeded()
+        })
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "CreateCategoryVCId") as! CreateCategoryVC
+        uvcs.modalPresentationStyle = .overFullScreen
+        uvcs.categoryChangedDelegate = self
+        self.present(uvcs, animated: true, completion: nil)
+
+//        })
+    }
     
+    func onCreateCategoryVCCircleBtnClicked() {
+        print("Delegate : CategoryVC - onCreateCategoryVCCircleBtnClicked() called")
+        refreshView()
+    }
+
 }
+
 
 
 extension CategoryVC: UITableViewDelegate {
@@ -101,7 +126,7 @@ extension CategoryVC: UITableViewDelegate {
                     AccountVC.db.deleteSecondCategoryById(id: subCatId)
                 }
                 
-                //Need to delete no Transaction !!!!!!!!!!!!!!!!
+                //Need to delete on Transaction !!!!!!!!!!!!!!!!
                 
             } else if tableView == secondCategoryTableView {
                 

@@ -10,11 +10,23 @@ import Foundation
 protocol EventDataTransactionDelegate {
         
     func onEditorVCCircleBtnClicked()
+        
+}
+
+protocol IndexPathPasser {
+    
+    func onCellEditBtnClicked(editingRowId: Int)
     
 }
 
-protocol indexPathPasser {
+protocol CreateCategoryVCDelegate {
     
-    func onCellEditBtnClicked(editingRowId: Int)
+    func onCreateCategoryVCCircleBtnClicked()
+
+}
+
+protocol SignInVCDelegate {
+    
+    func onSigninVCEnter()
     
 }

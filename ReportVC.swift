@@ -110,7 +110,9 @@ class ReportVC: UIViewController {
         }
         let sorted = monthTotalAmountDictionary.sorted(by: {$0.0 < $1.0})
         sixMonthsArray = Array(sorted.map{$0.key})
+        sixMonthsArray.removeSubrange(6...)
         totalAmountByMonth = Array(sorted.map{$0.value})
+        totalAmountByMonth.removeSubrange(6...)
         
     }
     
@@ -118,6 +120,8 @@ class ReportVC: UIViewController {
     
     func barChartMaker(barChartView: BarChartView, dataPoints: [String], values: [Double]) {
         var dataEntries: [BarChartDataEntry] = []
+        
+        
         
         let legend = barChartView.legend
             legend.enabled = false

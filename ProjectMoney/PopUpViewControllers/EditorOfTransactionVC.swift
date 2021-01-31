@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecognizerDelegate {
+class EditorOfTransactionVC: UIViewController, IndexPathPasser, CreateCategoryVCDelegate, UIGestureRecognizerDelegate {
     
     //MARK: - Upper Bar Buttons
     @IBOutlet weak var backArrowBtn: UIButton!
@@ -197,6 +197,12 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
     
     @objc func addCategory() {
         print("addCategory() called")
+        
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "CreateCategoryVCId") as! CreateCategoryVC
+        uvcs.modalPresentationStyle = .fullScreen
+        uvcs.categoryChangedDelegate = self
+        self.present(uvcs, animated: true, completion: nil)
     }
     
     
@@ -293,9 +299,17 @@ class EditorOfTransactionVC: UIViewController, indexPathPasser, UIGestureRecogni
         dateAndTimeButton.setTitle("\(dataFormatter.dateFormatter(inputValue: dateAndTimePicker.date)), \(dataFormatter.timeFormatter(inputValue: dateAndTimePicker.date))", for: .normal)
     }
     
+    //MARK: - Delegate
+    func onCreateCategoryVCCircleBtnClicked() {
+        print("Delegate : EditorOfTransactionVC - onCreateCategoryVCCircleBtnClicked() called")
+        catFirst = AccountVC.db.readFirstCategory()
+        catSecond = AccountVC.db.readSecondCategoy()
+        categoryMenus()
+    }
+    
     
     func onCellEditBtnClicked(editingRowId: Int) {
-        print("EditorOfTransactionVC - onCellEditBtnClicked() called / indexPathFromCell = \(editingRowId)")
+        print("Delegate : EditorOfTransactionVC - onCellEditBtnClicked() called / indexPathFromCell = \(editingRowId)")
         editingTransactionIdFromTable = editingRowId
     }
     

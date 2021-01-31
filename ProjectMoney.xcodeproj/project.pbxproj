@@ -28,6 +28,7 @@
 		6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */; };
 		6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6594E861259E433E001AEFF3 /* DatabaseManager.swift */; };
 		65A0CA8125BB40A400445BFC /* memoji.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 65A0CA8025BB40A400445BFC /* memoji.jpeg */; };
+		65D9D22625C6A6BB00CD9DF7 /* CreateCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D9D22525C6A6BB00CD9DF7 /* CreateCategoryVC.swift */; };
 		65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3EEE625A389D200BCD62D /* DataFormatter.swift */; };
 		828A66D709F42F53948AAEA7 /* Pods_ProjectMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF62904A2B42C54E8F5A4AFD /* Pods_ProjectMoney.framework */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		6594E85E259E358F001AEFF3 /* EditorOfTransactionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorOfTransactionVC.swift; sourceTree = "<group>"; };
 		6594E861259E433E001AEFF3 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		65A0CA8025BB40A400445BFC /* memoji.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = memoji.jpeg; sourceTree = "<group>"; };
+		65D9D22525C6A6BB00CD9DF7 /* CreateCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCategoryVC.swift; sourceTree = "<group>"; };
 		65E3EEE625A389D200BCD62D /* DataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataFormatter.swift; path = PopUpViewControllers/DataFormatter.swift; sourceTree = "<group>"; };
 		7C1A88D408AE048D3259BB0C /* Pods-ProjectMoney.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectMoney.release.xcconfig"; path = "Target Support Files/Pods-ProjectMoney/Pods-ProjectMoney.release.xcconfig"; sourceTree = "<group>"; };
 		BF62904A2B42C54E8F5A4AFD /* Pods_ProjectMoney.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectMoney.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 				6530215425B60A93004633A1 /* Sign_InVC.swift */,
 				651AE88425C163D500EA9046 /* AboutVC.swift */,
 				6557A8BC25C2A60C007D2EC1 /* CategoryVC.swift */,
+				65D9D22525C6A6BB00CD9DF7 /* CreateCategoryVC.swift */,
 			);
 			path = PopUpViewControllers;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				6530214E25B5D928004633A1 /* LoginVC.swift in Sources */,
 				6557A8BD25C2A60C007D2EC1 /* CategoryVC.swift in Sources */,
 				6508F0AC259F25B500B5F72F /* EventDataTransactionDelegate.swift in Sources */,
+				65D9D22625C6A6BB00CD9DF7 /* CreateCategoryVC.swift in Sources */,
 				65E3EEE725A389D200BCD62D /* DataFormatter.swift in Sources */,
 				6594E862259E433E001AEFF3 /* DatabaseManager.swift in Sources */,
 				6594E85F259E358F001AEFF3 /* EditorOfTransactionVC.swift in Sources */,

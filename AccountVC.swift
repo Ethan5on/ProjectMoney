@@ -44,6 +44,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     //MARK: - Instances
     static var db: DatabaseManager = DatabaseManager(user_Id: user_Id_Global)
     var transactionsFromDB: [TransactionEntity] = []
+    var transactionsFromDbByAccount: [TransactionEntity] = []
     var accountFromDB: [AccountEntity] = []
     var firstCategoryFromDB: [FirstCategoryEntity] = []
     var secondCategoryFromDB: [SecondCategoryEntity] = []
@@ -118,9 +119,18 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
     fileprivate func refreshView() {
         print("AccountVC - refreshView() called")
         
+        
         //table view update
-        transactionsFromDB = AccountVC.db.readTransaction()
+
         accountFromDB = AccountVC.db.readAccount()
+        transactionsFromDB = AccountVC.db.readTransaction()
+
+        if accountNameLabel.text != "MONEY CLIP" {
+            let accountId: Int = accountFromDB.filter{ $0.name == accountNameLabel.text! }[0].id
+            
+            transactionsFromDbByAccount = transactionsFromDB.filter{ $0.account_Id == accountId}
+            transactionsFromDB = transactionsFromDbByAccount
+        }
         firstCategoryFromDB = AccountVC.db.readFirstCategory()
         secondCategoryFromDB = AccountVC.db.readSecondCategoy()
         
@@ -132,10 +142,8 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
             for i in transactionsFromDB {
                 balance += i.amount
             }
-            self.balanceLabel.text = dataFormatter.currencyFormatter(inputValue: balance)
-        } else {
-            return
         }
+        self.balanceLabel.text = dataFormatter.currencyFormatter(inputValue: balance)
         self.refreshControl.endRefreshing()
     }
     
