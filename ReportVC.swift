@@ -110,9 +110,14 @@ class ReportVC: UIViewController {
         }
         let sorted = monthTotalAmountDictionary.sorted(by: {$0.0 < $1.0})
         sixMonthsArray = Array(sorted.map{$0.key})
-        sixMonthsArray.removeSubrange(6...)
         totalAmountByMonth = Array(sorted.map{$0.value})
-        totalAmountByMonth.removeSubrange(6...)
+        
+        
+        // Need to fix
+        if sixMonthsArray.isEmpty == false {
+            sixMonthsArray.removeSubrange(6...)
+            totalAmountByMonth.removeSubrange(6...)
+        }
         
     }
     

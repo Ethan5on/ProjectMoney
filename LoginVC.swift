@@ -75,6 +75,12 @@ class LoginVC: UIViewController {
                  
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print("ViewDidAppear() called")
+        super.viewDidAppear(animated)
+        usersInformation = LoginVC.db.readUser()
+    }
+    
     //MARK: - Keyborad Notification handles
     @objc
     private func handle(keyboardHideNotification notification: Notification) {
@@ -101,6 +107,12 @@ class LoginVC: UIViewController {
                 self.enterBtnBotConstraint.constant = keyboardRectangle.height
                 self.view.layoutIfNeeded()
         }
+    }
+    
+    //MARK: - Delegate
+    func onSigninVCEnter() {
+        print("Delegate : LoginVC - onSigninVCEnter() called")
+        usersInformation = LoginVC.db.readUser()
     }
     
     

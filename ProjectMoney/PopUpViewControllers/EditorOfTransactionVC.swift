@@ -78,7 +78,7 @@ class EditorOfTransactionVC: UIViewController, IndexPathPasser, CreateCategoryVC
     //MARK: - Drawing infomation of transaction
     @objc private func drawingInformationOfTransactionOrNot() {
         print("EditorOfTransactionVC - drawingInformationOfTransactionOrNot() called")
-
+        
         
         if editingTransactionIdFromTable != nil {                               //When Updating
             
@@ -193,6 +193,13 @@ class EditorOfTransactionVC: UIViewController, IndexPathPasser, CreateCategoryVC
     
     @objc func addAccount() {
         print("addAcount() called")
+        
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "CreateAccountVCId") as! CreateAccountVC
+        uvcs.modalPresentationStyle = .overCurrentContext
+        self.present(uvcs, animated: true, completion: nil)
+        uvcs.accountTableView.allowsSelection = false
+
     }
     
     @objc func addCategory() {
@@ -200,7 +207,7 @@ class EditorOfTransactionVC: UIViewController, IndexPathPasser, CreateCategoryVC
         
         let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
         let uvcs = storyboards.instantiateViewController(identifier: "CreateCategoryVCId") as! CreateCategoryVC
-        uvcs.modalPresentationStyle = .fullScreen
+        uvcs.modalPresentationStyle = .overFullScreen
         uvcs.categoryChangedDelegate = self
         self.present(uvcs, animated: true, completion: nil)
     }

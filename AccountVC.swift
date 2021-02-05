@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AccountVC: UIViewController, EventDataTransactionDelegate {
+class AccountVC: UIViewController, EventDataTransactionDelegate, CreateAccountVCDelegate {
 
     //MARK: - IBOulets
     //Upper
@@ -63,7 +63,7 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 
         refreshView()
         refreshController()
-        accountMenus()
+//        accountMenus()
         
         self.accountTableView.delegate = self
         self.accountTableView.dataSource = self
@@ -87,7 +87,6 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
 //        AccountVC.db.insertSecondCategory(name: "Game Cash", firstCategory_Id: 4)
 //        AccountVC.db.insertSecondCategory(name: "Electronics", firstCategory_Id: 7)
 //        AccountVC.db.insertSecondCategory(name: "Cloth", firstCategory_Id: 7)
-        
         
     }
     
@@ -190,8 +189,30 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         print("addAcount() called")
     }
     
-    //MARK: - IBAction Bottom Bar Buttons
+    //MARK: - IBAction Buttons
 
+    //Top Bar
+    
+    @IBAction func accountArrowBtnClicked(_ sender: UIButton) {
+        
+        if accountNameLabel.text != "MONEY CLIP" {
+            currentAccount_Global = accountNameLabel.text
+            print(currentAccount_Global!)
+        } else {
+            currentAccount_Global = "All accounts"
+        }
+        
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "CreateAccountVCId") as! CreateAccountVC
+        uvcs.changedAccountDelegate = self
+        self.present(uvcs, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    
+    
     //Bottom Bar
     @IBAction func botBarAccountBtnClicked(_ sender: UIButton) {
     }
@@ -261,10 +282,11 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         print("searchBtnOnPlusClicked")
         
         onPlusBtnDefaultPosition(targetBtn: searchBtn, isFuntional: true)
-
+        
         //Temporary Log Out Button
-        LoginVC.db.deleteRememberUser(id: user_Id_Global)
-        exchangeMainView(viewControllerId: "naviToLoginVCId")
+        let storyboards = UIStoryboard.init(name: "Main", bundle: nil)
+        let uvcs = storyboards.instantiateViewController(identifier: "CreateAccountVCId") as! CreateAccountVC
+        self.present(uvcs, animated: true, completion: nil)
     }
     
     
@@ -319,6 +341,19 @@ class AccountVC: UIViewController, EventDataTransactionDelegate {
         print("New transaction is updated on table")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: {self.refreshView()})
     }
+    
+    func onCreateAccountVCChangedAccount(accountName: String) {
+        print("AccountView - onCreateAccountVCChangedAccount() called")
+        print("Filtered by account : \(accountName)")
+        if accountName == "All accounts" {
+            self.accountNameLabel.text = "MONEY CLIP"
+        } else {
+            self.accountNameLabel.text = accountName
+        }
+        self.refreshView()
+    }
+
+    
 }
 
 
@@ -331,7 +366,7 @@ extension AccountVC: UITableViewDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
-    
+
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
         tableView.endUpdates()

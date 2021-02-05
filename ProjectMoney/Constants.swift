@@ -8,3 +8,5 @@
 import Foundation
 
 let user_Id_Global: String = LoginVC.logedInId!
+
+var currentAccount_Global: String?

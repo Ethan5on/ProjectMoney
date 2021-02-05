@@ -25,8 +25,8 @@ protocol CreateCategoryVCDelegate {
 
 }
 
-protocol SignInVCDelegate {
+protocol CreateAccountVCDelegate {
     
-    func onSigninVCEnter()
+    func onCreateAccountVCChangedAccount(accountName: String)
     
 }
